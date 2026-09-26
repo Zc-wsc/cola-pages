@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>汪仕诚 & 马晗瑜 · 婚礼请柬</title>
+<style>
+:root{--red:#a3242b;--deep:#6e1116;--gold:#c9a063;--paper:#f4ecdd;--ink:#3a2e26}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:#1a1214;color:var(--ink);overflow:hidden}
+#deck{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+#deck::-webkit-scrollbar{display:none}
+.scene{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;overflow:hidden;background:#111}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(20,8,8,.38) 100%)}
+/* ---------- 热区 ---------- */
+.hot{position:absolute;transform:translate(-50%,-50%);border-radius:14px;cursor:pointer;z-index:5}
+.hot:active{background:rgba(255,255,255,.12)}
+.hot .ring{position:absolute;inset:-6px;border:2px solid rgba(255,255,255,.75);border-radius:16px;opacity:0;animation:ring 2.2s ease-out infinite}
+@keyframes ring{0%{opacity:.85;transform:scale(.92)}70%{opacity:0;transform:scale(1.12)}100%{opacity:0}}
+.hint-dot{position:absolute;left:50%;top:50%;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.9);transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(255,255,255,.8);pointer-events:none}
+/* ---------- 章节标题 ---------- */
+.chapter-tag{position:absolute;top:2.2%;left:50%;transform:translateX(-50%);z-index:4;background:linear-gradient(180deg,rgba(20,10,10,.62),rgba(20,10,10,.32));color:#f7ecd8;padding:.45em 1.4em;border-radius:999px;font-size:14px;letter-spacing:.35em;text-shadow:0 1px 2px rgba(0,0,0,.6);border:1px solid rgba(201,160,99,.55);white-space:nowrap}
+/* ---------- 气泡 / 提示 ---------- */
+#toast{position:fixed;left:50%;bottom:14%;transform:translateX(-50%);z-index:900;background:rgba(24,12,12,.88);color:#f7ecd8;padding:.9em 1.5em;border-radius:14px;font-size:15px;letter-spacing:.12em;border:1px solid rgba(201,160,99,.5);max-width:82vw;text-align:center;line-height:1.7;opacity:0;pointer-events:none;transition:opacity .35s}
+#toast.show{opacity:1}
+.bubble{position:absolute;transform:translate(-50%,-115%);background:var(--paper);color:var(--ink);padding:.7em 1em;border-radius:12px;font-size:13px;line-height:1.6;max-width:64vw;z-index:20;box-shadow:0 6px 18px rgba(0,0,0,.35);border:1px solid rgba(163,36,43,.35);animation:pop .3s ease}
+.bubble:after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--paper)}
+@keyframes pop{from{transform:translate(-50%,-105%) scale(.7);opacity:0}to{transform:translate(-50%,-115%) scale(1);opacity:1}}
+/* ---------- 照片浮层（厚涂画框） ---------- */
+#lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(15,8,8,.72);backdrop-filter:blur(3px)}
+#lightbox.show{display:flex}
+.photo-card{width:min(78vw,360px);border-radius:8px;padding:12px;background:linear-gradient(160deg,#e9dcc3,#d9c5a0);box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 0 0 2px rgba(110,17,22,.25);animation:rise .35s ease}
+@keyframes rise{from{transform:translateY(26px) scale(.92);opacity:0}to{transform:none;opacity:1}}
+.photo-frame{aspect-ratio:3/4;border-radius:4px;background:radial-gradient(circle at 35% 30%,#f3e2c2,#cbb28a 60%,#b39a72);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a5b34;gap:.6em;box-shadow:inset 0 0 24px rgba(90,60,20,.35)}
+.photo-frame .big{font-size:64px;color:var(--red);font-weight:700;text-shadow:1px 2px 0 rgba(0,0,0,.12)}
+.photo-frame .cap{font-size:14px;letter-spacing:.25em}
+.photo-card .name{text-align:center;margin-top:10px;font-size:15px;letter-spacing:.3em;color:#5d3f22}
+.photo-card .sub{text-align:center;font-size:12px;color:#8a6a42;margin-top:4px;letter-spacing:.15em}
+/* ---------- 猫爪向导 ---------- */
+.paws{position:fixed;right:10px;bottom:12px;z-index:800;display:flex;flex-direction:column;gap:10px}
+.paw{width:44px;height:44px;border-radius:50%;background:rgba(24,12,12,.55);border:1px solid rgba(201,160,99,.5);color:#f0e2c8;display:flex;align-items:center;justify-content:center;font-size:20px;user-select:none}
+.paw:active{background:rgba(163,36,43,.65)}
+/* ---------- 开篇：打字机 → 信封火漆 ---------- */
+#intro{background:#0c0708}
+.stage{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.stage.on{opacity:1;pointer-events:auto}
+.fitbox{position:absolute;left:50%;top:0;height:100%;width:56.3vh;transform:translateX(-50%)}
+.fitbox img{width:100%;height:100%;display:block}
+#introStage .fitbox{transform-origin:51.5% 20%;transition:transform 1.7s cubic-bezier(.25,.7,.25,1)}
+#introStage.zoom .fitbox{transform:translateX(-50%) scale(2.6)}
+#typedText{position:absolute;left:31%;top:12.5%;width:41%;font-size:clamp(7px,1vh,13px);line-height:2.1;letter-spacing:.12em;color:#4a382a;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+#typedText .cursor{display:inline-block;width:.55em;animation:blink 1s steps(1) infinite;color:var(--red);margin-left:.1em}
+@keyframes blink{50%{opacity:0}}
+#pawStep{position:absolute;left:50%;top:72%;transform:translate(-50%,0) rotate(-14deg);font-size:40px;opacity:0;transition:opacity .3s;filter:drop-shadow(0 4px 6px rgba(0,0,0,.55))}
+#pawStep.on{opacity:1;animation:pawTap .5s ease-in-out infinite}
+@keyframes pawTap{0%,100%{transform:translate(-50%,0) rotate(-14deg)}50%{transform:translate(-50%,-14px) rotate(-10deg)}}
+.xiSeal{position:absolute;left:51.6%;top:50.9%;transform:translate(-50%,-50%);font-size:clamp(30px,7vh,64px);font-weight:900;color:#801114;opacity:0;line-height:1;text-shadow:0 2px 3px rgba(255,190,150,.45),0 -1px 2px rgba(70,0,0,.6),0 0 10px rgba(120,10,10,.4)}
+.xiSeal.stamp{animation:stamp .6s cubic-bezier(.3,1.4,.5,1) forwards}
+@keyframes stamp{0%{opacity:0;transform:translate(-50%,-50%) scale(2.1) rotate(6deg)}55%{opacity:1;transform:translate(-50%,-50%) scale(.94) rotate(-1deg)}75%{transform:translate(-50%,-50%) scale(1.05)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.rings{opacity:0;transition:opacity .5s}
+.rings.on{opacity:1}
+.rings span{position:absolute;left:51.6%;top:50.9%;width:16vmin;height:16vmin;margin:-8vmin 0 0 -8vmin;border:2px solid rgba(255,243,224,.9);border-radius:50%;opacity:0;animation:sweep 2s ease-out infinite;box-shadow:0 0 18px rgba(255,236,200,.35)}
+.rings span:nth-child(2){animation-delay:.66s}
+.rings span:nth-child(3){animation-delay:1.32s}
+@keyframes sweep{0%{transform:scale(.2);opacity:.95}75%{opacity:.3}100%{transform:scale(5.5);opacity:0}}
+#tapHint{position:absolute;left:50%;top:70%;transform:translateX(-50%);color:#f3e6cf;font-size:15px;letter-spacing:.5em;text-shadow:0 2px 8px rgba(0,0,0,.8);opacity:0;transition:opacity .6s;animation:tipPulse 1.7s ease-in-out infinite}
+#tapHint.show{opacity:1}
+@keyframes tipPulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.08)}}
+#introFlash{position:absolute;inset:0;background:radial-gradient(circle at 51.6% 51%,#fff7e6,#ffe9c4 45%,#0c0708 130%);opacity:0;pointer-events:none;transition:opacity .45s;z-index:40}
+#introFlash.show{opacity:1}
+/* ---------- 转场覆盖层 ---------- */
+.transition{position:fixed;inset:0;z-index:1500;pointer-events:none;display:none}
+.transition.play{display:block;pointer-events:all}
+/* ① 镜头推进 */
+#tr-zoom{background:#0c0708}
+#tr-zoom.play{animation:zoomIn 1.15s ease forwards}
+@keyframes zoomIn{0%{opacity:0}25%{opacity:1}80%{opacity:1}100%{opacity:0}}
+#tr-zoom .word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#f0e2c8;font-size:22px;letter-spacing:.5em;text-shadow:0 0 18px rgba(240,220,180,.5)}
+/* ② 日历翻页 */
+#tr-cal{display:none;align-items:center;justify-content:center;background:rgba(12,7,8,.85)}
+#tr-cal.play{display:flex}
+#tr-cal .year{color:#f0e2c8;font-size:74px;letter-spacing:.08em;text-shadow:0 4px 24px rgba(201,160,99,.5);font-weight:700}
+#tr-cal .lbl{position:absolute;top:38%;left:50%;transform:translateX(-50%);color:#c9a063;font-size:15px;letter-spacing:.4em}
+/* ③ 朱砂晕染 */
+#tr-ink{background:transparent}
+#tr-ink .blob{position:absolute;left:59%;top:48%;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#b3262c,#7c1216 70%);transform:translate(-50%,-50%)}
+#tr-ink.play .blob{animation:inkSpread 1.5s ease-in forwards}
+@keyframes inkSpread{0%{width:20px;height:20px;opacity:.95}55%{width:260vmax;height:260vmax;opacity:1}85%{width:260vmax;height:260vmax;opacity:1}100%{opacity:0}}
+#tr-ink .word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#f6dcbd;font-size:20px;letter-spacing:.5em;opacity:0;z-index:2}
+#tr-ink.play .word{animation:wordIn 1.5s ease forwards}
+@keyframes wordIn{0%,35%{opacity:0}60%,85%{opacity:1}100%{opacity:0}}
+/* ④ 红绸开幕 */
+#tr-curtain .panel{position:absolute;top:0;bottom:0;width:52%;background:linear-gradient(180deg,#8e1d20,#5e0f12);box-shadow:inset 0 0 60px rgba(0,0,0,.4)}
+#tr-curtain .panel.l{left:0}#tr-curtain .panel.r{right:0}
+#tr-curtain .panel:after{content:"囍";position:absolute;top:44%;font-size:54px;color:#e8b96a;left:50%;transform:translate(-50%,-50%)}
+#tr-curtain.play .panel.l{animation:cL 1.4s .5s ease-in forwards}
+#tr-curtain.play .panel.r{animation:cR 1.4s .5s ease-in forwards}
+@keyframes cL{to{transform:translateX(-110%)}}
+@keyframes cR{to{transform:translateX(110%)}}
+#tr-curtain{background:transparent;display:none}
+#tr-curtain.play{display:block}
+/* ---------- 流程时间轴弹层 ---------- */
+.modal{position:fixed;inset:0;z-index:1100;display:none;align-items:flex-end;justify-content:center;background:rgba(12,6,6,.7)}
+.modal.show{display:flex}
+.modal .sheet{width:100%;max-width:480px;max-height:72vh;overflow:auto;background:linear-gradient(180deg,#f7efdd,#efe1c4);border-radius:18px 18px 0 0;padding:22px 22px 30px;animation:up .35s ease}
+@keyframes up{from{transform:translateY(60%);opacity:.4}to{transform:none;opacity:1}}
+.modal h3{color:var(--red);letter-spacing:.3em;font-size:17px;text-align:center;margin-bottom:6px}
+.modal .sub{text-align:center;font-size:12px;color:#8a6a42;letter-spacing:.2em;margin-bottom:16px}
+.tl{list-style:none;position:relative;padding-left:20px}
+.tl:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(#c9a063,#a3242b)}
+.tl li{position:relative;margin-bottom:14px;padding-left:14px;font-size:14px;line-height:1.65}
+.tl li:before{content:"";position:absolute;left:-19px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(163,36,43,.18)}
+.tl b{color:#6e1116}
+.modal .close{margin-top:10px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--red);color:#f6dcbd;font-size:15px;letter-spacing:.3em}
+/* ---------- 地址/导航弹层 ---------- */
+.addr{font-size:14px;line-height:2;letter-spacing:.06em;text-align:center;color:#42342a}
+.btn-row{display:flex;gap:10px;margin-top:16px}
+.btn{flex:1;padding:12px 6px;border-radius:10px;border:1px solid rgba(163,36,43,.4);background:#fff8ea;color:#6e1116;font-size:14px;letter-spacing:.15em;text-decoration:none;text-align:center;cursor:pointer}
+.btn.primary{background:var(--red);color:#f6dcbd;border:none}
+/* ---------- 结尾 ---------- */
+#ending{background:linear-gradient(180deg,#201214,#38201f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+#ending .reply{position:relative;width:210px;height:140px;background:linear-gradient(160deg,#efe3c8,#dcc9a2);border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.5);cursor:pointer;display:flex;align-items:center;justify-content:center}
+#ending .reply:before{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(120deg,transparent 46%,rgba(163,36,43,.14) 50%,transparent 54%)}
+#ending .reply .zh{font-size:18px;letter-spacing:.4em;color:#6e1116}
+#ending .note{display:none;position:absolute;width:min(80vw,340px);background:var(--paper);border-radius:8px;padding:26px 22px;text-align:center;font-size:16px;line-height:2.1;letter-spacing:.18em;color:#42342a;box-shadow:0 18px 50px rgba(0,0,0,.55);border:1px solid rgba(163,36,43,.3)}
+#ending .note.show{display:block;animation:rise .4s ease}
+#ending .note .sign{margin-top:10px;font-size:14px;color:#6e1116}
+#xi{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#c33b34,#8e1d20 70%);color:#f6dcbd;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:700;box-shadow:0 10px 30px rgba(120,15,15,.55);cursor:pointer;user-select:none}
+#days{color:#d8c49a;font-size:13px;letter-spacing:.3em}
+/* 纸屑 */
+.confetti{position:fixed;top:-12px;z-index:1600;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(108vh) rotate(540deg);opacity:.85}}
+/* 手印涟漪 */
+.ripple{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid rgba(179,38,44,.85);transform:translate(-50%,-50%);animation:rip .9s ease-out forwards;pointer-events:none}
+@keyframes rip{to{width:120px;height:120px;opacity:0}}
+@media (max-width:380px){.chapter-tag{font-size:12px}}
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ═══════ 开篇：打字机 → 信封火漆 ═══════ -->
+  <section class="scene" id="intro">
+    <div class="stage on" id="introStage">
+      <div class="fitbox">
+        <img src="assets/web/intro-type.jpg" alt="打字机">
+        <div id="typedText"></div>
+      </div>
+      <div id="pawStep">🐾</div>
+    </div>
+    <div class="stage" id="envStage">
+      <div class="fitbox">
+        <img src="assets/web/intro-env.jpg" alt="信封">
+        <div class="rings" id="rings"><span></span><span></span><span></span></div>
+        <div class="xiSeal" id="xiSeal">囍</div>
+      </div>
+      <div id="tapHint">点 击 拆 开</div>
+    </div>
+    <div id="introFlash"></div>
+  </section>
+
+  <!-- ═══════ 第一幕 · 相遇 ═══════ -->
+  <section class="scene" id="act1">
+    <img class="bg" src="assets/web/act1.jpg" alt="第一幕 · 相遇">
+    <div class="vignette"></div>
+    <div class="chapter-tag">壹 · 相遇</div>
+    <div class="hot" data-act="1-sprite" style="left:42%;top:70%;width:17%;height:14%"><span class="ring"></span><span class="hint-dot"></span></div>
+    <div class="hot" data-act="photo-person" style="left:61%;top:65%;width:15%;height:22%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" style="left:75%;top:71%;width:14%;height:20%"><span class="ring"></span></div>
+    <div class="hot" data-act="tr1" style="left:50%;top:50%;width:34%;height:20%"><span class="ring"></span></div>
+  </section>
+
+  <!-- ═══════ 第二幕 · 相知 ═══════ -->
+  <section class="scene" id="act2">
+    <img class="bg" src="assets/web/act2.jpg" alt="第二幕 · 相知">
+    <div class="vignette"></div>
+    <div class="chapter-tag">贰 · 相知</div>
+    <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" style="left:52%;top:78%;width:32%;height:30%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" style="left:33%;top:84%;width:18%;height:14%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" style="left:60%;top:91%;width:30%;height:14%"><span class="ring"></span></div>
+    <div class="hot" data-act="tr2" style="left:50%;top:22%;width:44%;height:14%"><span class="ring"></span></div>
+  </section>
+
+  <!-- ═══════ 第三幕 · 定情 ═══════ -->
+  <section class="scene" id="act3">
+    <img class="bg" src="assets/web/act3.jpg" alt="第三幕 · 定情">
+    <div class="vignette"></div>
+    <div class="chapter-tag">叁 · 定情</div>
+    <div class="hot" data-act="handprint" style="left:59%;top:48%;width:14%;height:10%"><span class="ring"></span></div>
+    <div class="hot" data-act="lantern" style="left:55%;top:83%;width:76%;height:14%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" style="left:40%;top:57%;width:24%;height:28%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" style="left:26%;top:83%;width:20%;height:13%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:83%;width:20%;height:13%"><span class="ring"></span></div>
+  </section>
+
+  <!-- ═══════ 第四幕 · 红本为证 ═══════ -->
+  <section class="scene" id="act4">
+    <img class="bg" src="assets/web/act4.jpg" alt="第四幕 · 红本为证">
+    <div class="vignette"></div>
+    <div class="chapter-tag">肆 · 红本为证</div>
+    <div class="hot" data-act="book" style="left:46%;top:29%;width:13%;height:9%"><span class="ring"></span></div>
+    <div class="hot" data-act="book" style="left:61%;top:31%;width:13%;height:9%"><span class="ring"></span></div>
+    <div class="hot" data-act="ribbon" style="left:65%;top:84%;width:40%;height:26%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" style="left:43%;top:41%;width:16%;height:22%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" style="left:66%;top:42%;width:16%;height:22%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" style="left:38%;top:80%;width:18%;height:16%"><span class="ring"></span></div>
+  </section>
+
+  <!-- ═══════ 第五幕 · 婚礼 ═══════ -->
+  <section class="scene" id="act5">
+    <img class="bg" src="assets/web/act5.jpg" alt="第五幕 · 婚礼">
+    <div class="vignette"></div>
+    <div class="chapter-tag">伍 · 婚礼</div>
+    <div class="hot" data-act="door" style="left:73%;top:17%;width:36%;height:24%"><span class="ring"></span></div>
+    <div class="hot" data-act="addr" style="left:25%;top:17%;width:46%;height:24%"><span class="ring"></span></div>
+    <div class="hot" data-act="stage" style="left:52%;top:58%;width:26%;height:14%"><span class="ring"></span></div>
+    <div class="hot" data-act="petal" style="left:50%;top:37%;width:18%;height:12%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" style="left:66%;top:81%;width:14%;height:18%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:81%;width:16%;height:18%"><span class="ring"></span></div>
+  </section>
+
+  <!-- ═══════ 结尾 ═══════ -->
+  <section class="scene" id="ending">
+    <div id="xi">囍</div>
+    <div id="days">计算中…</div>
+    <div class="reply" id="reply"><span class="zh">给我们的回信</span></div>
+    <div class="note" id="note">
+      山水迢迢，终有一聚。<br>
+      十月二十五日，禧满鸿福，<br>
+      备好喜糖，只等你来。
+      <div class="sign">—— 汪仕诚 & 马晗瑜 敬上</div>
+    </div>
+  </section>
+</div>
+
+<!-- 浮层与控件 -->
+<div id="toast"></div>
+<div id="lightbox"><div class="photo-card" id="photoCard"></div></div>
+<div class="paws">
+  <div class="paw" id="pawUp">🐾</div>
+  <div class="paw" id="pawDown">🐾</div>
+</div>
+
+<!-- 转场层 -->
+<div class="transition" id="tr-zoom"><div class="word">游 戏 · 走 进 现 实</div></div>
+<div class="transition" id="tr-cal"><div class="lbl">时 光 流 逝</div><div class="year" id="calYear">2019</div></div>
+<div class="transition" id="tr-ink"><div class="blob"></div><div class="word">一 纸 婚 书 · 一 本 红 证</div></div>
+<div class="transition" id="tr-curtain"><div class="panel l"></div><div class="panel r"></div></div>
+
+<!-- 时间轴弹层 -->
+<div class="modal" id="tlModal">
+  <div class="sheet">
+    <h3>婚礼当天流程</h3>
+    <div class="sub">2026 年 10 月 25 日 · 禧满鸿福酒店（流程待定稿，先占位）</div>
+    <ul class="tl">
+      <li><b>10:58</b> 宾客入席 · 迎宾茶点</li>
+      <li><b>11:58</b> 婚礼仪式开始</li>
+      <li><b>12:38</b> 开席 · 敬酒</li>
+      <li><b>14:00</b> 送客 · 合影</li>
+    </ul>
+    <button class="close" onclick="document.getElementById('tlModal').classList.remove('show')">收 起</button>
+  </div>
+</div>
+
+<!-- 地址/导航弹层 -->
+<div class="modal" id="addrModal">
+  <div class="sheet">
+    <h3>婚礼地点</h3>
+    <div class="sub">禧满鸿福酒店</div>
+    <div class="addr">
+      地点：中国 · 重庆<br>
+      堂址：重庆市两江新区腾芳大道8号<br>
+      地铁：春华大道地铁站 3B 口 · 步行 310 米<br>
+      <span style="color:#8a6a42;font-size:12px">（停车信息待补充）</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn primary" id="navBtn" href="https://uri.amap.com/search?keyword=%E7%A6%A7%E6%BB%A1%E9%B8%BF%E7%A6%8F%E9%85%92%E5%BA%97&city=500000" target="_blank" rel="noopener">一键导航</a>
+      <span class="btn" id="copyBtn">复制地址</span>
+    </div>
+    <button class="close" onclick="document.getElementById('addrModal').classList.remove('show')">收 起</button>
+  </div>
+</div>
+
+<script>
+/* ================= 基础 ================= */
+var deck=document.getElementById('deck');
+var scenes=[].slice.call(document.querySelectorAll('.scene'));
+function cur(){var i=Math.round(deck.scrollTop/innerHeight);return Math.min(scenes.length-1,Math.max(0,i));}
+function go(i){scenes[Math.max(0,Math.min(scenes.length-1,i))].scrollIntoView({behavior:'smooth'});}
+document.getElementById('pawUp').onclick=function(){go(cur()-1)};
+document.getElementById('pawDown').onclick=function(){go(cur()+1)};
+
+var toastTimer;
+function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
+
+/* ================= 开篇：打字机 → 信封火漆 ================= */
+var introSec=document.getElementById('intro');
+var stageA=document.getElementById('introStage'),stageB=document.getElementById('envStage');
+var tEl=document.getElementById('typedText'),pawEl=document.getElementById('pawStep');
+var xiSeal=document.getElementById('xiSeal'),tapHint=document.getElementById('tapHint'),introFlash=document.getElementById('introFlash');
+var LINES=['诚邀您出席','汪仕诚 & 马晗瑜','2026年10月25日  周日','禧满鸿福酒店 · 鸿福厅'];
+var PRE='汪仕诚 & ',GARBAGE='喵嗷呜！';
+var doneLines=[],curLine='',skipIntro=false,typingDone=false,opened=false;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function draw(cursor){var parts=[],i;for(i=0;i<doneLines.length;i++)parts.push(esc(doneLines[i]));if(curLine)parts.push(esc(curLine));tEl.innerHTML=parts.join('<br>')+(cursor?'<span class="cursor">▌</span>':'');}
+function finishTyping(){if(typingDone)return;typingDone=true;draw(false);setTimeout(switchToEnv,1600);}
+function finishAll(){skipIntro=true;doneLines=LINES.slice();curLine='';pawEl.classList.remove('on');draw(false);finishTyping();}
+function typeChar(line,cb){(function step(){if(skipIntro)return finishAll();if(curLine.length<line.length){curLine=line.slice(0,curLine.length+1);draw(true);setTimeout(step,curLine.length<4?150:115);}else{doneLines.push(curLine);curLine='';draw(true);cb();}})();}
+function startType(){draw(true);typeChar(LINES[0],function(){setTimeout(function(){(function tp(){if(skipIntro)return finishAll();if(curLine.length<PRE.length){curLine=PRE.slice(0,curLine.length+1);draw(true);setTimeout(tp,130);}else{setTimeout(catStep,420);}})();},480);});}
+function catStep(){
+  pawEl.classList.add('on');toast('奥利奥踩到键盘啦 🐾',1900);
+  var bad=PRE+GARBAGE;
+  (function tg(){if(skipIntro)return finishAll();if(curLine.length<bad.length){curLine=bad.slice(0,curLine.length+1);draw(true);setTimeout(tg,150);}else{setTimeout(dels,650);}})();
+  function dels(){(function dl(){if(skipIntro)return finishAll();if(curLine.length>PRE.length){curLine=curLine.slice(0,-1);draw(true);setTimeout(dl,90);}else{pawEl.classList.remove('on');setTimeout(retypes,380);}})();}
+  function retypes(){var good=PRE+'马晗瑜';(function tr(){if(skipIntro)return finishAll();if(curLine.length<good.length){curLine=good.slice(0,curLine.length+1);draw(true);setTimeout(tr,150);}else{doneLines.push(curLine);curLine='';draw(true);setTimeout(function(){typeChar(LINES[2],function(){setTimeout(function(){typeChar(LINES[3],finishTyping);},520);});},560);}})();}
+}
+function switchToEnv(){stageB.classList.add('on');(new Image()).src='assets/web/intro-env.jpg';setTimeout(function(){xiSeal.classList.add('stamp');setTimeout(function(){document.getElementById('rings').classList.add('on');tapHint.classList.add('show');},620);},900);}
+function openEnvelope(){if(opened||!typingDone)return;opened=true;introFlash.classList.add('show');setTimeout(function(){go(1);},520);setTimeout(function(){introFlash.classList.remove('show');},1500);}
+introSec.addEventListener('click',function(){if(stageB.classList.contains('on')){openEnvelope();}else if(!typingDone){finishAll();}});
+setTimeout(function(){stageA.classList.add('zoom');},500);
+setTimeout(startType,2150);
+
+/* ================= 照片浮层 ================= */
+var lightbox=document.getElementById('lightbox'),card=document.getElementById('photoCard');
+var PHOTO={ /* 占位照片数据：臻诚提供原图后替换 */
+ person:{icon:'婚',name:'我们的婚纱照',sub:'照片待替换'},
+ catK:{icon:'猫',name:'库洛米 · 本尊',sub:'真实照片待替换'},
+ catA:{icon:'猫',name:'奥利奥 · 本尊',sub:'真实照片待替换'},
+ landCQ:{icon:'渝',name:'重庆 · 我们来过',sub:'旅行照片待替换'},
+ landXY:{icon:'宁',name:'高原 · 我们来过',sub:'旅行照片待替换'}
+};
+function showPhoto(k){var p=PHOTO[k];if(!p)return;card.innerHTML='<div class="photo-frame"><span class="big">'+p.icon+'</span><span class="cap">'+p.name+'</span></div><div class="name">'+p.name+'</div><div class="sub">'+p.sub+'</div>';lightbox.classList.add('show');}
+lightbox.addEventListener('click',function(){lightbox.classList.remove('show')});
+
+/* ================= 转场 ================= */
+function playTr(id,fn){var el=document.getElementById(id);el.classList.add('play');setTimeout(function(){fn&&fn()},650);setTimeout(function(){el.classList.remove('play')},1900);}
+function tr1(){playTr('tr-zoom',function(){go(2)})}
+function tr2(){var el=document.getElementById('tr-cal'),y=document.getElementById('calYear');el.classList.add('play');var ys=[2019,2020,2021,2022,2023,2024,2025];var i=0;var iv=setInterval(function(){y.textContent=ys[i];y.style.animation='none';y.offsetHeight;y.style.animation='';i++;if(i>=ys.length){clearInterval(iv);setTimeout(function(){go(3);setTimeout(function(){el.classList.remove('play')},400)},420);}},150);}
+function tr3(){playTr('tr-ink',function(){go(4)})}
+function tr4(){var el=document.getElementById('tr-curtain');el.classList.add('play');setTimeout(function(){go(5)},900);setTimeout(function(){el.classList.remove('play')},2300);}
+
+/* ================= 纸屑 ================= */
+function confetti(n){for(var i=0;i<n;i++){var c=document.createElement('div');c.className='confetti';var size=6+Math.random()*8;c.style.width=size+'px';c.style.height=size*1.4+'px';c.style.left=Math.random()*100+'vw';c.style.background=['#a3242b','#c9a063','#e8b96a','#f0e2c8','#7c9e6b'][i%5];c.style.animationDuration=(2.2+Math.random()*2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},5000);}}
+
+/* ================= 交互分发 ================= */
+document.getElementById('deck').addEventListener('click',function(e){
+  var h=e.target.closest('.hot');if(!h)return;
+  var a=h.getAttribute('data-act');
+  switch(a){
+    case '1-sprite': bubble(h,'2019 年，我们在游戏里第一次相遇 🎮');break;
+    case 'tr1': tr1();break;
+    case 'tr2': tr2();break;
+    case 'photo-person': showPhoto('person');break;
+    case 'photo-cat-kuluomi': showPhoto('catK');break;
+    case 'photo-cat-aoliao': showPhoto('catA');break;
+    case 'photo-land-chongqing': showPhoto('landCQ');break;
+    case 'photo-land-plateau': showPhoto('landXY');break;
+    case 'handprint': ripple(h);toast('2025.10.16，我们订婚啦 ❤');break;
+    case 'lantern': toast('两猫扑向灯笼球 🏮');break;
+    case 'book': toast('2025.12.31，领证了 🔴<br><span style="font-size:12px;opacity:.75">红本翻开 · 钢印在册</span>');confetti(26);break;
+    case 'ribbon': toast('两只小猫咬着红绸带拔河～');break;
+    case 'door': document.getElementById('addrModal').classList.add('show');break;
+    case 'addr': copyAddr();break;
+    case 'stage': document.getElementById('tlModal').classList.add('show');break;
+    case 'petal': confetti(60);toast('花瓣落满堂 🌸');break;
+  }
+});
+function bubble(h,html){var scene=h.closest('.scene');var old=scene.querySelector('.bubble');if(old)old.remove();var b=document.createElement('div');b.className='bubble';b.innerHTML=html;b.style.left=h.style.left;b.style.top=h.style.top;scene.appendChild(b);setTimeout(function(){b.remove()},3200);}
+function ripple(h){var scene=h.closest('.scene');var r=document.createElement('div');r.className='ripple';r.style.left=h.style.left;r.style.top=h.style.top;scene.appendChild(r);setTimeout(function(){r.remove()},950);}
+function copyAddr(){var addr='重庆市两江新区腾芳大道8号 禧满鸿福酒店';if(navigator.clipboard){navigator.clipboard.writeText(addr).then(function(){toast('地址已复制 ✂')},function(){toast(addr)});}else{toast(addr);}}
+document.getElementById('copyBtn').onclick=copyAddr;
+
+/* ================= 结尾 ================= */
+document.getElementById('reply').addEventListener('click',function(){document.getElementById('note').classList.toggle('show');});
+document.getElementById('xi').addEventListener('click',function(){confetti(80);});
+(function(){var target=new Date('2026-10-25T00:00:00+08:00');var d=Math.ceil((target-new Date())/86400000);var el=document.getElementById('days');el.innerHTML=d>0?('距 离 2 0 2 6 . 1 0 . 2 5 · 还 有 <b style="color:#e8b96a;font-size:18px">'+d+'</b> 天'):(d===0?'今天，是我们的大喜日子 🎊':'新婚快乐，岁岁常相见');})();
+</script>
+</body>
+</html>
