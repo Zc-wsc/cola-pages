@@ -56,7 +56,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .photo-card .name{text-align:center;margin-top:10px;font-size:15px;letter-spacing:.3em;color:#5d3f22}
 .photo-card .sub{text-align:center;font-size:12px;color:#8a6a42;margin-top:4px;letter-spacing:.15em}
 /* ---------- 猫爪向导 ---------- */
-.paws{position:fixed;right:10px;bottom:12px;z-index:800;display:flex;flex-direction:column;gap:10px}
+.paws{position:fixed;right:10px;bottom:12px;z-index:800;display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}.paws.visible{opacity:1;visibility:visible;pointer-events:auto}
 .paw{width:44px;height:44px;border-radius:50%;background:rgba(24,12,12,.55);border:1px solid rgba(201,160,99,.5);color:#f0e2c8;display:flex;align-items:center;justify-content:center;font-size:20px;user-select:none}
 .paw:active{background:rgba(163,36,43,.65)}
 /* ---------- 全屏开篇视频 ---------- */
@@ -154,11 +154,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="opening-shell">
       <div class="opening-frame">
         <video id="openingVideo" src="./assets/web/opening-video-mobile.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
-        <button class="opening-play" id="playOpening" type="button" aria-label="播放开篇" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5c0-.72.8-1.16 1.42-.78l9.56 5.95c.58.36.58 1.2 0 1.56l-9.56 5.95C8.8 18.56 8 18.12 8 17.4z" fill="currentColor"/></svg></button>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
-      </div>
-      <div class="opening-actions">
-        <button class="opening-button" id="skipOpening" type="button">跳过开篇</button>
       </div>
     </div>
   </section>
@@ -291,48 +287,36 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 /* ================= 基础 ================= */
 var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
+var paws=document.querySelector('.paws');
 function cur(){var i=Math.round(deck.scrollTop/innerHeight);return Math.min(scenes.length-1,Math.max(0,i));}
+function syncPaws(){paws.classList.toggle('visible',deck.scrollTop>=deck.clientHeight*.5);}
 function go(i){scenes[Math.max(0,Math.min(scenes.length-1,i))].scrollIntoView({behavior:'smooth'});}
+deck.addEventListener('scroll',syncPaws,{passive:true});
 document.getElementById('pawUp').onclick=function(){go(cur()-1)};
 document.getElementById('pawDown').onclick=function(){go(cur()+1)};
 
 var toastTimer;
 function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
 
-/* ================= 开篇视频：加载后立即尝试静音自动播放 ================= */
+/* ================= 开篇视频：纯画面静音自动播放；失败时轻触画面重试 ================= */
 var openingVideo=document.getElementById('openingVideo');
-var playOpening=document.getElementById('playOpening');
-var skipOpening=document.getElementById('skipOpening');
+var openingFrame=document.querySelector('.opening-frame');
 var sealOpen=document.getElementById('sealOpen');
-var fallbackTimer=0;
-var bridgeRetryUsed=false;
 function enterInvite(){openingVideo.pause();go(1);}
-function showVideoFallback(){
-  window.clearTimeout(fallbackTimer);
-  fallbackTimer=window.setTimeout(function(){
-    if(openingVideo.paused&&!openingVideo.ended)playOpening.hidden=false;
-  },1800);
-}
-function hideVideoFallback(){window.clearTimeout(fallbackTimer);playOpening.hidden=true;}
 function playOpeningVideo(){
-  sealOpen.hidden=true;
+  if(openingVideo.ended)return;
   openingVideo.muted=true;
   var result=openingVideo.play();
-  if(result&&result.then)result.then(hideVideoFallback).catch(showVideoFallback);
+  if(result&&result.catch)result.catch(function(){});
 }
-function retryWithWeixinBridge(){
-  if(bridgeRetryUsed)return;
-  bridgeRetryUsed=true;
-  if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();
-}
-playOpening.addEventListener('click',playOpeningVideo);
-skipOpening.addEventListener('click',enterInvite);
-sealOpen.addEventListener('click',enterInvite);
-openingVideo.addEventListener('playing',hideVideoFallback);
-openingVideo.addEventListener('ended',function(){playOpening.hidden=true;sealOpen.hidden=false;});
-openingVideo.addEventListener('error',showVideoFallback);
-document.addEventListener('WeixinJSBridgeReady',retryWithWeixinBridge,false);
-if(window.WeixinJSBridge)window.setTimeout(retryWithWeixinBridge,0);
+function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
+openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();});
+sealOpen.addEventListener('click',function(e){e.stopPropagation();enterInvite();});
+openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;});
+openingVideo.addEventListener('loadeddata',retryAutoplay);
+document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
+window.addEventListener('pageshow',retryAutoplay,false);
+if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
 playOpeningVideo();
 
 /* ================= 照片浮层 ================= */
