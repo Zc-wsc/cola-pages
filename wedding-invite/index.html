@@ -64,12 +64,12 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .opening-shell{position:absolute;inset:0}
 .opening-frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,56.25vh);height:min(100vh,177.7778vw);width:min(100vw,56.25dvh);height:min(100dvh,177.7778vw);aspect-ratio:9/16;overflow:hidden;background:#080606}
 .opening-frame video{display:block;width:100%;height:100%;object-fit:contain;background:#080606}
-.opening-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:44px;min-height:48px;padding:10px 20px;border:1px solid #f0d39a;border-radius:999px;background:rgba(110,17,22,.94);color:#fff5e5;font:inherit;font-size:16px;font-weight:700;letter-spacing:.1em;box-shadow:0 4px 20px rgba(0,0,0,.6);cursor:pointer;white-space:nowrap;z-index:3}
+.opening-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;padding:0;border:1px solid #f0d39a;border-radius:50%;background:rgba(110,17,22,.94);color:#fff5e5;display:grid;place-items:center;box-shadow:0 4px 20px rgba(0,0,0,.6);cursor:pointer;z-index:3}
+.opening-play svg{width:22px;height:22px;margin-left:2px;display:block}
 .opening-play:focus-visible,.opening-button:focus-visible{outline:3px solid #ffe4a6;outline-offset:3px}
 .opening-actions{position:absolute;inset:0;pointer-events:none}
 .opening-button{pointer-events:auto;min-height:48px;padding:10px 16px;border:1px solid rgba(201,160,99,.82);border-radius:12px;background:rgba(38,20,20,.94);color:#fff3df;font:inherit;font-size:15px;letter-spacing:.1em;cursor:pointer;touch-action:manipulation}
 #skipOpening{position:absolute;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;min-width:44px;min-height:44px;padding:9px 15px;border-radius:999px;background:rgba(20,12,12,.78);font-size:13px;white-space:nowrap}
-.opening-status{position:absolute;left:50%;bottom:calc(72px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(90vw,390px);color:#f4dfbb;font-size:13px;line-height:1.5;text-align:center;text-shadow:0 1px 5px #000;pointer-events:none}
 .seal-open{position:absolute;left:50.3%;top:50.4%;transform:translate(-50%,-50%);width:22%;aspect-ratio:1;border:0;border-radius:50%;padding:0;background:transparent;color:#fff5e5;cursor:pointer;z-index:2;touch-action:manipulation}
 .seal-open:focus-visible{outline:3px solid #ffe4a6;outline-offset:5px}
 .seal-ring{position:absolute;inset:0;border:2px solid rgba(255,236,190,.95);border-radius:50%;box-shadow:0 0 14px rgba(255,226,164,.75),inset 0 0 12px rgba(255,226,164,.28);animation:sealPulse 1.8s ease-out infinite}
@@ -154,12 +154,11 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="opening-shell">
       <div class="opening-frame">
         <video id="openingVideo" src="./assets/web/opening-video-mobile.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
-        <button class="opening-play" id="playOpening" type="button" hidden>点击播放开篇</button>
+        <button class="opening-play" id="playOpening" type="button" aria-label="播放开篇" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5c0-.72.8-1.16 1.42-.78l9.56 5.95c.58.36.58 1.2 0 1.56l-9.56 5.95C8.8 18.56 8 18.12 8 17.4z" fill="currentColor"/></svg></button>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
       </div>
       <div class="opening-actions">
         <button class="opening-button" id="skipOpening" type="button">跳过开篇</button>
-        <div class="opening-status" id="openingStatus" aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -305,29 +304,35 @@ var openingVideo=document.getElementById('openingVideo');
 var playOpening=document.getElementById('playOpening');
 var skipOpening=document.getElementById('skipOpening');
 var sealOpen=document.getElementById('sealOpen');
-var openingStatus=document.getElementById('openingStatus');
+var fallbackTimer=0;
 var bridgeRetryUsed=false;
 function enterInvite(){openingVideo.pause();go(1);}
 function showVideoFallback(){
-  if(!openingVideo.paused&&!openingVideo.ended)return;
-  playOpening.hidden=false;
-  openingStatus.textContent='视频未能自动播放，请轻触播放，或跳过开篇。';
+  window.clearTimeout(fallbackTimer);
+  fallbackTimer=window.setTimeout(function(){
+    if(openingVideo.paused&&!openingVideo.ended)playOpening.hidden=false;
+  },1800);
 }
-function hideVideoFallback(){playOpening.hidden=true;openingStatus.textContent='';}
+function hideVideoFallback(){window.clearTimeout(fallbackTimer);playOpening.hidden=true;}
 function playOpeningVideo(){
   sealOpen.hidden=true;
-  openingStatus.textContent='正在尝试播放开篇…';
+  openingVideo.muted=true;
   var result=openingVideo.play();
   if(result&&result.then)result.then(hideVideoFallback).catch(showVideoFallback);
+}
+function retryWithWeixinBridge(){
+  if(bridgeRetryUsed)return;
+  bridgeRetryUsed=true;
+  if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();
 }
 playOpening.addEventListener('click',playOpeningVideo);
 skipOpening.addEventListener('click',enterInvite);
 sealOpen.addEventListener('click',enterInvite);
 openingVideo.addEventListener('playing',hideVideoFallback);
-openingVideo.addEventListener('ended',function(){playOpening.hidden=true;openingStatus.textContent='';sealOpen.hidden=false;});
+openingVideo.addEventListener('ended',function(){playOpening.hidden=true;sealOpen.hidden=false;});
 openingVideo.addEventListener('error',showVideoFallback);
-openingVideo.addEventListener('stalled',function(){if(openingVideo.readyState<2)showVideoFallback();});
-document.addEventListener('WeixinJSBridgeReady',function(){if(!bridgeRetryUsed){bridgeRetryUsed=true;if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}},false);
+document.addEventListener('WeixinJSBridgeReady',retryWithWeixinBridge,false);
+if(window.WeixinJSBridge)window.setTimeout(retryWithWeixinBridge,0);
 playOpeningVideo();
 
 /* ================= 照片浮层 ================= */
