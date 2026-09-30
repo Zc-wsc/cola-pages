@@ -26,9 +26,9 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:#1a1214;color:var(--ink);overflow:hidden}
-#deck{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+#deck{height:100%;position:relative;overflow:hidden;scroll-behavior:auto;overscroll-behavior:none;touch-action:none}
 #deck::-webkit-scrollbar{display:none}
-.scene{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;overflow:hidden;background:#111}
+.scene{position:relative;height:100vh;height:100dvh;overflow:hidden;background:#111}
 .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(20,8,8,.38) 100%)}
 /* ---------- 热区 ---------- */
@@ -55,10 +55,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .photo-frame .cap{font-size:14px;letter-spacing:.25em}
 .photo-card .name{text-align:center;margin-top:10px;font-size:15px;letter-spacing:.3em;color:#5d3f22}
 .photo-card .sub{text-align:center;font-size:12px;color:#8a6a42;margin-top:4px;letter-spacing:.15em}
-/* ---------- 猫爪向导 ---------- */
-.paws{position:fixed;right:10px;bottom:12px;z-index:800;display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}.paws.visible{opacity:1;visibility:visible;pointer-events:auto}
-.paw{width:44px;height:44px;border-radius:50%;background:rgba(24,12,12,.55);border:1px solid rgba(201,160,99,.5);color:#f0e2c8;display:flex;align-items:center;justify-content:center;font-size:20px;user-select:none}
-.paw:active{background:rgba(163,36,43,.65)}
+/* 右下角固定猫爪按钮已移除；上下滑动改由猫爪扫屏完成翻页。 */
 /* ---------- 全屏开篇视频 ---------- */
 #intro{background:#080606}
 .opening-shell{position:absolute;inset:0}
@@ -77,37 +74,17 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 @keyframes sealPulse{0%{opacity:.95;transform:scale(.72)}75%,100%{opacity:0;transform:scale(1.48)}}
 .seal-label{position:absolute;left:50%;top:calc(100% + 5px);transform:translateX(-50%);padding:.45em .9em;border:1px solid rgba(240,211,154,.7);border-radius:999px;background:rgba(28,16,16,.84);box-shadow:0 2px 12px rgba(0,0,0,.5);color:#fff4df;font-size:clamp(12px,3.5vw,15px);letter-spacing:.15em;white-space:nowrap}
 [hidden]{display:none!important}
-/* ---------- 转场覆盖层 ---------- */
-.transition{position:fixed;inset:0;z-index:1500;pointer-events:none;display:none}
-.transition.play{display:block;pointer-events:all}
-/* ① 镜头推进 */
-#tr-zoom{background:#0c0708}
-#tr-zoom.play{animation:zoomIn 1.15s ease forwards}
-@keyframes zoomIn{0%{opacity:0}25%{opacity:1}80%{opacity:1}100%{opacity:0}}
-#tr-zoom .word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#f0e2c8;font-size:22px;letter-spacing:.5em;text-shadow:0 0 18px rgba(240,220,180,.5)}
-/* ② 日历翻页 */
-#tr-cal{display:none;align-items:center;justify-content:center;background:rgba(12,7,8,.85)}
-#tr-cal.play{display:flex}
-#tr-cal .year{color:#f0e2c8;font-size:74px;letter-spacing:.08em;text-shadow:0 4px 24px rgba(201,160,99,.5);font-weight:700}
-#tr-cal .lbl{position:absolute;top:38%;left:50%;transform:translateX(-50%);color:#c9a063;font-size:15px;letter-spacing:.4em}
-/* ③ 朱砂晕染 */
-#tr-ink{background:transparent}
-#tr-ink .blob{position:absolute;left:59%;top:48%;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#b3262c,#7c1216 70%);transform:translate(-50%,-50%)}
-#tr-ink.play .blob{animation:inkSpread 1.5s ease-in forwards}
-@keyframes inkSpread{0%{width:20px;height:20px;opacity:.95}55%{width:260vmax;height:260vmax;opacity:1}85%{width:260vmax;height:260vmax;opacity:1}100%{opacity:0}}
-#tr-ink .word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#f6dcbd;font-size:20px;letter-spacing:.5em;opacity:0;z-index:2}
-#tr-ink.play .word{animation:wordIn 1.5s ease forwards}
-@keyframes wordIn{0%,35%{opacity:0}60%,85%{opacity:1}100%{opacity:0}}
-/* ④ 红绸开幕 */
-#tr-curtain .panel{position:absolute;top:0;bottom:0;width:52%;background:linear-gradient(180deg,#8e1d20,#5e0f12);box-shadow:inset 0 0 60px rgba(0,0,0,.4)}
-#tr-curtain .panel.l{left:0}#tr-curtain .panel.r{right:0}
-#tr-curtain .panel:after{content:"囍";position:absolute;top:44%;font-size:54px;color:#e8b96a;left:50%;transform:translate(-50%,-50%)}
-#tr-curtain.play .panel.l{animation:cL 1.4s .5s ease-in forwards}
-#tr-curtain.play .panel.r{animation:cR 1.4s .5s ease-in forwards}
-@keyframes cL{to{transform:translateX(-110%)}}
-@keyframes cR{to{transform:translateX(110%)}}
-#tr-curtain{background:transparent;display:none}
-#tr-curtain.play{display:block}
+/* ---------- 角落固定轴心的挥手翻幕：新旧两幕沿挥动边界交替显露 ---------- */
+#tr-cat-wipe{position:fixed;inset:0;z-index:850;display:none;overflow:hidden;pointer-events:none;isolation:isolate}
+#tr-cat-wipe.play{display:block}
+.wipe-scene-copy.scene{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.wipe-scene-copy *{animation-play-state:paused!important}
+.wipe-intro-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#080606}
+.cat-swipe-paw{position:absolute;z-index:2;display:none;width:120vw;max-width:none;height:auto;opacity:0;object-fit:contain;will-change:transform,opacity;filter:drop-shadow(0 8px 14px rgba(22,8,8,.24));pointer-events:none}
+#tr-cat-wipe.wipe-next .cat-swipe-paw{left:100vw;bottom:-40vw;transform-origin:0 50%}
+#tr-cat-wipe.wipe-prev .cat-swipe-paw{left:0;bottom:-40vw;transform-origin:0 50%}
+#tr-cat-wipe.wipe-next .cat-swipe-paw.oreo,#tr-cat-wipe.wipe-prev .cat-swipe-paw.kulomi{display:block}
+@media(prefers-reduced-motion:reduce){.wipe-scene-copy *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 /* ---------- 流程时间轴弹层 ---------- */
 .modal{position:fixed;inset:0;z-index:1100;display:none;align-items:flex-end;justify-content:center;background:rgba(12,6,6,.7)}
 .modal.show{display:flex}
@@ -238,16 +215,11 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 <!-- 浮层与控件 -->
 <div id="toast"></div>
 <div id="lightbox"><div class="photo-card" id="photoCard"></div></div>
-<div class="paws">
-  <div class="paw" id="pawUp">🐾</div>
-  <div class="paw" id="pawDown">🐾</div>
+<!-- 保留两只猫的原始厚涂爪素材；前进/返回时分别从右下/左下固定轴心挥动 -->
+<div class="transition" id="tr-cat-wipe" aria-hidden="true">
+  <img class="cat-swipe-paw kulomi" data-src="./assets/web/库洛米猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
+  <img class="cat-swipe-paw oreo" data-src="./assets/web/奥利奥猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
 </div>
-
-<!-- 转场层 -->
-<div class="transition" id="tr-zoom"><div class="word">游 戏 · 走 进 现 实</div></div>
-<div class="transition" id="tr-cal"><div class="lbl">时 光 流 逝</div><div class="year" id="calYear">2019</div></div>
-<div class="transition" id="tr-ink"><div class="blob"></div><div class="word">一 纸 婚 书 · 一 本 红 证</div></div>
-<div class="transition" id="tr-curtain"><div class="panel l"></div><div class="panel r"></div></div>
 
 <!-- 时间轴弹层 -->
 <div class="modal" id="tlModal">
@@ -287,13 +259,8 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 /* ================= 基础 ================= */
 var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
-var paws=document.querySelector('.paws');
-function cur(){var i=Math.round(deck.scrollTop/innerHeight);return Math.min(scenes.length-1,Math.max(0,i));}
-function syncPaws(){paws.classList.toggle('visible',deck.scrollTop>=deck.clientHeight*.5);}
-function go(i){scenes[Math.max(0,Math.min(scenes.length-1,i))].scrollIntoView({behavior:'smooth'});}
-deck.addEventListener('scroll',syncPaws,{passive:true});
-document.getElementById('pawUp').onclick=function(){go(cur()-1)};
-document.getElementById('pawDown').onclick=function(){go(cur()+1)};
+function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
+function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;}
 
 var toastTimer;
 function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
@@ -302,7 +269,7 @@ function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.
 var openingVideo=document.getElementById('openingVideo');
 var openingFrame=document.querySelector('.opening-frame');
 var sealOpen=document.getElementById('sealOpen');
-function enterInvite(){openingVideo.pause();go(1);}
+function enterInvite(){playCatWipe(function(){openingVideo.pause();go(1);});}
 function playOpeningVideo(){
   if(openingVideo.ended)return;
   openingVideo.muted=true;
@@ -312,7 +279,7 @@ function playOpeningVideo(){
 function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
 openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();});
 sealOpen.addEventListener('click',function(e){e.stopPropagation();enterInvite();});
-openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;});
+openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;loadPawArtwork();});
 openingVideo.addEventListener('loadeddata',retryAutoplay);
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
 window.addEventListener('pageshow',retryAutoplay,false);
@@ -331,18 +298,111 @@ var PHOTO={ /* 占位照片数据：臻诚提供原图后替换 */
 function showPhoto(k){var p=PHOTO[k];if(!p)return;card.innerHTML='<div class="photo-frame"><span class="big">'+p.icon+'</span><span class="cap">'+p.name+'</span></div><div class="name">'+p.name+'</div><div class="sub">'+p.sub+'</div>';lightbox.classList.add('show');}
 lightbox.addEventListener('click',function(){lightbox.classList.remove('show')});
 
-/* ================= 转场 ================= */
-function playTr(id,fn){var el=document.getElementById(id);el.classList.add('play');setTimeout(function(){fn&&fn()},650);setTimeout(function(){el.classList.remove('play')},1900);}
-function tr1(){playTr('tr-zoom',function(){go(2)})}
-function tr2(){var el=document.getElementById('tr-cal'),y=document.getElementById('calYear');el.classList.add('play');var ys=[2019,2020,2021,2022,2023,2024,2025];var i=0;var iv=setInterval(function(){y.textContent=ys[i];y.style.animation='none';y.offsetHeight;y.style.animation='';i++;if(i>=ys.length){clearInterval(iv);setTimeout(function(){go(3);setTimeout(function(){el.classList.remove('play')},400)},420);}},150);}
-function tr3(){playTr('tr-ink',function(){go(4)})}
-function tr4(){var el=document.getElementById('tr-curtain');el.classList.add('play');setTimeout(function(){go(5)},900);setTimeout(function(){el.classList.remove('play')},2300);}
+/* ================= 角落固定轴心的挥手翻幕 ================= */
+var catWipe=document.getElementById('tr-cat-wipe'),catWipeBusy=false,pawArtworkPromise=null;
+var swipeStart=null,ignoreTapUntil=0,wheelDelta=0,wheelTimer=0;
+function loadPawArtwork(){
+  if(!pawArtworkPromise){
+    var images=[].slice.call(catWipe.querySelectorAll('.cat-swipe-paw'));
+    pawArtworkPromise=Promise.all(images.map(function(img){return new Promise(function(resolve){
+      if(img.complete&&img.naturalWidth){resolve();return;}
+      img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});img.src=img.getAttribute('data-src');
+    });})).then(function(){return Promise.all(images.map(function(img){return img.decode?img.decode().catch(function(){}):Promise.resolve();}));});
+  }
+  return pawArtworkPromise;
+}
+function incomingScene(index){
+  var copy=scenes[index].cloneNode(true);copy.classList.add('wipe-scene-copy');
+  var images=[].slice.call(copy.querySelectorAll('img'));
+  images.forEach(function(img){img.loading='eager';});
+  var video=copy.querySelector('video');
+  if(video){var posterUrl=video.getAttribute('poster'),frame=copy.querySelector('.opening-frame');video.remove();if(frame&&posterUrl){var poster=document.createElement('img');poster.className='wipe-intro-poster';poster.src=posterUrl;poster.alt='';frame.appendChild(poster);}}
+  var seal=copy.querySelector('#sealOpen');if(seal)seal.hidden=true;
+  return copy;
+}
+function sceneImagesReady(copy){
+  var images=[].slice.call(copy.querySelectorAll('img'));
+  return Promise.all(images.map(function(img){return new Promise(function(resolve){
+    if(img.complete&&img.naturalWidth){resolve();return;}
+    var done=function(){img.removeEventListener('load',done);img.removeEventListener('error',done);resolve();};
+    img.addEventListener('load',done);img.addEventListener('error',done);window.setTimeout(done,1800);
+  });})).then(function(){return Promise.all(images.map(function(img){return img.decode?img.decode().catch(function(){}):Promise.resolve();}));});
+}
+function setWipeProgress(copy,progress,forward){
+  var width=window.innerWidth,height=window.innerHeight,angle=Math.max(-65,92-175*progress),top,clip,release=Math.max(0,Math.min(1,(progress-.9)/.1));
+  if(angle>=0){clip=forward?'polygon(0% 100%,0% 100%,0% 100%)':'polygon(100% 100%,100% 100%,100% 100%)';}
+  else{
+    var slope=Math.tan(-angle*Math.PI/180),edgeY=100*(height-width*slope)/height;
+    if(progress>.9){top=forward?100*release:100*(1-release);clip=forward?'polygon(0% 0%,'+top+'% 0%,100% 100%,0% 100%)':'polygon(100% 0%,'+top+'% 0%,0% 100%,100% 100%)';}
+    else if(edgeY>=0){clip=forward?'polygon(0% '+edgeY+'%,100% 100%,0% 100%)':'polygon(100% '+edgeY+'%,100% 100%,0% 100%)';}
+    else{top=forward?100*(width-height/slope)/width:100*(height/slope)/width;top=Math.max(0,Math.min(100,top));clip=forward?'polygon(0% 0%,'+top+'% 0%,100% 100%,0% 100%)':'polygon(100% 0%,'+top+'% 0%,0% 100%,100% 100%)';}
+  }
+  copy.style.clipPath=clip;copy.style.webkitClipPath=clip;
+}
+function playCatWipe(target,fn){
+  if(catWipeBusy)return;
+  var current=cur(),forward=target>current,copy=incomingScene(target);
+  catWipeBusy=true;catWipe.classList.remove('wipe-next','wipe-prev');catWipe.classList.add('play',forward?'wipe-next':'wipe-prev');
+  var paws=[].slice.call(catWipe.querySelectorAll('.cat-swipe-paw'));
+  paws.forEach(function(paw){paw.style.display=((forward&&paw.classList.contains('oreo'))||(!forward&&paw.classList.contains('kulomi')))?'block':'none';paw.style.opacity='0';});
+  setWipeProgress(copy,0,forward);catWipe.appendChild(copy);
+  Promise.all([loadPawArtwork(),sceneImagesReady(copy)]).then(function(){
+    var paw=forward?catWipe.querySelector('.cat-swipe-paw.oreo'):catWipe.querySelector('.cat-swipe-paw.kulomi');
+    var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var duration=reduced?420:1200,startTime=0;
+    function frame(now){
+      if(!startTime)startTime=now;
+      var raw=Math.min(1,(now-startTime)/duration),p=raw*raw*(3-2*raw);
+      setWipeProgress(copy,p,forward);
+      var angle=Math.max(-65,92-175*p),opacity=Math.max(0,Math.min(1,p/.1,(1-p)/.08)),scale=.9+.1*Math.sin(Math.PI*p);
+      if(paw){paw.style.opacity=String(opacity);paw.style.transform=(forward?'scaleX(-1) ':'')+'rotate('+angle+'deg) scale('+scale+')';}
+      if(raw<1){window.requestAnimationFrame(frame);return;}
+      if(fn)fn();
+      window.requestAnimationFrame(function(){copy.remove();catWipe.classList.remove('play','wipe-next','wipe-prev');catWipeBusy=false;});
+    }
+    window.requestAnimationFrame(frame);
+  });
+}
+function stepScene(direction){
+  if(catWipeBusy)return;
+  var current=cur();
+  if(current===0&&!openingVideo.ended)return;
+  var next=current+direction;if(next<0||next>=scenes.length)return;
+  ignoreTapUntil=Date.now()+700;
+  playCatWipe(next,function(){if(cur()===0&&next>0)openingVideo.pause();go(next);});
+}
+deck.addEventListener('touchstart',function(e){
+  if(e.touches.length!==1)return;
+  var t=e.touches[0];swipeStart={x:t.clientX,y:t.clientY};
+},{passive:true});
+deck.addEventListener('touchend',function(e){
+  if(!swipeStart||!e.changedTouches.length)return;
+  var t=e.changedTouches[0],dx=t.clientX-swipeStart.x,dy=t.clientY-swipeStart.y;swipeStart=null;
+  if(Math.abs(dy)<58||Math.abs(dy)<Math.abs(dx)*1.18)return;
+  stepScene(dy<0?1:-1);
+},{passive:true});
+deck.addEventListener('touchcancel',function(){swipeStart=null;},{passive:true});
+deck.addEventListener('wheel',function(e){
+  e.preventDefault();if(catWipeBusy)return;
+  wheelDelta+=e.deltaY;window.clearTimeout(wheelTimer);wheelTimer=window.setTimeout(function(){wheelDelta=0;},180);
+  if(Math.abs(wheelDelta)>=48){var direction=wheelDelta>0?1:-1;wheelDelta=0;stepScene(direction);}
+},{passive:false});
+document.addEventListener('keydown',function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey||(e.target.closest&&e.target.closest('input,textarea,select,button,a')))return;
+  var direction=(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')?1:(e.key==='ArrowUp'||e.key==='PageUp'?-1:0);
+  if(direction){e.preventDefault();stepScene(direction);}
+});
+function tr1(){playCatWipe(2,function(){go(2);});}
+function tr2(){playCatWipe(3,function(){go(3);});}
+function tr3(){playCatWipe(4,function(){go(4);});}
+function tr4(){playCatWipe(5,function(){go(5);});}
 
 /* ================= 纸屑 ================= */
 function confetti(n){for(var i=0;i<n;i++){var c=document.createElement('div');c.className='confetti';var size=6+Math.random()*8;c.style.width=size+'px';c.style.height=size*1.4+'px';c.style.left=Math.random()*100+'vw';c.style.background=['#a3242b','#c9a063','#e8b96a','#f0e2c8','#7c9e6b'][i%5];c.style.animationDuration=(2.2+Math.random()*2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},5000);}}
 
 /* ================= 交互分发 ================= */
 document.getElementById('deck').addEventListener('click',function(e){
+  if(Date.now()<ignoreTapUntil){e.preventDefault();return;}
   var h=e.target.closest('.hot');if(!h)return;
   var a=h.getAttribute('data-act');
   switch(a){
