@@ -31,23 +31,41 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .scene{position:relative;height:100vh;height:100dvh;overflow:hidden;background:#111}
 .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(20,8,8,.38) 100%)}
-/* ---------- 热区 ---------- */
-.hot{position:absolute;transform:translate(-50%,-50%);border-radius:14px;cursor:pointer;z-index:5}
-.hot:active{background:rgba(255,255,255,.12)}
-.hot .ring{position:absolute;inset:-6px;border:2px solid rgba(255,255,255,.75);border-radius:16px;opacity:0;animation:ring 2.2s ease-out infinite}
-.tour-entry{overflow:visible;text-decoration:none;color:inherit;border-radius:0;background:transparent}
-.tour-entry .ring{inset:auto;left:50%;top:50%;width:clamp(20px,5.7vw,28px);height:clamp(20px,5.7vw,28px);transform:translate(-50%,-50%);border:1.5px solid rgba(255,247,232,.94);border-radius:50%;opacity:1;animation:none;box-shadow:0 0 0 1px rgba(113,52,42,.5),0 0 10px rgba(255,220,170,.72),inset 0 0 5px rgba(255,240,220,.42);pointer-events:none}
-.tour-entry .ring:before,.tour-entry .ring:after{content:"";position:absolute;inset:-1px;border:1.5px solid rgba(255,236,207,.98);border-radius:50%;box-shadow:0 0 0 1px rgba(105,40,32,.32),0 0 12px rgba(255,225,174,.82);opacity:0;animation:tourRing 2.8s ease-out infinite}
-.tour-entry .ring:after{animation-delay:1.4s}
+/* ---------- 全幕统一圆形扩散光圈；透明点击区域不再显示白框 ---------- */
+.hot{position:absolute;transform:translate(-50%,-50%);border-radius:50%;cursor:pointer;z-index:5;background:transparent;touch-action:manipulation}
+.hot:active{background:transparent;filter:brightness(1.25)}
+.hot .ring{position:absolute;left:50%;top:50%;width:var(--ring-size,clamp(30px,8vw,50px));height:var(--ring-size,clamp(30px,8vw,50px));transform:translate(-50%,-50%);border:1.5px solid rgba(255,247,232,.94);border-radius:50%;box-shadow:0 0 0 1px rgba(113,52,42,.5),0 0 10px rgba(255,220,170,.72),inset 0 0 5px rgba(255,240,220,.42);pointer-events:none}
+.tour-entry{overflow:visible;text-decoration:none;color:inherit}
 .tour-label{position:absolute;left:calc(50% + 18px);top:50%;transform:translateY(-50%);z-index:1;padding:7px 10px;border:1px solid rgba(255,230,188,.8);border-radius:999px;background:rgba(25,18,16,.78);color:#fff7e9;font-size:clamp(11px,3.2vw,13px);line-height:1.25;letter-spacing:.04em;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.45);box-shadow:0 2px 10px rgba(0,0,0,.28)}
-@keyframes tourRing{0%{opacity:0;transform:scale(.32)}15%{opacity:.9}72%{opacity:.62;transform:scale(.82)}100%{opacity:0;transform:scale(1)}}
-@keyframes ring{0%{opacity:.85;transform:scale(.92)}70%{opacity:0;transform:scale(1.12)}100%{opacity:0}}
-.hint-dot{position:absolute;left:50%;top:50%;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.9);transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(255,255,255,.8);pointer-events:none}
+.hot .ring:before,.hot .ring:after{content:"";position:absolute;inset:-1px;border:1.5px solid rgba(255,236,207,.98);border-radius:50%;box-shadow:0 0 0 1px rgba(105,40,32,.32),0 0 12px rgba(255,225,174,.82);opacity:0;animation:ring 2.8s ease-out infinite paused}
+.hot .ring:after{animation-delay:1.4s}
+.scene.is-current .hot .ring:before,.scene.is-current .hot .ring:after{animation-play-state:running}
+@keyframes ring{0%{opacity:0;transform:scale(.32)}15%{opacity:.9}72%{opacity:.62;transform:scale(.82)}100%{opacity:0;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.scene.is-current .hot .ring:before,.scene.is-current .hot .ring:after{animation:none;opacity:.55;transform:scale(.72)}}
 /* ---------- 章节标题 ---------- */
 .chapter-tag{position:absolute;top:2.2%;left:50%;transform:translateX(-50%);z-index:4;background:linear-gradient(180deg,rgba(20,10,10,.62),rgba(20,10,10,.32));color:#f7ecd8;padding:.45em 1.4em;border-radius:999px;font-size:14px;letter-spacing:.35em;text-shadow:0 1px 2px rgba(0,0,0,.6);border:1px solid rgba(201,160,99,.55);white-space:nowrap}
 /* ---------- 气泡 / 提示 ---------- */
 #toast{position:fixed;left:50%;bottom:14%;transform:translateX(-50%);z-index:900;background:rgba(24,12,12,.88);color:#f7ecd8;padding:.9em 1.5em;border-radius:14px;font-size:15px;letter-spacing:.12em;border:1px solid rgba(201,160,99,.5);max-width:82vw;text-align:center;line-height:1.7;opacity:0;pointer-events:none;transition:opacity .35s}
 #toast.show{opacity:1}
+#storyModal{position:fixed;inset:0;z-index:1200;display:none;place-items:center;padding:12vw;background:rgba(18,10,14,.8);color:#f8ecd8;text-align:center}
+#storyModal.show{display:grid}
+.story-copy{width:min(78vw,460px);animation:storyIn .45s ease both}
+.story-kicker{font-size:12px;letter-spacing:.5em;color:#e5c58c;margin-bottom:18px}
+.story-title{font-size:clamp(24px,7vw,34px);letter-spacing:.22em;font-weight:400}
+.story-text{margin-top:22px;font-size:15px;line-height:2.1;letter-spacing:.1em;color:rgba(248,236,216,.9)}
+#storyClose{position:absolute;top:calc(18px + env(safe-area-inset-top));right:20px;width:42px;height:42px;border:0;background:transparent;color:#f8ecd8;font-size:30px;font-weight:200;cursor:pointer}
+@keyframes storyIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.falling-petal{position:absolute;z-index:8;width:var(--petal-w,15px);height:var(--petal-h,23px);border-radius:100% 0 100% 0;background:linear-gradient(145deg,#fff2ec 0%,#f2a1a6 54%,#c95469 100%);box-shadow:0 1px 4px rgba(104,24,42,.2);pointer-events:none;will-change:transform,opacity;animation:petalFall var(--petal-time,5s) cubic-bezier(.24,.55,.55,.95) var(--petal-delay,0s) both}
+@keyframes petalFall{0%{opacity:0;transform:translate3d(0,-12px,0) rotate(0) scale(.8)}12%{opacity:.95}100%{opacity:0;transform:translate3d(var(--petal-drift,12vw),calc(100vh + 120px),0) rotate(var(--petal-turn,420deg)) scale(.65)}}
+.love-light{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none}
+.love-light.play{visibility:visible;animation:lightWash 2.8s ease-out forwards}
+.love-light-beam{position:absolute;left:50%;top:20%;width:86%;height:75%;transform:translateX(-50%) scaleY(.18);transform-origin:top center;clip-path:polygon(48% 0,52% 0,88% 100%,12% 100%);background:linear-gradient(180deg,rgba(255,246,207,.58),rgba(255,235,185,.2) 72%,transparent);opacity:0}
+.love-light.play .love-light-beam{animation:beamReach 2.8s cubic-bezier(.2,.62,.35,1) forwards}
+.love-light-couple{position:absolute;left:50%;top:78%;width:52%;height:24%;transform:translate(-50%,-50%) scale(.72);border-radius:50%;background:radial-gradient(ellipse,rgba(255,239,199,.56),rgba(255,226,165,.18) 42%,transparent 72%);opacity:0}
+.love-light.play .love-light-couple{animation:coupleGlow 2.8s ease-out forwards}
+@keyframes beamReach{0%{opacity:0;transform:translateX(-50%) scaleY(.16)}18%{opacity:.88}72%{opacity:.72;transform:translateX(-50%) scaleY(1)}100%{opacity:0;transform:translateX(-50%) scaleY(1)}}
+@keyframes coupleGlow{0%,18%{opacity:0;transform:translate(-50%,-50%) scale(.72)}42%{opacity:.88;transform:translate(-50%,-50%) scale(1)}74%{opacity:.58}100%{opacity:0;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes lightWash{0%,100%{opacity:0}18%,72%{opacity:1}}
 .bubble{position:absolute;transform:translate(-50%,-115%);background:var(--paper);color:var(--ink);padding:.7em 1em;border-radius:12px;font-size:13px;line-height:1.6;max-width:64vw;z-index:20;box-shadow:0 6px 18px rgba(0,0,0,.35);border:1px solid rgba(163,36,43,.35);animation:pop .3s ease}
 .bubble:after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--paper)}
 @keyframes pop{from{transform:translate(-50%,-105%) scale(.7);opacity:0}to{transform:translate(-50%,-115%) scale(1);opacity:1}}
@@ -147,10 +165,9 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act1.jpg" alt="第一幕 · 相遇" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">壹 · 相遇</div>
-    <div class="hot" data-act="1-sprite" style="left:42%;top:70%;width:17%;height:14%"><span class="ring"></span><span class="hint-dot"></span></div>
-    <div class="hot" data-act="photo-person" style="left:61%;top:65%;width:15%;height:22%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-person" style="left:75%;top:71%;width:14%;height:20%"><span class="ring"></span></div>
-    <div class="hot" data-act="tr1" style="left:50%;top:50%;width:34%;height:20%"><span class="ring"></span></div>
+    <div class="hot" data-act="lamp-petals" data-art-x="0.509" data-art-y="0.180" data-ring-ratio="0.047" style="left:50.9%;top:18%;width:15vw;height:10vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击吊灯，落下花瓣"><span class="ring"></span></div>
+    <div class="hot" data-act="meet-story" data-art-x="0.383" data-art-y="0.550" data-ring-ratio="0.047" style="left:38.3%;top:55%;width:20vw;height:15vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击精灵，查看相遇故事"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" data-art-x="0.717" data-art-y="0.689" data-ring-ratio="0.047" style="left:71.7%;top:68.9%;width:22vw;height:23vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新人，查看婚纱照"><span class="ring"></span></div>
   </section>
 
   <!-- ═══════ 第二幕 · 相知 ═══════ -->
@@ -158,12 +175,13 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act2.jpg" alt="第二幕 · 相知" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">贰 · 相知</div>
+    <div class="love-light" id="loveLight" aria-hidden="true"><div class="love-light-beam"></div><div class="love-light-couple"></div></div>
+    <div class="hot" data-act="couple-light" data-art-x="0.505" data-art-y="0.195" style="left:50.5%;top:19.5%;width:16vw;height:10vh" aria-label="点击头部光照，照亮新人"><span class="ring"></span></div>
     <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-person" style="left:52%;top:78%;width:32%;height:30%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" style="left:33%;top:84%;width:18%;height:14%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" style="left:60%;top:91%;width:30%;height:14%"><span class="ring"></span></div>
-    <div class="hot" data-act="tr2" style="left:50%;top:22%;width:44%;height:14%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.305" data-art-y="0.845" data-ring-ratio="0.047" style="left:30.5%;top:84.5%;width:18%;height:14%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.585" data-art-y="0.905" data-ring-ratio="0.047" style="left:58.5%;top:90.5%;width:22%;height:14%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
   </section>
 
   <!-- ═══════ 第三幕 · 定情 ═══════ -->
@@ -171,11 +189,11 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act3.jpg" alt="第三幕 · 定情" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">叁 · 定情</div>
+    <div class="hot" data-act="full-petals" data-art-x="0.505" data-art-y="0.105" style="left:50.5%;top:10.5%;width:26vw;height:12vh" aria-label="点击背景囍字，落下满屏花瓣"><span class="ring"></span></div>
     <div class="hot" data-act="handprint" style="left:59%;top:48%;width:14%;height:10%"><span class="ring"></span></div>
-    <div class="hot" data-act="lantern" style="left:55%;top:83%;width:76%;height:14%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-person" style="left:40%;top:57%;width:24%;height:28%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" style="left:26%;top:83%;width:20%;height:13%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:83%;width:20%;height:13%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.285" data-art-y="0.842" data-ring-ratio="0.047" style="left:28.5%;top:84.2%;width:20%;height:13%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.835" data-art-y="0.839" data-ring-ratio="0.047" style="left:83.5%;top:83.9%;width:20%;height:13%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
   </section>
 
   <!-- ═══════ 第四幕 · 红本为证 ═══════ -->
@@ -183,12 +201,10 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act4.jpg" alt="第四幕 · 红本为证" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">肆 · 红本为证</div>
-    <div class="hot" data-act="book" style="left:46%;top:29%;width:13%;height:9%"><span class="ring"></span></div>
-    <div class="hot" data-act="book" style="left:61%;top:31%;width:13%;height:9%"><span class="ring"></span></div>
-    <div class="hot" data-act="ribbon" style="left:65%;top:84%;width:40%;height:26%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-person" style="left:43%;top:41%;width:16%;height:22%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-person" style="left:66%;top:42%;width:16%;height:22%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" style="left:38%;top:80%;width:18%;height:16%"><span class="ring"></span></div>
+    <div class="hot" data-act="marriage-story" data-art-x="0.538" data-art-y="0.172" data-ring-ratio="0.047" style="left:53.8%;top:17.2%;width:14vw;height:12vh" aria-label="点击国徽，查看领证故事"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-person" data-art-x="0.525" data-art-y="0.445" style="left:52.5%;top:44.5%;width:24vw;height:24vh" aria-label="点击新人，查看婚纱照"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.335" data-art-y="0.865" style="left:33.5%;top:86.5%;width:20vw;height:16vh" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.800" data-art-y="0.755" style="left:80%;top:75.5%;width:20vw;height:17vh" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
   </section>
 
   <!-- ═══════ 第五幕 · 婚礼 ═══════ -->
@@ -202,7 +218,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="hot" data-act="petal" style="left:50%;top:37%;width:18%;height:12%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-kuluomi" style="left:66%;top:81%;width:14%;height:18%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:81%;width:16%;height:18%"><span class="ring"></span></div>
-    <a class="hot tour-entry" data-act="cloud-tour" style="left:16%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="tour-label">点击进入720°云游</span></a>
+    <a class="hot tour-entry" data-act="cloud-tour" data-art-x="0.22" data-art-y="0.84" data-ring-ratio="0.047" style="left:22%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="tour-label">点击进入720°云游</span></a>
   </section>
 
   <!-- ═══════ 结尾 ═══════ -->
@@ -222,6 +238,10 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 <!-- 浮层与控件 -->
 <div id="toast"></div>
 <div id="lightbox"><div class="photo-card" id="photoCard"></div></div>
+<div id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
+  <button id="storyClose" type="button" aria-label="关闭故事">×</button>
+  <div class="story-copy"><div class="story-kicker" id="storyKicker"></div><h2 class="story-title" id="storyTitle"></h2><div class="story-text" id="storyText">故事内容待补充</div></div>
+</div>
 <!-- 保留两只猫的原始厚涂爪素材；前进/返回时分别从右下/左下固定轴心挥动 -->
 <div class="transition" id="tr-cat-wipe" aria-hidden="true">
   <img class="cat-swipe-paw kulomi" data-src="./assets/web/库洛米猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
@@ -267,7 +287,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
-function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;}
+function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});}
 
 var toastTimer;
 function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
@@ -331,9 +351,17 @@ function warmScene(index){
     function finish(){if(settled)return;settled=true;clearTimeout(timer);img.removeEventListener('load',finish);img.removeEventListener('error',finish);resolve();}
     if(img.complete){finish();return;}
     img.addEventListener('load',finish,{once:true});img.addEventListener('error',finish,{once:true});timer=setTimeout(finish,2500);
-  }).then(function(){return img.decode?img.decode().catch(function(){}):Promise.resolve();});
+  }).then(function(){return img.decode?img.decode().catch(function(){}):Promise.resolve();}).then(function(){positionArtHotspots(index);});
   return sceneWarmPromises[index];
 }
+function positionArtHotspots(index){
+  if(index<=0||index>=scenes.length)return;
+  var scene=scenes[index],img=scene.querySelector('.bg');if(!img||!img.naturalWidth)return;
+  var sw=scene.clientWidth,sh=scene.clientHeight,scale=Math.max(sw/img.naturalWidth,sh/img.naturalHeight),rw=img.naturalWidth*scale,rh=img.naturalHeight*scale,ox=(sw-rw)/2,oy=(sh-rh)/2;
+  scene.querySelectorAll('[data-art-x][data-art-y]').forEach(function(h){var x=Number(h.getAttribute('data-art-x')),y=Number(h.getAttribute('data-art-y'));h.style.left=((x*rw+ox)/sw*100)+'%';h.style.top=((y*rh+oy)/sh*100)+'%';var ratio=Number(h.getAttribute('data-ring-ratio'));if(ratio>0)h.style.setProperty('--ring-size',Math.max(16,Math.min(36,rw*ratio))+'px');});
+}
+function positionAllArtHotspots(){for(var i=1;i<scenes.length;i++)positionArtHotspots(i);}
+window.addEventListener('resize',positionAllArtHotspots);
 function warmAround(index){warmScene(index-1);warmScene(index+1);}
 function incomingScene(index){
   var copy=scenes[index].cloneNode(true);copy.classList.add('wipe-scene-copy');
@@ -421,11 +449,6 @@ document.addEventListener('keydown',function(e){
   var direction=(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')?1:(e.key==='ArrowUp'||e.key==='PageUp'?-1:0);
   if(direction){e.preventDefault();stepScene(direction);}
 });
-function tr1(){playCatWipe(2,function(){go(2);});}
-function tr2(){playCatWipe(3,function(){go(3);});}
-function tr3(){playCatWipe(4,function(){go(4);});}
-function tr4(){playCatWipe(5,function(){go(5);});}
-
 /* ================= 纸屑 ================= */
 function confetti(n){for(var i=0;i<n;i++){var c=document.createElement('div');c.className='confetti';var size=6+Math.random()*8;c.style.width=size+'px';c.style.height=size*1.4+'px';c.style.left=Math.random()*100+'vw';c.style.background=['#a3242b','#c9a063','#e8b96a','#f0e2c8','#7c9e6b'][i%5];c.style.animationDuration=(2.2+Math.random()*2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},5000);}}
 
@@ -437,25 +460,33 @@ document.getElementById('deck').addEventListener('click',function(e){
   if(!h)return;
   var a=h.getAttribute('data-act');
   switch(a){
-    case '1-sprite': bubble(h,'2019 年，我们在游戏里第一次相遇 🎮');break;
-    case 'tr1': tr1();break;
-    case 'tr2': tr2();break;
+    case 'lamp-petals': fallingPetalsFull(h.closest('.scene'),42);break;
+    case 'meet-story': showStory('从游戏里的一次相遇开始','相遇 · 故事');break;
     case 'photo-person': showPhoto('person');break;
     case 'photo-cat-kuluomi': showPhoto('catK');break;
     case 'photo-cat-aoliao': showPhoto('catA');break;
     case 'photo-land-chongqing': showPhoto('landCQ');break;
     case 'photo-land-plateau': showPhoto('landXY');break;
     case 'handprint': ripple(h);toast('2025.10.16，我们订婚啦 ❤');break;
-    case 'lantern': toast('两猫扑向灯笼球 🏮');break;
-    case 'book': toast('2025.12.31，领证了 🔴<br><span style="font-size:12px;opacity:.75">红本翻开 · 钢印在册</span>');confetti(26);break;
-    case 'ribbon': toast('两只小猫咬着红绸带拔河～');break;
+    case 'couple-light': castCoupleLight();break;
+    case 'full-petals': fallingPetalsFull(h.closest('.scene'),42);break;
+    case 'marriage-story': showStory('国徽下的承诺','领证 · 故事');break;
     case 'door': document.getElementById('addrModal').classList.add('show');break;
     case 'addr': copyAddr();break;
     case 'stage': document.getElementById('tlModal').classList.add('show');break;
     case 'petal': confetti(60);toast('花瓣落满堂 🌸');break;
   }
 });
-function bubble(h,html){var scene=h.closest('.scene');var old=scene.querySelector('.bubble');if(old)old.remove();var b=document.createElement('div');b.className='bubble';b.innerHTML=html;b.style.left=h.style.left;b.style.top=h.style.top;scene.appendChild(b);setTimeout(function(){b.remove()},3200);}
+var storyModal=document.getElementById('storyModal');
+function showStory(kicker,title){document.getElementById('storyKicker').textContent=kicker;document.getElementById('storyTitle').textContent=title;document.getElementById('storyText').textContent='故事内容待补充';storyModal.classList.add('show');}
+storyModal.addEventListener('click',function(e){if(e.target===storyModal||e.target.id==='storyClose')storyModal.classList.remove('show');});
+function newPetal(scene,left,top){
+  var p=document.createElement('span');p.className='falling-petal';p.style.left=left+'%';p.style.top=top+'%';
+  p.style.setProperty('--petal-w',(11+Math.random()*9)+'px');p.style.setProperty('--petal-h',(17+Math.random()*13)+'px');p.style.setProperty('--petal-drift',((-18+Math.random()*36).toFixed(1))+'vw');p.style.setProperty('--petal-turn',(260+Math.random()*520).toFixed(0)+'deg');p.style.setProperty('--petal-time',(4.4+Math.random()*1.7).toFixed(2)+'s');p.style.setProperty('--petal-delay',(Math.random()*.75).toFixed(2)+'s');scene.appendChild(p);window.setTimeout(function(petal){return function(){petal.remove();};}(p),7800);
+}
+function fallingPetalsFull(scene,count){for(var i=0;i<count;i++)newPetal(scene,Math.random()*100,-7+Math.random()*12);}
+var loveLightTimer=0;
+function castCoupleLight(){var light=document.getElementById('loveLight');light.classList.remove('play');void light.offsetWidth;light.classList.add('play');window.clearTimeout(loveLightTimer);loveLightTimer=window.setTimeout(function(){light.classList.remove('play');},3000);}
 function ripple(h){var scene=h.closest('.scene');var r=document.createElement('div');r.className='ripple';r.style.left=h.style.left;r.style.top=h.style.top;scene.appendChild(r);setTimeout(function(){r.remove()},950);}
 function copyAddr(){var addr='重庆市两江新区腾芳大道8号 禧满鸿福酒店';if(navigator.clipboard){navigator.clipboard.writeText(addr).then(function(){toast('地址已复制 ✂')},function(){toast(addr)});}else{toast(addr);}}
 document.getElementById('copyBtn').onclick=copyAddr;
