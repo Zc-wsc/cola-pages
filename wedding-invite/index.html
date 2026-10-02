@@ -127,16 +127,21 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .btn-row{display:flex;gap:10px;margin-top:16px}
 .btn{flex:1;padding:12px 6px;border-radius:10px;border:1px solid rgba(163,36,43,.4);background:#fff8ea;color:#6e1116;font-size:14px;letter-spacing:.15em;text-decoration:none;text-align:center;cursor:pointer}
 .btn.primary{background:var(--red);color:#f6dcbd;border:none}
-/* ---------- 结尾 ---------- */
-#ending{background:linear-gradient(180deg,#201214,#38201f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
-#ending .reply{position:relative;width:210px;height:140px;background:linear-gradient(160deg,#efe3c8,#dcc9a2);border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.5);cursor:pointer;display:flex;align-items:center;justify-content:center}
-#ending .reply:before{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(120deg,transparent 46%,rgba(163,36,43,.14) 50%,transparent 54%)}
-#ending .reply .zh{font-size:18px;letter-spacing:.4em;color:#6e1116}
-#ending .note{display:none;position:absolute;width:min(80vw,340px);background:var(--paper);border-radius:8px;padding:26px 22px;text-align:center;font-size:16px;line-height:2.1;letter-spacing:.18em;color:#42342a;box-shadow:0 18px 50px rgba(0,0,0,.55);border:1px solid rgba(163,36,43,.3)}
-#ending .note.show{display:block;animation:rise .4s ease}
-#ending .note .sign{margin-top:10px;font-size:14px;color:#6e1116}
-#xi{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#c33b34,#8e1d20 70%);color:#f6dcbd;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:700;box-shadow:0 10px 30px rgba(120,15,15,.55);cursor:pointer;user-select:none}
-#days{color:#d8c49a;font-size:13px;letter-spacing:.3em}
+/* ---------- 婚礼指南尾幕 ---------- */
+#ending{position:relative;display:block;overflow:hidden;background:#2d211b}
+#guideBgVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+#ending:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(42,28,20,.06),rgba(42,28,20,.10) 54%,rgba(23,15,13,.38))}
+.guide-logo-shell{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);z-index:2;width:min(96vw,620px);aspect-ratio:1652/700;filter:drop-shadow(0 2px 8px rgba(51,31,19,.22))}
+.guide-logo-shell img{display:block;width:100%;height:100%;object-fit:contain}
+.guide-open{position:absolute;left:50%;top:69%;transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;padding:8px 14px;border:0;background:transparent;color:#fff8e8;font:inherit;cursor:pointer;touch-action:manipulation;text-shadow:0 2px 10px rgba(34,18,12,.85)}
+.guide-open:active{transform:translate(-50%,-50%) scale(.97)}
+.guide-ring{position:relative;display:block;width:58px;height:58px;border:1px solid rgba(255,244,220,.95);border-radius:50%;box-shadow:0 0 12px rgba(255,232,190,.58),inset 0 0 8px rgba(255,246,220,.25)}
+.guide-ring:before,.guide-ring:after{content:"";position:absolute;inset:-1px;border:1px solid rgba(255,243,218,.94);border-radius:50%;opacity:0;animation:guidePulse 2.8s ease-out infinite}
+.guide-ring:after{animation-delay:1.4s}
+@keyframes guidePulse{0%{opacity:0;transform:scale(.56)}18%{opacity:.88}75%{opacity:.45;transform:scale(1.35)}100%{opacity:0;transform:scale(1.62)}}
+.guide-label{font-size:clamp(14px,4vw,16px);letter-spacing:.14em;white-space:nowrap}
+#days{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2;color:#fff3df;font-size:12px;letter-spacing:.18em;white-space:nowrap;text-shadow:0 2px 9px rgba(30,17,12,.9)}
+#days b{color:#ffe4aa!important}
 /* 纸屑 */
 .confetti{position:fixed;top:-12px;z-index:1600;pointer-events:none;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(108vh) rotate(540deg);opacity:.85}}
@@ -147,6 +152,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 </style>
 </head>
 <body>
+<audio id="inviteMusic" src="./assets/web/invite-bgm.m4a" autoplay loop preload="auto" aria-hidden="true"></audio>
 
 <div id="deck">
 
@@ -221,17 +227,15 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <a class="hot tour-entry" data-act="cloud-tour" data-art-x="0.22" data-art-y="0.84" data-ring-ratio="0.047" style="left:22%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="tour-label">点击进入720°云游</span></a>
   </section>
 
-  <!-- ═══════ 结尾 ═══════ -->
+  <!-- ═══════ 婚礼指南入口尾幕 ═══════ -->
   <section class="scene" id="ending">
-    <div id="xi">囍</div>
+    <video id="guideBgVideo" data-src="./assets/web/guide-background-mobile.mp4" poster="./assets/web/guide-background-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+    <div class="guide-logo-shell"><img src="./assets/branding/wedding-logo-overlay.webp" alt="汪仕诚与马晗瑜的婚礼 LOGO"></div>
+    <button class="guide-open" id="openGuide" type="button" aria-haspopup="dialog" aria-controls="guideModal">
+      <span class="guide-ring" aria-hidden="true"></span>
+      <span class="guide-label">点击查看婚礼指南</span>
+    </button>
     <div id="days">计算中…</div>
-    <div class="reply" id="reply"><span class="zh">给我们的回信</span></div>
-    <div class="note" id="note">
-      山水迢迢，终有一聚。<br>
-      十月二十五日，禧满鸿福，<br>
-      备好喜糖，只等你来。
-      <div class="sign">—— 汪仕诚 & 马晗瑜 敬上</div>
-    </div>
   </section>
 </div>
 
@@ -246,6 +250,15 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 <div class="transition" id="tr-cat-wipe" aria-hidden="true">
   <img class="cat-swipe-paw kulomi" data-src="./assets/web/库洛米猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
   <img class="cat-swipe-paw oreo" data-src="./assets/web/奥利奥猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
+</div>
+
+<!-- 婚礼指南占位：后续制作真实指南后替换此内容 -->
+<div class="modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
+  <div class="sheet">
+    <h3 id="guideModalTitle">婚礼指南</h3>
+    <div class="sub">指南内容后续制作完成后接入</div>
+    <button class="close" type="button" onclick="document.getElementById('guideModal').classList.remove('show')">知 道 了</button>
+  </div>
 </div>
 
 <!-- 时间轴弹层 -->
@@ -286,8 +299,12 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 /* ================= 基础 ================= */
 var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
+var guideBgVideo=document.getElementById('guideBgVideo');
+var inviteMusic=document.getElementById('inviteMusic');
+function tryStartInviteMusic(){if(!inviteMusic)return;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
+function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
-function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});}
+function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});syncGuideBackground(n);}
 
 var toastTimer;
 function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
@@ -491,9 +508,16 @@ function ripple(h){var scene=h.closest('.scene');var r=document.createElement('d
 function copyAddr(){var addr='重庆市两江新区腾芳大道8号 禧满鸿福酒店';if(navigator.clipboard){navigator.clipboard.writeText(addr).then(function(){toast('地址已复制 ✂')},function(){toast(addr)});}else{toast(addr);}}
 document.getElementById('copyBtn').onclick=copyAddr;
 
-/* ================= 结尾 ================= */
-document.getElementById('reply').addEventListener('click',function(){document.getElementById('note').classList.toggle('show');});
-document.getElementById('xi').addEventListener('click',function(){confetti(80);});
+/* ================= 背景音乐：尝试自动播放，受设备策略拦截时在首次交互后重试 ================= */
+document.addEventListener('WeixinJSBridgeReady',tryStartInviteMusic,false);
+window.addEventListener('pageshow',tryStartInviteMusic,false);
+document.addEventListener('touchstart',tryStartInviteMusic,{once:true,passive:true});
+document.addEventListener('click',tryStartInviteMusic,{once:true});
+if(window.WeixinJSBridge)window.setTimeout(tryStartInviteMusic,0);
+tryStartInviteMusic();
+
+/* ================= 婚礼指南尾幕 ================= */
+document.getElementById('openGuide').addEventListener('click',function(){document.getElementById('guideModal').classList.add('show');});
 (function(){var target=new Date('2026-10-25T00:00:00+08:00');var d=Math.ceil((target-new Date())/86400000);var el=document.getElementById('days');el.innerHTML=d>0?('距 离 2 0 2 6 . 1 0 . 2 5 · 还 有 <b style="color:#e8b96a;font-size:18px">'+d+'</b> 天'):(d===0?'今天，是我们的大喜日子 🎊':'新婚快乐，岁岁常相见');})();
 </script>
 </body>
