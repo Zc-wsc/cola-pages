@@ -297,8 +297,8 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 </div>
 <!-- 保留两只猫的原始厚涂爪素材；前进/返回时分别从右下/左下固定轴心挥动 -->
 <div class="transition" id="tr-cat-wipe" aria-hidden="true">
-  <img class="cat-swipe-paw kulomi" data-src="./assets/web/库洛米猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
-  <img class="cat-swipe-paw oreo" data-src="./assets/web/奥利奥猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
+  <img class="cat-swipe-paw kulomi" data-src="./assets/web/transition-paws/kulomi-paw.webp" alt="" decoding="async" draggable="false">
+  <img class="cat-swipe-paw oreo" data-src="./assets/web/transition-paws/oreo-paw.webp" alt="" decoding="async" draggable="false">
 </div>
 
 <!-- 婚礼指南交互预览：正面三栏拆分竖排；背面迎宾栏与支线地图竖排 -->
@@ -406,7 +406,7 @@ var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
 var guideBgVideo=document.getElementById('guideBgVideo');
 var inviteMusic=document.getElementById('inviteMusic');
-function tryStartInviteMusic(){if(!inviteMusic||typeof openingVideo==='undefined'||(!openingVideo.ended&&(openingVideo.paused||openingVideo.readyState<2))||!inviteMusic.paused)return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
+function tryStartInviteMusic(){if(!inviteMusic||typeof openingVideo==='undefined'||!openingVideo.ended||cur()===0||!inviteMusic.paused)return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
 function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){var poster=guideBgVideo.getAttribute('data-poster');if(poster&&!guideBgVideo.getAttribute('poster'))guideBgVideo.setAttribute('poster',poster);if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
 function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});syncGuideBackground(n);}
@@ -427,10 +427,9 @@ function playOpeningVideo(){
 }
 function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
 openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();});
-sealOpen.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic();enterInvite();});
-openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);tryStartInviteMusic();});
+sealOpen.addEventListener('click',function(e){e.stopPropagation();enterInvite();});
+openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
 openingVideo.addEventListener('loadeddata',retryAutoplay);
-openingVideo.addEventListener('playing',function(){window.setTimeout(tryStartInviteMusic,500);});
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
 window.addEventListener('pageshow',retryAutoplay,false);
 if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
@@ -450,7 +449,7 @@ lightbox.addEventListener('click',function(){lightbox.classList.remove('show')})
 
 /* ================= 角落固定轴心的挥手翻幕 ================= */
 var catWipe=document.getElementById('tr-cat-wipe'),catWipeBusy=false,pawArtworkPromises={};
-var sceneWarmPromises={},swipeStart=null,ignoreTapUntil=0,wheelDelta=0,wheelTimer=0;
+var sceneWarmPromises={},swipeStart=null,ignoreTapUntil=0,wheelDelta=0,wheelTimer=0,pendingSwipeSteps=[];
 function loadPawArtwork(forward){
   var img=catWipe.querySelector(forward?'.cat-swipe-paw.oreo':'.cat-swipe-paw.kulomi');
   var key=forward?'oreo':'kulomi';
@@ -538,13 +537,17 @@ function playCatWipe(target,fn){
       if(raw<1){window.requestAnimationFrame(frame);return;}
       if(fn)fn();
       warmAround(target);
-      window.requestAnimationFrame(function(){copy.remove();catWipe.classList.remove('play','wipe-next','wipe-prev');catWipeBusy=false;});
+      window.requestAnimationFrame(function(){
+        copy.remove();catWipe.classList.remove('play','wipe-next','wipe-prev');catWipeBusy=false;
+        var queuedDirection=pendingSwipeSteps.shift();
+        if(queuedDirection)window.setTimeout(function(){stepScene(queuedDirection);},0);
+      });
     }
     window.requestAnimationFrame(frame);
   });
 }
 function stepScene(direction){
-  if(catWipeBusy)return;
+  if(catWipeBusy){if(pendingSwipeSteps.length<scenes.length-1)pendingSwipeSteps.push(direction);return;}
   var current=cur();
   if(current===0&&!openingVideo.ended)return;
   var next=current+direction;if(next<0||next>=scenes.length)return;
@@ -648,7 +651,7 @@ function showGuidePoint(key){
 function showGuideNote(title,copy){document.getElementById('guidePointHero').hidden=true;document.getElementById('guidePointFields').hidden=true;document.getElementById('guidePointDisclaimer').hidden=true;var noteTitle=document.getElementById('guideNoteTitle'),noteCopy=document.getElementById('guidePointCopy');noteTitle.textContent=title;noteTitle.hidden=false;noteCopy.textContent=copy;noteCopy.hidden=false;setGuideMapLink(null);guidePointCard.hidden=false;}
 function closeWeddingGuide(){guideModal.classList.remove('show');hideGuidePoint();document.getElementById('guideScroll').classList.remove('zoomed');document.getElementById('guideZoom').setAttribute('aria-pressed','false');document.getElementById('guideZoom').textContent='放大长图';}
 var guideImageObservers={};
-function activateGuideImages(which){var page=document.getElementById(which==='branches'?'guideBranchesPage':'guideMainPage');if(!page)return;var images=[].slice.call(page.querySelectorAll('img[data-guide-src]'));if(guideImageObservers[which])guideImageObservers[which].disconnect();if(images[0]&&!images[0].getAttribute('src')){images[0].loading='eager';images[0].src=images[0].getAttribute('data-guide-src');}if(!('IntersectionObserver' in window)){images.slice(1).forEach(function(img){if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');});return;}var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(!entry.isIntersecting)return;var img=entry.target;if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');observer.unobserve(img);});},{root:guideScroll,rootMargin:'0px'});guideImageObservers[which]=observer;images.slice(1).forEach(function(img){if(!img.getAttribute('src'))observer.observe(img);});}
+function activateGuideImages(which){var page=document.getElementById(which==='branches'?'guideBranchesPage':'guideMainPage');if(!page)return;var images=[].slice.call(page.querySelectorAll('img[data-guide-src]'));if(guideImageObservers[which])guideImageObservers[which].disconnect();if(images[0]&&!images[0].getAttribute('src')){images[0].loading='eager';images[0].src=images[0].getAttribute('data-guide-src');}if(!('IntersectionObserver' in window)){images.slice(1).forEach(function(img){if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');});return;}var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(!entry.isIntersecting)return;var img=entry.target;if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');observer.unobserve(img);});},{root:guideScroll,rootMargin:'100% 0px'});guideImageObservers[which]=observer;images.slice(1).forEach(function(img){if(!img.getAttribute('src'))observer.observe(img);});}
 function selectGuideTab(which){
   document.querySelectorAll('[data-guide-tab]').forEach(function(button){var active=button.getAttribute('data-guide-tab')===which;button.classList.toggle('active',active);button.setAttribute('aria-selected',active?'true':'false');});
   document.getElementById('guideMainPage').hidden=which!=='main';document.getElementById('guideBranchesPage').hidden=which!=='branches';
