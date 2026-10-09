@@ -142,6 +142,55 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .guide-label{font-size:clamp(14px,4vw,16px);letter-spacing:.14em;white-space:nowrap}
 #days{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2;color:#fff3df;font-size:12px;letter-spacing:.18em;white-space:nowrap;text-shadow:0 2px 9px rgba(30,17,12,.9)}
 #days b{color:#ffe4aa!important}
+/* ---------- 婚礼指南交互预览 ---------- */
+#guideModal.modal{z-index:1800;display:none;align-items:stretch;justify-content:center;padding:0;background:rgba(20,12,10,.82);color:#3a2e26;text-align:left;overflow:hidden}
+#guideModal.modal.show{display:flex}
+#guideModal .guide-app{position:relative;display:flex;flex-direction:column;width:100%;max-width:920px;height:100vh;height:100dvh;background:#f7efdf;overflow:hidden}
+.guide-topbar{z-index:3;flex:0 0 auto;padding:calc(7px + env(safe-area-inset-top)) 10px 8px;background:linear-gradient(180deg,#fff9ec,#f3e8d4);box-shadow:0 2px 12px rgba(68,44,26,.12)}
+.guide-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.guide-bar-title{color:#6e1116;font-size:14px;letter-spacing:.16em;font-weight:700;white-space:nowrap}
+.guide-tools{display:flex;gap:6px}
+.guide-tool,.guide-tab{min-height:36px;border:1px solid rgba(163,36,43,.28);border-radius:999px;background:#fffaf0;color:#6e1116;font:inherit;font-size:12px;letter-spacing:.04em;padding:7px 11px;white-space:nowrap;cursor:pointer;touch-action:manipulation}
+.guide-tool:active,.guide-tab:active{transform:scale(.97)}
+.guide-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.guide-tab{min-height:39px;font-size:13px}
+.guide-tab.active{background:#a3242b;color:#fff5e7;border-color:#a3242b;box-shadow:0 3px 9px rgba(110,17,22,.18)}
+.guide-zoom-hint{padding:5px 2px 0;text-align:center;color:#7d644e;font-size:11px;line-height:1.4;letter-spacing:.03em}
+.guide-scroll{position:relative;flex:1;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;background:#eae0cf}
+.guide-page{min-height:100%;line-height:0}
+.guide-long-wrap{position:relative;width:100%;max-width:720px;margin:0 auto;line-height:0}
+.guide-long{display:block;width:100%;height:auto}
+.guide-scroll.zoomed{touch-action:pan-x pan-y}
+.guide-scroll.zoomed .guide-long-wrap{width:200%;max-width:none;margin:0}
+.guide-pin{position:absolute;z-index:2;left:var(--pin-x);top:var(--pin-y);width:clamp(30px,8vw,42px);height:clamp(30px,8vw,42px);transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.95);border-radius:50%;background:rgba(163,36,43,.18);box-shadow:0 0 0 2px rgba(163,36,43,.54),0 1px 8px rgba(43,25,20,.28);cursor:pointer;touch-action:manipulation}
+.guide-pin:before,.guide-pin:after{content:"";position:absolute;inset:3px;border:1px solid rgba(255,248,232,.95);border-radius:50%}
+.guide-pin:after{inset:-5px;border-color:rgba(163,36,43,.6);animation:guidePinPulse 2.3s ease-out infinite}
+@keyframes guidePinPulse{0%{opacity:.8;transform:scale(.7)}100%{opacity:0;transform:scale(1.65)}}
+.guide-pin:focus-visible,.guide-tool:focus-visible,.guide-tab:focus-visible,.guide-close:focus-visible{outline:3px solid #e9bd6e;outline-offset:2px}
+.guide-point-card{position:absolute;z-index:5;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));max-height:min(78dvh,760px);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(163,36,43,.3);border-radius:18px;background:#fffaf0;box-shadow:0 12px 38px rgba(32,20,14,.38);line-height:1.55}
+.guide-point-card[hidden]{display:none}
+.guide-point-hero{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;height:clamp(176px,30dvh,260px);overflow:hidden;background:#28231f}
+.guide-point-hero[hidden]{display:none}
+.guide-point-hero img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain}
+.guide-point-hero:after{content:"";position:absolute;inset:auto 0 0;height:64px;background:linear-gradient(180deg,transparent,rgba(27,18,15,.72));pointer-events:none}
+#guideModal .guide-point-title{position:absolute;z-index:1;left:15px;right:12px;bottom:11px;margin:0;color:#fff9ec;font-size:18px;letter-spacing:.08em;text-align:left;text-shadow:0 2px 8px rgba(20,12,10,.75)}
+.guide-point-disclaimer{flex:0 0 auto;padding:6px 14px 0;color:#92775d;font-size:10px;line-height:1.4}
+.guide-point-fields{flex:1 1 auto;min-height:0;overflow:auto;padding:3px 14px 6px;-webkit-overflow-scrolling:touch}
+.guide-point-fields[hidden]{display:none}
+.guide-field{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px;padding:9px 0;border-bottom:1px solid rgba(163,36,43,.12);line-height:1.65}
+.guide-field:last-child{border-bottom:0}
+.guide-field-label{align-self:start;color:#8a302c;font-size:12px;font-weight:700;letter-spacing:.04em}
+.guide-field-value{min-width:0;color:#514438;font-size:12px;white-space:pre-line;overflow-wrap:anywhere}
+.guide-note-title{padding:18px 18px 4px;color:#8c1e28;font-size:17px;font-weight:700;letter-spacing:.08em}
+.guide-note-title[hidden],.guide-point-copy[hidden]{display:none}
+.guide-point-copy{padding:7px 18px 16px;color:#604d3e;font-size:14px;line-height:1.85;white-space:pre-line}
+.guide-point-actions{position:sticky;z-index:2;bottom:0;display:flex;gap:8px;flex:0 0 auto;padding:9px 12px calc(9px + env(safe-area-inset-bottom));border-top:1px solid rgba(163,36,43,.12);background:linear-gradient(180deg,#fffaf0,#f7efdf)}
+.guide-point-actions a,.guide-point-actions button{flex:1;display:grid;place-items:center;min-height:42px;border:1px solid rgba(163,36,43,.35);border-radius:11px;background:#fff8e9;color:#6e1116;font:inherit;font-size:13px;text-decoration:none;cursor:pointer}
+.guide-point-actions a{background:#a3242b;color:#fff6e7;border-color:#a3242b}
+@media(max-width:360px){.guide-field{grid-template-columns:72px minmax(0,1fr);gap:6px}.guide-field-value{font-size:11.5px}}
+.guide-close{position:absolute;z-index:4;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);min-height:38px;padding:8px 17px;border:1px solid rgba(255,239,211,.88);border-radius:999px;background:rgba(49,30,24,.78);color:#fff7e8;font:inherit;font-size:12px;letter-spacing:.08em;white-space:nowrap;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+@media(min-width:700px){.guide-topbar{padding-left:18px;padding-right:18px}.guide-scroll.zoomed .guide-long-wrap{width:125%;margin:0 auto}.guide-point-card{left:50%;right:auto;width:min(520px,calc(100% - 32px));transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.guide-pin:after{animation:none}}
 /* 纸屑 */
 .confetti{position:fixed;top:-12px;z-index:1600;pointer-events:none;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(108vh) rotate(540deg);opacity:.85}}
@@ -252,12 +301,58 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
   <img class="cat-swipe-paw oreo" data-src="./assets/web/奥利奥猫爪扫屏手机轻量版.png" alt="" decoding="async" draggable="false">
 </div>
 
-<!-- 婚礼指南占位：后续制作真实指南后替换此内容 -->
-<div class="modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
-  <div class="sheet">
-    <h3 id="guideModalTitle">婚礼指南</h3>
-    <div class="sub">指南内容后续制作完成后接入</div>
-    <button class="close" type="button" onclick="document.getElementById('guideModal').classList.remove('show')">知 道 了</button>
+<!-- 婚礼指南交互预览：正面三栏拆分竖排；背面迎宾栏与支线地图竖排 -->
+<div class="modal" id="guideModal" role="dialog" aria-modal="true" aria-label="婚礼指南">
+  <div class="guide-app">
+    <header class="guide-topbar">
+      <div class="guide-topline">
+        <div class="guide-bar-title">赴约任务指南</div>
+        <div class="guide-tools">
+          <button class="guide-tool" id="guideNpc" type="button">问问猫咪</button>
+          <button class="guide-tool" id="guideZoom" type="button" aria-pressed="false">放大长图</button>
+          <button class="guide-tool" id="guideCloseTop" type="button" aria-label="关闭婚礼指南">关闭</button>
+        </div>
+      </div>
+      <nav class="guide-tabs" aria-label="指南内容分类">
+        <button class="guide-tab active" type="button" data-guide-tab="main" aria-selected="true">主线任务 · 婚礼攻略</button>
+        <button class="guide-tab" type="button" data-guide-tab="branches" aria-selected="false">重庆支线 · 副本地图</button>
+      </nav>
+      <div class="guide-zoom-hint" id="guideZoomHint" hidden>地图已放大，可左右滑动查看；点地点标记打开地图搜索。</div>
+    </header>
+    <div class="guide-scroll" id="guideScroll">
+      <section class="guide-page" id="guideMainPage" aria-label="婚礼主线指南长图">
+        <div class="guide-long-wrap">
+          <img class="guide-long" src="./assets/web/wedding-guide/wedding-guide-main-long.webp" alt="婚礼指南正面：婚礼Online任务信息、交通住宿攻略、婚礼现场任务详情，按手机阅读顺序竖向拼接" decoding="async" loading="lazy" fetchpriority="low">
+        </div>
+      </section>
+      <section class="guide-page" id="guideBranchesPage" aria-label="重庆支线指南长图" hidden>
+        <div class="guide-long-wrap" id="guideBranchesWrap">
+          <img class="guide-long" src="./assets/web/wedding-guide/wedding-guide-branches-long.webp" alt="婚礼指南背面：重庆欢迎页与副本一至七地图，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <button class="guide-pin" style="--pin-x:8.2%;--pin-y:70.6%" type="button" data-guide-point="green" aria-label="打开副本一：绿心公园地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:39.5%;--pin-y:73.6%" type="button" data-guide-point="worldtree" aria-label="打开副本二：世界树地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:8.2%;--pin-y:79.6%" type="button" data-guide-point="forest" aria-label="打开副本三：沐光森林地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:8.3%;--pin-y:88.5%" type="button" data-guide-point="nanbin" aria-label="打开副本四：南滨路地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:39.8%;--pin-y:88.2%" type="button" data-guide-point="museum" aria-label="打开副本五：三峡博物馆地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:73.8%;--pin-y:85.6%" type="button" data-guide-point="jiangtan" aria-label="打开副本六：江北嘴江滩地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:67.3%;--pin-y:93.5%" type="button" data-guide-point="trail" aria-label="打开副本七：山城步道地图搜索"></button>
+          <button class="guide-pin" style="--pin-x:65.7%;--pin-y:76.3%" type="button" data-guide-point="hotel" aria-label="打开主线起点：禧满鸿福酒店地图搜索"></button>
+        </div>
+      </section>
+    </div>
+    <section class="guide-point-card" id="guidePointCard" role="region" aria-label="副本详情" hidden>
+      <div class="guide-point-hero" id="guidePointHero">
+        <img id="guidePointImage" alt="" decoding="async">
+        <h3 class="guide-point-title" id="guidePointTitle"></h3>
+      </div>
+      <div class="guide-point-disclaimer" id="guidePointDisclaimer">交通距离与耗时为地图参考值，出发前请以实时导航为准。</div>
+      <div class="guide-point-fields" id="guidePointFields"></div>
+      <div class="guide-note-title" id="guideNoteTitle" hidden></div>
+      <div class="guide-point-copy" id="guidePointCopy" hidden></div>
+      <div class="guide-point-actions">
+        <a id="guideMapLink" href="#" target="_blank" rel="noopener noreferrer" hidden>打开高德地图搜索</a>
+        <button id="guidePointDismiss" type="button">返回地图</button>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -462,6 +557,7 @@ deck.addEventListener('wheel',function(e){
   if(Math.abs(wheelDelta)>=48){var direction=wheelDelta>0?1:-1;wheelDelta=0;stepScene(direction);}
 },{passive:false});
 document.addEventListener('keydown',function(e){
+  if(document.getElementById('guideModal').classList.contains('show')){if(e.key==='Escape')closeWeddingGuide();return;}
   if(e.altKey||e.ctrlKey||e.metaKey||(e.target.closest&&e.target.closest('input,textarea,select,button,a')))return;
   var direction=(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')?1:(e.key==='ArrowUp'||e.key==='PageUp'?-1:0);
   if(direction){e.preventDefault();stepScene(direction);}
@@ -516,8 +612,55 @@ document.addEventListener('click',tryStartInviteMusic,{once:true});
 if(window.WeixinJSBridge)window.setTimeout(tryStartInviteMusic,0);
 tryStartInviteMusic();
 
-/* ================= 婚礼指南尾幕 ================= */
-document.getElementById('openGuide').addEventListener('click',function(){document.getElementById('guideModal').classList.add('show');});
+/* ================= 婚礼指南尾幕与交互长图 ================= */
+var guideModal=document.getElementById('guideModal'),guideScroll=document.getElementById('guideScroll'),guidePointCard=document.getElementById('guidePointCard');
+var guidePoints={
+  green:{title:'副本一 · 绿心公园',image:'./assets/web/wedding-guide/points/green-photo.webp',query:'麓溪湖 绿心公园 重庆',coordinate:'麓溪湖·绿心公园',transport:'【直达传送阵】自驾/网约车：11km / 25min\n【公共传送网】公交/轻轨：不推荐，无直达',task:'沿湖畔小径登上鹿岛，与梅花鹿来一场轻柔的近距离邂逅！',features:'山谷廊桥、层叠花境、湖面倒影、开阔草坪、鹿灵互动。',reminder:'提前在「麓悦江城」小程序预约观光车和撸鹿。'},
+  worldtree:{title:'副本二 · 世界树',image:'./assets/web/wedding-guide/points/worldtree-photo.webp',query:'重庆光环花园城 世界树',coordinate:'光环花园城B馆（中央公园）',transport:'【直达传送阵】自驾/网约车：3.5km / 10min\n【公共传送网】公交/轻轨：3.1km / 22min（轨道9号线，步行约870米）',task:'进入B馆的奇幻森林，寻找机械巨树与森林中的有趣装置！',features:'B馆室内奇幻森林、机械巨树与互动装置。',reminder:'馆内装置与活动开放情况以商场当日公告和现场安排为准。'},
+  forest:{title:'副本三 · 沐光森林',image:'./assets/web/wedding-guide/points/forest-photo.webp',query:'重庆光环购物公园 沐光森林',coordinate:'重庆光环购物公园·沐光森林\n两江新区湖彩路118号',transport:'【直达传送阵】自驾/网约车：14.7km / 25min\n【公共传送网】公交/轻轨：15.6km / 57min（公交679路转轨道5号线，步行约560米）',task:'穿行在层叠的室内雨林之间，完成一次“商场里的雨林探索”！',features:'层叠室内雨林与绿植景观，适合边走边探索、拍照留念。',reminder:'商场营业时间与场内体验项目开放情况以当天公告为准。'},
+  nanbin:{title:'副本四 · 南滨路连环副本',image:'./assets/web/wedding-guide/points/nanbin-photo.webp',query:'下浩里 重庆',coordinate:'南岸区下浩里老街 → 沿江步行 → 长江艺术广场',transport:'【直达传送阵】自驾/网约车：24.8km / 32min\n【公共传送网】公交/轻轨：22km / 1小时6min（轨道9号线转6号线，步行约1km）',task:'先漫游下浩里的老街，再沿江步行至长江艺术广场，拍摄重庆“落地签”！',features:'下浩里老街、南滨路江岸与长江艺术广场；“落地签”为机车约拍商家服务。',reminder:'“落地签”不是固定景点官方项目；集合点、价格与安全规则按预约商家通知确认。'},
+  museum:{title:'副本五 · 三峡博物馆',image:'./assets/web/wedding-guide/points/museum-photo.webp',query:'重庆中国三峡博物馆',coordinate:'重庆市渝中区人民路236号',transport:'【直达传送阵】自驾/网约车：24.3km / 36min\n【公共传送网】公交/轻轨：20.6km / 1小时2min（轨道9号线转10号线，步行约1km）',task:'进入博物馆解锁巴渝历史，收集一段“读懂重庆”的历史情报！',features:'巴渝历史文化展陈与重庆城市记忆。',reminder:'开放时间、入馆证件及预约要求以博物馆官方当日公告为准；建议携带有效身份证件。'},
+  jiangtan:{title:'副本六 · 江北嘴江滩夜景',image:'./assets/web/wedding-guide/points/jiangtan-photo.webp',query:'江北嘴江滩公园 重庆',coordinate:'重庆市江北区江北嘴江滩公园',transport:'【直达传送阵】自驾/网约车：23.1km / 30min\n【公共传送网】公交/轻轨：19.8km / 1小时5min（轨道9号线转6号线，步行约1.5km）',task:'沿江漫步到观景处，把千厮门大桥和洪崖洞一起收入镜头，完成一张重庆夜景合影！',features:'江岸步道、两江夜景，可将千厮门大桥与洪崖洞一同收入镜头。',reminder:'夜景受天气与照明安排影响；临江步道注意脚下与随身物品。'},
+  trail:{title:'副本七 · 山城步道',image:'./assets/web/wedding-guide/points/trail-photo.webp',query:'山城第三步道 重庆',coordinate:'渝中区中兴路234号附近（山城第三步道/山城巷段）',transport:'【直达传送阵】自驾/网约车：27.3km / 56min\n【公共传送网】公交/轻轨：23km / 1小时18min（末段步行约1.6km）',task:'从高处沿山城巷道向下探索，收集山城坡坎间的老重庆记忆！',features:'山城巷道、坡坎台阶与老重庆街巷景观。',reminder:'坡坎和台阶较多，建议穿舒适防滑鞋、按体力慢行；雨天注意路面湿滑。'},
+  hotel:{title:'主线起点 · 禧满鸿福酒店',image:'./assets/web/wedding-guide/points/hotel.webp',query:'重庆禧满鸿福酒店',coordinate:'重庆市两江新区腾芳大道8号',transport:'婚礼指南地图起点；各副本路线请以出发当天实时导航为准。',task:'从主线关卡出发，按兴趣选择想探索的重庆支线副本。',features:'婚礼集合点与各条支线的路线起点。',reminder:'导航路线与耗时会随路况变化，出发前请重新确认。'}
+};
+function hideGuidePoint(){guidePointCard.hidden=true;}
+function setGuideMapLink(query){var link=document.getElementById('guideMapLink');if(query){link.href='https://uri.amap.com/search?keyword='+encodeURIComponent(query)+'&city=重庆市';link.hidden=false;}else{link.removeAttribute('href');link.hidden=true;}}
+function showGuidePoint(key){
+  var point=guidePoints[key];if(!point)return;
+  var hero=document.getElementById('guidePointHero'),fields=document.getElementById('guidePointFields'),noteTitle=document.getElementById('guideNoteTitle'),noteCopy=document.getElementById('guidePointCopy'),image=document.getElementById('guidePointImage');
+  hero.hidden=false;fields.hidden=false;document.getElementById('guidePointDisclaimer').hidden=false;noteTitle.hidden=true;noteCopy.hidden=true;
+  image.src=point.image;image.alt=point.title+'实景照片';document.getElementById('guidePointTitle').textContent=point.title;
+  while(fields.firstChild)fields.removeChild(fields.firstChild);
+  [['副本坐标',point.coordinate],['传送方式',point.transport],['副本任务',point.task],['副本特色',point.features],['副本提醒',point.reminder]].forEach(function(row){var item=document.createElement('div'),label=document.createElement('strong'),value=document.createElement('div');item.className='guide-field';label.className='guide-field-label';value.className='guide-field-value';label.textContent=row[0];value.textContent=row[1];item.appendChild(label);item.appendChild(value);fields.appendChild(item);});
+  setGuideMapLink(point.query);guidePointCard.hidden=false;
+}
+function showGuideNote(title,copy){document.getElementById('guidePointHero').hidden=true;document.getElementById('guidePointFields').hidden=true;document.getElementById('guidePointDisclaimer').hidden=true;var noteTitle=document.getElementById('guideNoteTitle'),noteCopy=document.getElementById('guidePointCopy');noteTitle.textContent=title;noteTitle.hidden=false;noteCopy.textContent=copy;noteCopy.hidden=false;setGuideMapLink(null);guidePointCard.hidden=false;}
+function closeWeddingGuide(){guideModal.classList.remove('show');hideGuidePoint();document.getElementById('guideScroll').classList.remove('zoomed');document.getElementById('guideZoom').setAttribute('aria-pressed','false');document.getElementById('guideZoom').textContent='放大长图';}
+function selectGuideTab(which){
+  document.querySelectorAll('[data-guide-tab]').forEach(function(button){var active=button.getAttribute('data-guide-tab')===which;button.classList.toggle('active',active);button.setAttribute('aria-selected',active?'true':'false');});
+  document.getElementById('guideMainPage').hidden=which!=='main';document.getElementById('guideBranchesPage').hidden=which!=='branches';
+  if(which==='branches'){var branchImage=document.querySelector('#guideBranchesPage img');if(branchImage)branchImage.loading='eager';}
+  guideScroll.scrollTop=0;guideScroll.scrollLeft=0;guideScroll.classList.remove('zoomed');document.getElementById('guideZoom').setAttribute('aria-pressed','false');document.getElementById('guideZoom').textContent=which==='branches'?'放大地图':'放大长图';document.getElementById('guideZoomHint').hidden=true;hideGuidePoint();
+}
+function openWeddingGuide(){guideModal.classList.add('show');selectGuideTab('main');document.getElementById('guideCloseTop').focus({preventScroll:true});}
+document.getElementById('openGuide').addEventListener('click',openWeddingGuide);
+document.getElementById('guideCloseTop').addEventListener('click',closeWeddingGuide);
+document.querySelectorAll('[data-guide-tab]').forEach(function(button){button.addEventListener('click',function(){selectGuideTab(button.getAttribute('data-guide-tab'));});});
+document.getElementById('guideZoom').addEventListener('click',function(){
+  var branches=document.getElementById('guideBranchesPage').hidden===false,zoomed=guideScroll.classList.toggle('zoomed');
+  this.setAttribute('aria-pressed',zoomed?'true':'false');this.textContent=zoomed?(branches?'还原地图':'还原长图'):(branches?'放大地图':'放大长图');document.getElementById('guideZoomHint').hidden=!(branches&&zoomed);hideGuidePoint();
+  if(branches){
+    var branchImg=document.querySelector('#guideBranchesPage img');
+    function scrollToMap(attempt){window.requestAnimationFrame(function(){var wrap=document.getElementById('guideBranchesWrap'),target=wrap.offsetTop+Math.round(wrap.offsetHeight*.665);if(!guideScroll.clientHeight||!wrap.offsetHeight){if(attempt<24)window.setTimeout(function(){scrollToMap(attempt+1);},50);return;}guideScroll.scrollLeft=0;guideScroll.scrollTop=target;if(Math.abs(guideScroll.scrollTop-target)>4&&attempt<24)window.setTimeout(function(){scrollToMap(attempt+1);},50);});}
+    if(branchImg&&branchImg.complete&&branchImg.naturalWidth){scrollToMap();}
+    else if(branchImg){branchImg.loading='eager';branchImg.addEventListener('load',scrollToMap,{once:true});branchImg.addEventListener('error',scrollToMap,{once:true});}
+  }
+});
+document.getElementById('guideNpc').addEventListener('click',function(){showGuideNote('库洛米 & 奥利奥 · NPC向导','库洛米：先看主线任务，签到、交通和住宿信息都在这里。\n奥利奥：想继续逛山城？打开“重庆支线”，挑喜欢的副本再出发！');});
+document.getElementById('guidePointDismiss').addEventListener('click',hideGuidePoint);
+document.getElementById('guideBranchesWrap').addEventListener('click',function(e){var pin=e.target.closest('[data-guide-point]');if(!pin)return;showGuidePoint(pin.getAttribute('data-guide-point'));});
+guideModal.addEventListener('click',function(e){if(e.target===guideModal)closeWeddingGuide();});
 (function(){var target=new Date('2026-10-25T00:00:00+08:00');var d=Math.ceil((target-new Date())/86400000);var el=document.getElementById('days');el.innerHTML=d>0?('距 离 2 0 2 6 . 1 0 . 2 5 · 还 有 <b style="color:#e8b96a;font-size:18px">'+d+'</b> 天'):(d===0?'今天，是我们的大喜日子 🎊':'新婚快乐，岁岁常相见');})();
 </script>
 </body>
