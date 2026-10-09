@@ -201,7 +201,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 </style>
 </head>
 <body>
-<audio id="inviteMusic" src="./assets/web/invite-bgm.m4a" autoplay loop preload="auto" aria-hidden="true"></audio>
+<audio id="inviteMusic" data-src="./assets/web/invite-bgm.m4a" loop preload="none" aria-hidden="true"></audio>
 
 <div id="deck">
 
@@ -209,7 +209,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
   <section class="scene" id="intro">
     <div class="opening-shell">
       <div class="opening-frame">
-        <video id="openingVideo" src="./assets/web/opening-video-mobile-performance-test.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
+        <video id="openingVideo" src="./assets/web/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
       </div>
     </div>
@@ -278,8 +278,8 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 
   <!-- ═══════ 婚礼指南入口尾幕 ═══════ -->
   <section class="scene" id="ending">
-    <video id="guideBgVideo" data-src="./assets/web/guide-background-mobile.mp4" poster="./assets/web/guide-background-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-    <div class="guide-logo-shell"><img src="./assets/branding/wedding-logo-overlay.webp" alt="汪仕诚与马晗瑜的婚礼 LOGO"></div>
+    <video id="guideBgVideo" data-src="./assets/web/guide-background-mobile.mp4" data-poster="./assets/web/guide-background-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+    <div class="guide-logo-shell"><img src="./assets/branding/wedding-logo-overlay.webp" alt="汪仕诚与马晗瑜的婚礼 LOGO" loading="lazy" decoding="async" fetchpriority="low"></div>
     <button class="guide-open" id="openGuide" type="button" aria-haspopup="dialog" aria-controls="guideModal">
       <span class="guide-ring" aria-hidden="true"></span>
       <span class="guide-label">点击查看婚礼指南</span>
@@ -321,13 +321,23 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     </header>
     <div class="guide-scroll" id="guideScroll">
       <section class="guide-page" id="guideMainPage" aria-label="婚礼主线指南长图">
-        <div class="guide-long-wrap">
-          <img class="guide-long" src="./assets/web/wedding-guide/wedding-guide-main-long.webp" alt="婚礼指南正面：婚礼Online任务信息、交通住宿攻略、婚礼现场任务详情，按手机阅读顺序竖向拼接" decoding="async" loading="lazy" fetchpriority="low">
+        <div class="guide-long-wrap" id="guideMainWrap">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-01.webp" width="1067" height="1200" alt="婚礼指南正面：婚礼Online任务信息、交通住宿攻略、婚礼现场任务详情，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-02.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-03.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-04.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-05.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-06.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
         </div>
       </section>
       <section class="guide-page" id="guideBranchesPage" aria-label="重庆支线指南长图" hidden>
         <div class="guide-long-wrap" id="guideBranchesWrap">
-          <img class="guide-long" src="./assets/web/wedding-guide/wedding-guide-branches-long.webp" alt="婚礼指南背面：重庆欢迎页与副本一至七地图，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-01.webp" width="2128" height="1200" alt="婚礼指南背面：重庆欢迎页与副本一至七地图，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-02.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-03.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-04.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-05.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-06.webp" width="2128" height="1169" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:70.6%" type="button" data-guide-point="green" aria-label="打开副本一：绿心公园地图搜索"></button>
           <button class="guide-pin" style="--pin-x:39.5%;--pin-y:73.6%" type="button" data-guide-point="worldtree" aria-label="打开副本二：世界树地图搜索"></button>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:79.6%" type="button" data-guide-point="forest" aria-label="打开副本三：沐光森林地图搜索"></button>
@@ -396,8 +406,8 @@ var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
 var guideBgVideo=document.getElementById('guideBgVideo');
 var inviteMusic=document.getElementById('inviteMusic');
-function tryStartInviteMusic(){if(!inviteMusic)return;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
-function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
+function tryStartInviteMusic(){if(!inviteMusic||typeof openingVideo==='undefined'||(!openingVideo.ended&&(openingVideo.paused||openingVideo.readyState<2))||!inviteMusic.paused)return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
+function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){var poster=guideBgVideo.getAttribute('data-poster');if(poster&&!guideBgVideo.getAttribute('poster'))guideBgVideo.setAttribute('poster',poster);if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
 function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});syncGuideBackground(n);}
 
@@ -417,9 +427,10 @@ function playOpeningVideo(){
 }
 function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
 openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();});
-sealOpen.addEventListener('click',function(e){e.stopPropagation();enterInvite();});
-openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
+sealOpen.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic();enterInvite();});
+openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);tryStartInviteMusic();});
 openingVideo.addEventListener('loadeddata',retryAutoplay);
+openingVideo.addEventListener('playing',function(){window.setTimeout(tryStartInviteMusic,500);});
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
 window.addEventListener('pageshow',retryAutoplay,false);
 if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
@@ -607,10 +618,9 @@ document.getElementById('copyBtn').onclick=copyAddr;
 /* ================= 背景音乐：尝试自动播放，受设备策略拦截时在首次交互后重试 ================= */
 document.addEventListener('WeixinJSBridgeReady',tryStartInviteMusic,false);
 window.addEventListener('pageshow',tryStartInviteMusic,false);
-document.addEventListener('touchstart',tryStartInviteMusic,{once:true,passive:true});
-document.addEventListener('click',tryStartInviteMusic,{once:true});
+document.addEventListener('touchstart',tryStartInviteMusic,{passive:true});
+document.addEventListener('click',tryStartInviteMusic);
 if(window.WeixinJSBridge)window.setTimeout(tryStartInviteMusic,0);
-tryStartInviteMusic();
 
 /* ================= 婚礼指南尾幕与交互长图 ================= */
 var guideModal=document.getElementById('guideModal'),guideScroll=document.getElementById('guideScroll'),guidePointCard=document.getElementById('guidePointCard');
@@ -637,10 +647,12 @@ function showGuidePoint(key){
 }
 function showGuideNote(title,copy){document.getElementById('guidePointHero').hidden=true;document.getElementById('guidePointFields').hidden=true;document.getElementById('guidePointDisclaimer').hidden=true;var noteTitle=document.getElementById('guideNoteTitle'),noteCopy=document.getElementById('guidePointCopy');noteTitle.textContent=title;noteTitle.hidden=false;noteCopy.textContent=copy;noteCopy.hidden=false;setGuideMapLink(null);guidePointCard.hidden=false;}
 function closeWeddingGuide(){guideModal.classList.remove('show');hideGuidePoint();document.getElementById('guideScroll').classList.remove('zoomed');document.getElementById('guideZoom').setAttribute('aria-pressed','false');document.getElementById('guideZoom').textContent='放大长图';}
+var guideImageObservers={};
+function activateGuideImages(which){var page=document.getElementById(which==='branches'?'guideBranchesPage':'guideMainPage');if(!page)return;var images=[].slice.call(page.querySelectorAll('img[data-guide-src]'));if(guideImageObservers[which])guideImageObservers[which].disconnect();if(images[0]&&!images[0].getAttribute('src')){images[0].loading='eager';images[0].src=images[0].getAttribute('data-guide-src');}if(!('IntersectionObserver' in window)){images.slice(1).forEach(function(img){if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');});return;}var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(!entry.isIntersecting)return;var img=entry.target;if(!img.getAttribute('src'))img.src=img.getAttribute('data-guide-src');observer.unobserve(img);});},{root:guideScroll,rootMargin:'0px'});guideImageObservers[which]=observer;images.slice(1).forEach(function(img){if(!img.getAttribute('src'))observer.observe(img);});}
 function selectGuideTab(which){
   document.querySelectorAll('[data-guide-tab]').forEach(function(button){var active=button.getAttribute('data-guide-tab')===which;button.classList.toggle('active',active);button.setAttribute('aria-selected',active?'true':'false');});
   document.getElementById('guideMainPage').hidden=which!=='main';document.getElementById('guideBranchesPage').hidden=which!=='branches';
-  if(which==='branches'){var branchImage=document.querySelector('#guideBranchesPage img');if(branchImage)branchImage.loading='eager';}
+  activateGuideImages(which);
   guideScroll.scrollTop=0;guideScroll.scrollLeft=0;guideScroll.classList.remove('zoomed');document.getElementById('guideZoom').setAttribute('aria-pressed','false');document.getElementById('guideZoom').textContent=which==='branches'?'放大地图':'放大长图';document.getElementById('guideZoomHint').hidden=true;hideGuidePoint();
 }
 function openWeddingGuide(){guideModal.classList.add('show');selectGuideTab('main');document.getElementById('guideCloseTop').focus({preventScroll:true});}
