@@ -57,7 +57,8 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .story-copy{width:min(78vw,460px);animation:storyIn .45s ease both}
 .story-kicker{font-size:12px;letter-spacing:.5em;color:#e5c58c;margin-bottom:18px}
 .story-title{font-size:clamp(24px,7vw,34px);letter-spacing:.22em;font-weight:400}
-.story-text{margin-top:22px;font-size:15px;line-height:2.1;letter-spacing:.1em;color:rgba(248,236,216,.9)}
+.story-illustration{display:block;width:100%;max-height:26vh;object-fit:contain;margin:16px auto 0;border-radius:4px}
+.story-text{margin-top:18px;max-height:62vh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;white-space:pre-line;font-size:15px;line-height:1.9;letter-spacing:.1em;color:rgba(248,236,216,.9)}
 #storyClose{position:absolute;top:calc(18px + env(safe-area-inset-top));right:20px;width:42px;height:42px;border:0;background:transparent;color:#f8ecd8;font-size:30px;font-weight:200;cursor:pointer}
 @keyframes storyIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .falling-petal{position:absolute;z-index:8;width:var(--petal-w,15px);height:var(--petal-h,23px);border-radius:100% 0 100% 0;background:linear-gradient(145deg,#fff2ec 0%,#f2a1a6 54%,#c95469 100%);box-shadow:0 1px 4px rgba(104,24,42,.2);pointer-events:none;will-change:transform,opacity;animation:petalFall var(--petal-time,5s) cubic-bezier(.24,.55,.55,.95) var(--petal-delay,0s) both}
@@ -83,7 +84,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .photo-frame .big{font-size:64px;color:var(--red);font-weight:700;text-shadow:1px 2px 0 rgba(0,0,0,.12)}
 .photo-frame .cap{font-size:14px;letter-spacing:.25em}
 .photo-card .name{text-align:center;margin-top:10px;font-size:15px;letter-spacing:.3em;color:#5d3f22}
-.photo-card .sub{text-align:center;font-size:12px;color:#8a6a42;margin-top:4px;letter-spacing:.15em}
+.photo-card .sub{text-align:center;font-size:12px;line-height:1.6;color:#8a6a42;margin-top:4px;letter-spacing:.15em;white-space:pre-line}
 /* 右下角固定猫爪按钮已移除；上下滑动改由猫爪扫屏完成翻页。 */
 /* ---------- 全屏开篇视频 ---------- */
 #intro{background:#080606}
@@ -238,8 +239,8 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="chapter-tag">贰 · 相知</div>
     <div class="love-light" id="loveLight" aria-hidden="true"><div class="love-light-beam"></div><div class="love-light-couple"></div></div>
     <div class="hot" data-act="couple-light" data-art-x="0.505" data-art-y="0.195" style="left:50.5%;top:19.5%;width:16vw;height:10vh" aria-label="点击头部光照，照亮新人"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%" aria-label="点击重庆，查看小奥利奥的故事"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%" aria-label="点击西宁，查看小库洛米的故事"><span class="ring"></span></div>
     <div class="hot" data-act="photo-person" style="left:52%;top:78%;width:32%;height:30%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.305" data-art-y="0.845" data-ring-ratio="0.047" style="left:30.5%;top:84.5%;width:18%;height:14%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.585" data-art-y="0.905" data-ring-ratio="0.047" style="left:58.5%;top:90.5%;width:22%;height:14%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
@@ -252,8 +253,9 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="vignette"></div>
     <div class="chapter-tag">叁 · 定情</div>
     <div class="hot" data-act="full-petals" data-art-x="0.505" data-art-y="0.105" style="left:50.5%;top:10.5%;width:26vw;height:12vh" aria-label="点击背景囍字，落下满屏花瓣"><span class="ring"></span></div>
-    <div class="hot" data-act="handprint" style="left:59%;top:48%;width:14%;height:10%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-person" style="left:40%;top:57%;width:24%;height:28%"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-engagement" data-art-x="0.40" data-art-y="0.64" data-ring-ratio="0.047" style="left:40%;top:64%;width:20%;height:23%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新郎，查看订婚当天照片"><span class="ring"></span></div>
+    <div class="hot" data-act="photo-engagement" data-art-x="0.83" data-art-y="0.72" data-ring-ratio="0.047" style="left:83%;top:72%;width:32%;height:44%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新娘，查看订婚当天照片"><span class="ring"></span></div>
+    <div class="hot" data-act="engagement-story" data-art-x="0.56" data-art-y="0.475" data-ring-ratio="0.047" style="left:56%;top:47.5%;width:12%;height:7%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击桌上的订婚书，查看订婚故事"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.285" data-art-y="0.842" data-ring-ratio="0.047" style="left:28.5%;top:84.2%;width:20%;height:13%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.835" data-art-y="0.839" data-ring-ratio="0.047" style="left:83.5%;top:83.9%;width:20%;height:13%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
     <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看肆·红本为证</span></div>
@@ -279,7 +281,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="hot" data-act="door" style="left:73%;top:17%;width:36%;height:24%"><span class="ring"></span></div>
     <div class="hot" data-act="addr" style="left:25%;top:17%;width:46%;height:24%"><span class="ring"></span></div>
     <div class="hot" data-act="stage" style="left:52%;top:58%;width:26%;height:14%"><span class="ring"></span></div>
-    <div class="hot" data-act="petal" style="left:50%;top:37%;width:18%;height:12%"><span class="ring"></span></div>
+    <div class="hot" data-act="wedding-story" style="left:50%;top:37%;width:18%;height:12%" aria-label="点击舞台吊灯，查看婚礼故事"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-kuluomi" style="left:66%;top:81%;width:14%;height:18%"><span class="ring"></span></div>
     <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:81%;width:16%;height:18%"><span class="ring"></span></div>
     <a class="hot tour-entry" data-act="cloud-tour" data-art-x="0.22" data-art-y="0.84" data-ring-ratio="0.047" style="left:22%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="tour-label">点击进入720°云游</span></a>
@@ -303,7 +305,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 <div id="lightbox"><div class="photo-card" id="photoCard"></div></div>
 <div id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
   <button id="storyClose" type="button" aria-label="关闭故事">×</button>
-  <div class="story-copy"><div class="story-kicker" id="storyKicker"></div><h2 class="story-title" id="storyTitle"></h2><div class="story-text" id="storyText">故事内容待补充</div></div>
+  <div class="story-copy"><div class="story-kicker" id="storyKicker"></div><h2 class="story-title" id="storyTitle"></h2><img class="story-illustration" id="storyIllustration" alt="" decoding="async" hidden><div class="story-text" id="storyText">故事内容待补充</div></div>
 </div>
 <!-- 保留两只猫的原始厚涂爪素材；前进/返回时分别从右下/左下固定轴心挥动 -->
 <div class="transition" id="tr-cat-wipe" aria-hidden="true">
@@ -450,12 +452,13 @@ playOpeningVideo();
 var lightbox=document.getElementById('lightbox'),card=document.getElementById('photoCard');
 var PHOTO={ /* 占位照片数据：臻诚提供原图后替换 */
  person:{icon:'婚',name:'我们的婚纱照',sub:'照片待替换'},
- catK:{icon:'猫',name:'库洛米 · 本尊',sub:'真实照片待替换'},
- catA:{icon:'猫',name:'奥利奥 · 本尊',sub:'真实照片待替换'},
+ engagement:{icon:'订',name:'我们的订婚照片',sub:['订婚当天','照片待提供'].join('\n'),cap:''},
+ catK:{icon:'猫',name:'库洛米 · 本尊',sub:['2021.07.16，西宁','从那天起，我们多了一份小牵挂'].join('\n')},
+ catA:{icon:'猫',name:'奥利奥 · 本尊',sub:['2023.10.07，重庆','于是，两地的思念，终于有了同一个家'].join('\n')},
  landCQ:{icon:'渝',name:'重庆 · 我们来过',sub:'旅行照片待替换'},
  landXY:{icon:'宁',name:'高原 · 我们来过',sub:'旅行照片待替换'}
 };
-function showPhoto(k){var p=PHOTO[k];if(!p)return;card.innerHTML='<div class="photo-frame"><span class="big">'+p.icon+'</span><span class="cap">'+p.name+'</span></div><div class="name">'+p.name+'</div><div class="sub">'+p.sub+'</div>';lightbox.classList.add('show');}
+function showPhoto(k){var p=PHOTO[k];if(!p)return;var cap=p.cap===undefined?p.name:p.cap;card.innerHTML='<div class="photo-frame"><span class="big">'+p.icon+'</span>'+(cap?'<span class="cap">'+cap+'</span>':'')+'</div><div class="name">'+p.name+'</div><div class="sub">'+p.sub+'</div>';lightbox.classList.add('show');}
 lightbox.addEventListener('click',function(){lightbox.classList.remove('show')});
 
 /* ================= 角落固定轴心的挥手翻幕 ================= */
@@ -599,24 +602,57 @@ document.getElementById('deck').addEventListener('click',function(e){
   var a=h.getAttribute('data-act');
   switch(a){
     case 'lamp-petals': fallingPetalsFull(h.closest('.scene'),42);break;
-    case 'meet-story': showStory('从游戏里的一次相遇开始','相遇 · 故事');break;
+    case 'meet-story': showStory('从游戏里的一次相遇开始','相遇 · 故事',[
+      '我们诞生于2019年的春风里，随《一起来捉妖》来到世间',
+      '原本只是徘徊在城市角落的小妖灵，不曾想，遇见了两位一同举着手机、寻找我们的人',
+      '我们见证过你们并肩行走，在街头捕捉妖灵，分享游戏里的奇遇',
+      '看着游戏里的相遇，慢慢变成现实里的相伴',
+      '昔日一同捉妖的伙伴，如今携手步入婚礼',
+      '曾经山野间的妖灵，跨越时光赴约，在此见证，你们终成正果'
+    ].join('\n\n'));break;
     case 'photo-person': showPhoto('person');break;
+    case 'photo-engagement': showPhoto('engagement');break;
     case 'photo-cat-kuluomi': showPhoto('catK');break;
     case 'photo-cat-aoliao': showPhoto('catA');break;
-    case 'photo-land-chongqing': showPhoto('landCQ');break;
-    case 'photo-land-plateau': showPhoto('landXY');break;
-    case 'handprint': ripple(h);toast('2025.10.16，我们订婚啦 ❤');break;
+    case 'photo-land-chongqing': showStory('2023年10月7日，重庆','小奥利奥加入了我们的家',[
+      '从那天起，重庆的夜色里，不再只有思念，还有了两只小猫',
+      '它见证了我们从相隔千里，到终于相守'
+    ].join('\n\n'),'./assets/web/story/chongqing-illustration.jpg');break;
+    case 'photo-land-plateau': showStory('2021年7月16日，西宁','小库洛米走进了我们的生活',[
+      '那时，我们相隔千里，却因为这个小生命，多了一个共同的牵挂',
+      '库洛米来自她的城市，也像一座小桥，把西宁的温柔，带到我身边'
+    ].join('\n\n'),'./assets/web/story/xining-illustration.jpg');break;
+    case 'engagement-story': showStory('叁 · 定情','订婚仪式',[
+      '2025年10月16日，红绸铺展，喜字高悬',
+      '在双方长辈的注视与祝福里，我们定下婚约',
+      '从2019年隔着千里的心动告白，到两只小猫陆续奔赴，成为我们的家人。跨越山城与高原的漫长思念，终于在此刻，落进这场满是红色暖意的订婚仪式',
+      '一纸婚约，是承诺，也是奔赴终点的约定',
+      '从此往后，我们不再是相隔两地的爱人，而是准备携手，共赴婚礼的一家人'
+    ].join('\n\n'));break;
     case 'couple-light': castCoupleLight();break;
     case 'full-petals': fallingPetalsFull(h.closest('.scene'),42);break;
-    case 'marriage-story': showStory('国徽下的承诺','领证 · 故事');break;
+    case 'marriage-story': showStory('国徽下的承诺','领证 · 故事',[
+      '2025年12月31日，岁末的最后一日',
+      '我们走进民政局，成为这一年最后登记的一对爱人',
+      '红本为证，落笔为约',
+      '跨越山城与高原的千里相思，走过告白、订婚，在旧年的末尾，定格成法律守护的相守',
+      '库洛米与奥利奥，也静静见证这一时刻',
+      '旧岁落幕，爱意不止，我们带着这份凭证，奔赴来年10月的婚礼之约'
+    ].join('\n\n'));break;
     case 'door': document.getElementById('addrModal').classList.add('show');break;
     case 'addr': copyAddr();break;
     case 'stage': document.getElementById('tlModal').classList.add('show');break;
-    case 'petal': confetti(60);toast('花瓣落满堂 🌸');break;
+    case 'wedding-story': showStory('伍 · 婚礼','婚礼 · 故事',[
+      '跨越山海，历经数载，故事终于抵达终章',
+      '2026年10月25日，在重庆禧满鸿福酒店，我们将举行婚礼',
+      '从游戏里初遇，千里奔赴，订婚、领证，两只小猫一路相伴',
+      '所有漫长等待与遥遥思念，都将在这一天，化作满堂欢喜',
+      '诚邀亲爱的你，赴这场我们期待已久的邀约，见证我们相守一生的仪式'
+    ].join('\n\n'));break;
   }
 });
 var storyModal=document.getElementById('storyModal');
-function showStory(kicker,title){document.getElementById('storyKicker').textContent=kicker;document.getElementById('storyTitle').textContent=title;document.getElementById('storyText').textContent='故事内容待补充';storyModal.classList.add('show');}
+function showStory(kicker,title,content,imageSrc){var illustration=document.getElementById('storyIllustration');document.getElementById('storyKicker').textContent=kicker;document.getElementById('storyTitle').textContent=title;document.getElementById('storyText').textContent=content||'故事内容待补充';if(imageSrc){illustration.src=imageSrc;illustration.alt=title;illustration.hidden=false;}else{illustration.hidden=true;illustration.removeAttribute('src');illustration.alt='';}storyModal.classList.add('show');}
 storyModal.addEventListener('click',function(e){if(e.target===storyModal||e.target.id==='storyClose')storyModal.classList.remove('show');});
 function newPetal(scene,left,top){
   var p=document.createElement('span');p.className='falling-petal';p.style.left=left+'%';p.style.top=top+'%';
