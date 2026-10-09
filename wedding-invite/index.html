@@ -406,7 +406,7 @@ var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
 var guideBgVideo=document.getElementById('guideBgVideo');
 var inviteMusic=document.getElementById('inviteMusic');
-function tryStartInviteMusic(){if(!inviteMusic||typeof openingVideo==='undefined'||!openingVideo.ended||cur()===0||!inviteMusic.paused)return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
+function tryStartInviteMusic(userGesture){if(!inviteMusic||typeof openingVideo==='undefined'||!inviteMusic.paused)return;if(!openingVideo.ended&&userGesture!==true&&(openingVideo.paused||openingVideo.readyState<2))return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
 function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){var poster=guideBgVideo.getAttribute('data-poster');if(poster&&!guideBgVideo.getAttribute('poster'))guideBgVideo.setAttribute('poster',poster);if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
 function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});syncGuideBackground(n);}
@@ -426,10 +426,11 @@ function playOpeningVideo(){
   if(result&&result.catch)result.catch(function(){});
 }
 function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
-openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();});
-sealOpen.addEventListener('click',function(e){e.stopPropagation();enterInvite();});
+openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();tryStartInviteMusic(true);});
+sealOpen.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic(true);enterInvite();});
 openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
 openingVideo.addEventListener('loadeddata',retryAutoplay);
+openingVideo.addEventListener('playing',function(){window.setTimeout(tryStartInviteMusic,300);});
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
 window.addEventListener('pageshow',retryAutoplay,false);
 if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
