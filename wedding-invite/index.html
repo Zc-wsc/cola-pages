@@ -471,8 +471,8 @@ var photoPrev=document.getElementById('photoPrev'),photoNext=document.getElement
 function photoRange(prefix,start,count){var out=[];for(var i=start;i<start+count;i++)out.push('./assets/web/story/photos/'+prefix+'-'+String(i).padStart(2,'0')+'.webp');return out;}
 function photoList(prefix,count){return photoRange(prefix,1,count);}
 var PHOTO={
- weddingBeach:{name:'我们的婚纱照 · 海边',sub:'第壹幕 · 海边一套',photos:photoList('wedding-beach',7)},
- weddingIndoor:{name:'我们的婚纱照 · 室内',sub:'第贰幕 · 室内一套',photos:photoList('wedding-indoor',5)},
+ weddingBeach:{name:'我们的婚纱照 · 海边',sub:'第壹幕 · 海边一套',photos:photoList('wedding-beach',3)},
+ weddingIndoor:{name:'我们的婚纱照 · 室内',sub:'第贰幕 · 室内一套',photos:photoList('wedding-indoor',3)},
  engagement:{name:'我们的订婚照片',sub:'订婚当天',photos:photoList('engagement',8)},
  marriage:{name:'我们的领证照片',sub:'领证当天',photos:photoList('marriage',4)},
  catKAct2:{name:'库洛米 · 本尊',sub:'2021.07.16，西宁\n从那天起，我们多了一份小牵挂',photos:photoRange('kulomi',1,3)},
