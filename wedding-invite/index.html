@@ -102,7 +102,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .opening-play:focus-visible,.opening-button:focus-visible{outline:3px solid #ffe4a6;outline-offset:3px}
 .opening-actions{position:absolute;inset:0;pointer-events:none}
 .opening-button{pointer-events:auto;min-height:48px;padding:10px 16px;border:1px solid rgba(201,160,99,.82);border-radius:12px;background:rgba(38,20,20,.94);color:#fff3df;font:inherit;font-size:15px;letter-spacing:.1em;cursor:pointer;touch-action:manipulation}
-#skipOpening{position:absolute;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;min-width:44px;min-height:44px;padding:9px 15px;border-radius:999px;background:rgba(20,12,12,.78);font-size:13px;white-space:nowrap}
+#skipOpening{position:absolute;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:6;min-width:44px;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:rgba(255,248,235,.78);font:inherit;font-size:clamp(11px,3vw,13px);letter-spacing:.12em;line-height:1.35;text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.75);white-space:nowrap;cursor:pointer;touch-action:manipulation}#skipOpening:active{color:rgba(255,248,235,1)}#skipOpening:focus-visible{outline:2px solid #ffe4a6;outline-offset:2px}
 .seal-open{position:absolute;left:50.3%;top:50.4%;transform:translate(-50%,-50%);width:22%;aspect-ratio:1;border:0;border-radius:50%;padding:0;background:transparent;color:#fff5e5;cursor:pointer;z-index:2;touch-action:manipulation}
 .seal-open:focus-visible{outline:3px solid #ffe4a6;outline-offset:5px}
 .seal-ring{position:absolute;inset:0;border:2px solid rgba(255,236,190,.95);border-radius:50%;box-shadow:0 0 14px rgba(255,226,164,.75),inset 0 0 12px rgba(255,226,164,.28);animation:sealPulse 1.8s ease-out infinite}
@@ -224,6 +224,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
         <video id="openingVideo" src="./assets/web/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
       </div>
+      <button id="skipOpening" type="button" aria-label="跳过开篇视频，进入第一幕">跳过开篇</button>
     </div>
   </section>
 
@@ -395,12 +396,12 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 <div class="modal" id="tlModal">
   <div class="sheet">
     <h3>婚礼当天流程</h3>
-    <div class="sub">2026 年 10 月 25 日 · 禧满鸿福酒店（流程待定稿，先占位）</div>
+    <div class="sub">2026 年 10 月 25 日 · 禧满鸿福酒店</div>
     <ul class="tl">
-      <li><b>10:58</b> 宾客入席 · 迎宾茶点</li>
-      <li><b>11:58</b> 婚礼仪式开始</li>
-      <li><b>12:38</b> 开席 · 敬酒</li>
-      <li><b>14:00</b> 送客 · 合影</li>
+      <li><b>10:58</b> 迎宾入场</li>
+      <li><b>12:08</b> 仪式开始</li>
+      <li><b>12:18</b> 午宴时间</li>
+      <li><b>17:30</b> 晚宴时间</li>
     </ul>
     <button class="close" onclick="document.getElementById('tlModal').classList.remove('show')">收 起</button>
   </div>
@@ -439,11 +440,12 @@ function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scen
 var toastTimer;
 function toast(msg,ms){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},ms||2600);}
 
-/* ================= 开篇视频：纯画面静音自动播放；失败时轻触画面重试 ================= */
+/* ================= 开篇视频：静音自动播放，可低调跳过 ================= */
 var openingVideo=document.getElementById('openingVideo');
 var openingFrame=document.querySelector('.opening-frame');
 var sealOpen=document.getElementById('sealOpen');
-function enterInvite(){playCatWipe(1,function(){openingVideo.pause();go(1);});}
+var skipOpening=document.getElementById('skipOpening');
+function enterInvite(){skipOpening.hidden=true;playCatWipe(1,function(){openingVideo.pause();go(1);});}
 function playOpeningVideo(){
   if(openingVideo.ended)return;
   openingVideo.muted=true;
@@ -452,8 +454,9 @@ function playOpeningVideo(){
 }
 function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();}
 openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();tryStartInviteMusic(true);});
+skipOpening.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic(true);enterInvite();});
 sealOpen.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic(true);enterInvite();});
-openingVideo.addEventListener('ended',function(){sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
+openingVideo.addEventListener('ended',function(){skipOpening.hidden=true;sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
 openingVideo.addEventListener('loadeddata',retryAutoplay);
 openingVideo.addEventListener('playing',function(){window.setTimeout(tryStartInviteMusic,300);});
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
