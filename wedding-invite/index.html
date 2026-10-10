@@ -465,7 +465,7 @@ if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
 playOpeningVideo();
 
 /* ================= 照片相册：仅在用户打开时加载当前照片 ================= */
-var lightbox=document.getElementById('lightbox'),photoImage=document.getElementById('photoImage');
+var lightbox=document.getElementById('lightbox'),photoImage=document.getElementById('photoImage'),photoFrame=document.querySelector('.photo-frame');
 var photoName=document.getElementById('photoName'),photoSub=document.getElementById('photoSub'),photoCount=document.getElementById('photoCount');
 var photoPrev=document.getElementById('photoPrev'),photoNext=document.getElementById('photoNext');
 function photoRange(prefix,start,count){var out=[];for(var i=start;i<start+count;i++)out.push('./assets/web/story/photos/'+prefix+'-'+String(i).padStart(2,'0')+'.webp');return out;}
@@ -484,16 +484,29 @@ var PHOTO={
  catAAct4:{name:'奥利奥 · 本尊',sub:'肆 · 红本为证',photos:photoRange('oreo',7,4)},
  catAAct5:{name:'奥利奥 · 本尊',sub:'伍 · 婚礼',photos:photoRange('oreo',11,4)}
 };
-var currentPhotoGallery=null,currentPhotoIndex=0,photoTouchX=null;
-function renderPhoto(){if(!currentPhotoGallery)return;photoName.textContent=currentPhotoGallery.name;photoSub.textContent=currentPhotoGallery.sub||'';photoImage.alt=currentPhotoGallery.name+' · 第'+(currentPhotoIndex+1)+'张';photoImage.loading='eager';photoImage.src=currentPhotoGallery.photos[currentPhotoIndex];photoCount.textContent=(currentPhotoIndex+1)+' / '+currentPhotoGallery.photos.length;var disabled=currentPhotoGallery.photos.length<2;photoPrev.disabled=disabled;photoNext.disabled=disabled;}
+var currentPhotoGallery=null,currentPhotoIndex=0,photoTouchX=null,photoRenderToken=0;
+function renderPhoto(){
+ if(!currentPhotoGallery)return;
+ photoName.textContent=currentPhotoGallery.name;photoSub.textContent=currentPhotoGallery.sub||'';
+ var renderToken=++photoRenderToken,nextImage=document.createElement('img');
+ nextImage.id='photoImage';nextImage.alt=currentPhotoGallery.name+' · 第'+(currentPhotoIndex+1)+'张';nextImage.loading='eager';nextImage.decoding='async';
+ nextImage.addEventListener('load',function(){
+   if(renderToken!==photoRenderToken||!currentPhotoGallery)return;
+   var oldImage=photoImage;if(oldImage.parentNode)oldImage.parentNode.replaceChild(nextImage,oldImage);photoImage=nextImage;
+ });
+ nextImage.addEventListener('error',function(){if(renderToken===photoRenderToken)toast('这张照片暂时加载失败，请稍后再试');});
+ nextImage.src=currentPhotoGallery.photos[currentPhotoIndex];
+ photoCount.textContent=(currentPhotoIndex+1)+' / '+currentPhotoGallery.photos.length;var disabled=currentPhotoGallery.photos.length<2;photoPrev.disabled=disabled;photoNext.disabled=disabled;
+}
 function showPhoto(k){var p=PHOTO[k];if(!p)return;currentPhotoGallery=p;currentPhotoIndex=0;renderPhoto();lightbox.classList.add('show');lightbox.setAttribute('aria-hidden','false');}
 function stepPhoto(delta){if(!currentPhotoGallery||currentPhotoGallery.photos.length<2)return;currentPhotoIndex=(currentPhotoIndex+delta+currentPhotoGallery.photos.length)%currentPhotoGallery.photos.length;renderPhoto();}
-function closePhoto(){lightbox.classList.remove('show');lightbox.setAttribute('aria-hidden','true');photoImage.removeAttribute('src');currentPhotoGallery=null;}
+function closePhoto(){photoRenderToken++;lightbox.classList.remove('show');lightbox.setAttribute('aria-hidden','true');photoImage.removeAttribute('src');currentPhotoGallery=null;}
 photoPrev.addEventListener('click',function(){stepPhoto(-1)});photoNext.addEventListener('click',function(){stepPhoto(1)});
 document.getElementById('photoClose').addEventListener('click',closePhoto);
 lightbox.addEventListener('click',function(e){if(e.target===lightbox)closePhoto();});
-photoImage.addEventListener('touchstart',function(e){if(e.touches.length===1)photoTouchX=e.touches[0].clientX;},{passive:true});
-photoImage.addEventListener('touchend',function(e){if(photoTouchX===null||!e.changedTouches.length)return;var dx=e.changedTouches[0].clientX-photoTouchX;photoTouchX=null;if(Math.abs(dx)>45)stepPhoto(dx<0?1:-1);},{passive:true});
+photoFrame.addEventListener('touchstart',function(e){if(e.touches.length===1)photoTouchX=e.touches[0].clientX;},{passive:true});
+photoFrame.addEventListener('touchend',function(e){if(photoTouchX===null||!e.changedTouches.length)return;var dx=e.changedTouches[0].clientX-photoTouchX;photoTouchX=null;if(Math.abs(dx)>45)stepPhoto(dx<0?1:-1);},{passive:true});
+photoFrame.addEventListener('touchcancel',function(){photoTouchX=null;},{passive:true});
 document.addEventListener('keydown',function(e){if(!lightbox.classList.contains('show'))return;if(e.key==='Escape'){closePhoto();e.preventDefault();e.stopImmediatePropagation();}else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){stepPhoto(e.key==='ArrowLeft'?-1:1);e.preventDefault();e.stopImmediatePropagation();}else{e.stopImmediatePropagation();}});
 
 /* ================= 角落固定轴心的挥手翻幕 ================= */
