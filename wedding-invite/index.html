@@ -221,7 +221,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
   <section class="scene" id="intro">
     <div class="opening-shell">
       <div class="opening-frame">
-        <video id="openingVideo" src="./assets/web/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
+        <video id="openingVideo" src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
       </div>
       <button id="skipOpening" type="button" aria-label="跳过开篇视频，进入第一幕">跳过开篇</button>
@@ -571,7 +571,7 @@ function playCatWipe(target,fn){
   paws.forEach(function(paw){paw.style.display=((forward&&paw.classList.contains('oreo'))||(!forward&&paw.classList.contains('kulomi')))?'block':'none';paw.style.opacity='0';});
   var wipeWidth=window.innerWidth,wipeHeight=window.innerHeight;
   var paw=forward?catWipe.querySelector('.cat-swipe-paw.oreo'):catWipe.querySelector('.cat-swipe-paw.kulomi');
-  Promise.all([loadPawArtwork(forward),warmScene(target)]).then(function(){
+  Promise.race([Promise.all([loadPawArtwork(forward),warmScene(target)]),new Promise(function(resolve){window.setTimeout(resolve,3000);})]).then(function(){
     copy=incomingScene(target);setWipeProgress(copy,0,forward,wipeWidth,wipeHeight);catWipe.appendChild(copy);
     return target===0?sceneImagesReady(copy):Promise.resolve();
   }).then(function(){
@@ -761,6 +761,8 @@ document.getElementById('guidePointDismiss').addEventListener('click',hideGuideP
 document.getElementById('guideBranchesWrap').addEventListener('click',function(e){var pin=e.target.closest('[data-guide-point]');if(!pin)return;showGuidePoint(pin.getAttribute('data-guide-point'));});
 guideModal.addEventListener('click',function(e){if(e.target===guideModal)closeWeddingGuide();});
 (function(){var target=new Date('2026-10-25T00:00:00+08:00');var d=Math.ceil((target-new Date())/86400000);var el=document.getElementById('days');el.innerHTML=d>0?('距 离 2 0 2 6 . 1 0 . 2 5 · 还 有 <b style="color:#e8b96a;font-size:18px">'+d+'</b> 天'):(d===0?'今天，是我们的大喜日子 🎊':'新婚快乐，岁岁常相见');})();
+/* 开篇播放期间预载第一幕和奥利奥爪图，减少视频结束后等待翻幕素材。 */
+warmScene(1);loadPawArtwork(true);
 </script>
 </body>
 </html>
