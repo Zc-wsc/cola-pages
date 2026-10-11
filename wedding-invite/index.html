@@ -9,8 +9,8 @@
 <meta property="og:description" content="诚邀您于 2026 年 10 月 25 日，与我们共赴婚礼之约。点击打开请柬。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://Zc-wsc.github.io/cola-pages/wedding-invite/">
-<meta property="og:image" content="https://Zc-wsc.github.io/cola-pages/wedding-invite/assets/web/wedding-invite-share.jpg">
-<meta property="og:image:secure_url" content="https://Zc-wsc.github.io/cola-pages/wedding-invite/assets/web/wedding-invite-share.jpg">
+<meta property="og:image" content="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-invite-share.jpg">
+<meta property="og:image:secure_url" content="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-invite-share.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="汪仕诚 &amp; 马晗瑜 · 婚礼请柬">
 <meta name="twitter:description" content="诚邀您于 2026 年 10 月 25 日，与我们共赴婚礼之约。点击打开请柬。">
-<meta name="twitter:image" content="https://Zc-wsc.github.io/cola-pages/wedding-invite/assets/web/wedding-invite-share.jpg">
+<meta name="twitter:image" content="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-invite-share.jpg">
 <title>汪仕诚 & 马晗瑜 · 婚礼请柬</title>
 <style>
 :root{--red:#a3242b;--deep:#6e1116;--gold:#c9a063;--paper:#f4ecdd;--ink:#3a2e26}
@@ -88,6 +88,10 @@ button,input,textarea,select{font-family:inherit}
 .photo-card .name{text-align:center;font-size:16px;letter-spacing:.14em;color:#5d3f22}
 .photo-card .sub{text-align:center;font-size:12px;line-height:1.55;color:#8a6a42;margin-top:4px;letter-spacing:.08em;white-space:pre-line}
 .photo-frame{position:relative;width:100%;height:auto;min-height:0;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo-frame.is-loading{min-height:min(42vh,280px)}
+.photo-frame.is-loading:before{content:"";position:absolute;left:50%;top:calc(50% - 14px);width:22px;height:22px;margin:-11px;border:2px solid rgba(110,17,22,.2);border-top-color:#6e1116;border-radius:50%;animation:photoSpin .8s linear infinite}
+.photo-frame.is-loading:after{content:"照片加载中…";position:absolute;left:0;right:0;top:calc(50% + 17px);text-align:center;color:#75583c;font-size:12px;letter-spacing:.08em}
+@keyframes photoSpin{to{transform:rotate(360deg)}}
 .photo-frame img{display:block;width:auto;height:auto;max-width:100%;max-height:59vh;max-height:59dvh;object-fit:contain;border-radius:4px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
 .photo-close{position:absolute;right:9px;top:7px;z-index:2;width:36px;height:36px;border:0;border-radius:50%;background:rgba(76,42,28,.13);color:#5d3f22;font-size:27px;line-height:1;cursor:pointer}
 .photo-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:10px}
@@ -222,7 +226,7 @@ button,input,textarea,select{font-family:inherit}
 </style>
 </head>
 <body>
-<audio id="inviteMusic" data-src="./assets/web/invite-bgm.m4a" loop preload="none" aria-hidden="true"></audio>
+<audio id="inviteMusic" src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/invite-bgm.m4a" loop preload="auto" aria-hidden="true"></audio>
 
 <div id="deck">
 
@@ -230,7 +234,7 @@ button,input,textarea,select{font-family:inherit}
   <section class="scene" id="intro">
     <div class="opening-shell">
       <div class="opening-frame">
-        <video id="openingVideo" src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="./assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
+        <video id="openingVideo" src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/opening-video-mobile-fast-v2.mp4" autoplay muted playsinline webkit-playsinline preload="auto" poster="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/opening-video-poster.jpg" aria-label="婚礼请柬开篇视频"></video>
         <button class="seal-open" id="sealOpen" type="button" aria-label="点击打开婚礼请柬" hidden><span class="seal-ring" aria-hidden="true"></span><span class="seal-label">点击打开</span></button>
       </div>
       <button id="skipOpening" type="button" aria-label="跳过开篇视频，进入第一幕">跳过开篇</button>
@@ -239,7 +243,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 第一幕 · 相遇 ═══════ -->
   <section class="scene" id="act1">
-    <img class="bg" data-src="./assets/web/act1.jpg" alt="第一幕 · 相遇" loading="lazy" decoding="async">
+    <img class="bg" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/act1.jpg" alt="第一幕 · 相遇" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">壹 · 相遇</div>
     <div class="hot" data-act="lamp-petals" data-art-x="0.509" data-art-y="0.180" data-ring-ratio="0.065" style="left:50.9%;top:18%;width:15vw;height:10vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击吊灯，落下花瓣"><span class="ring"></span></div>
@@ -250,7 +254,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 第二幕 · 相知 ═══════ -->
   <section class="scene" id="act2">
-    <img class="bg" data-src="./assets/web/act2.jpg" alt="第二幕 · 相知" loading="lazy" decoding="async">
+    <img class="bg" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/act2.jpg" alt="第二幕 · 相知" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">贰 · 相知</div>
     <div class="love-light" id="loveLight" aria-hidden="true"><div class="love-light-beam"></div><div class="love-light-couple"></div></div>
@@ -265,7 +269,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 第三幕 · 定情 ═══════ -->
   <section class="scene" id="act3">
-    <img class="bg" data-src="./assets/web/act3.jpg" alt="第三幕 · 定情" loading="lazy" decoding="async">
+    <img class="bg" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/act3.jpg" alt="第三幕 · 定情" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">叁 · 定情</div>
     <div class="hot" data-act="full-petals" data-art-x="0.505" data-art-y="0.105" style="left:50.5%;top:10.5%;width:26vw;height:12vh" aria-label="点击背景囍字，落下满屏花瓣"><span class="ring"></span></div>
@@ -278,7 +282,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 第四幕 · 红本为证 ═══════ -->
   <section class="scene" id="act4">
-    <img class="bg" data-src="./assets/web/act4.jpg" alt="第四幕 · 红本为证" loading="lazy" decoding="async">
+    <img class="bg" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/act4.jpg" alt="第四幕 · 红本为证" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">肆 · 红本为证</div>
     <div class="hot" data-act="marriage-story" data-art-x="0.538" data-art-y="0.172" data-ring-ratio="0.047" style="left:53.8%;top:17.2%;width:14vw;height:12vh" aria-label="点击国徽，查看领证故事"><span class="ring"></span><span class="hot-label">领证故事</span></div>
@@ -290,7 +294,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 第五幕 · 婚礼 ═══════ -->
   <section class="scene" id="act5">
-    <img class="bg" data-src="./assets/web/act5.jpg" alt="第五幕 · 婚礼" loading="lazy" decoding="async">
+    <img class="bg" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/act5.jpg" alt="第五幕 · 婚礼" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">伍 · 婚礼</div>
     <div class="hot" data-act="door" style="left:73%;top:17%;width:36%;height:24%"><span class="ring"></span><span class="hot-label">酒店地址导航</span></div>
@@ -305,7 +309,7 @@ button,input,textarea,select{font-family:inherit}
 
   <!-- ═══════ 婚礼指南入口尾幕 ═══════ -->
   <section class="scene" id="ending">
-    <video id="guideBgVideo" data-src="./assets/web/guide-background-mobile.mp4" data-poster="./assets/web/guide-background-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+    <video id="guideBgVideo" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/guide-background-mobile.mp4" data-poster="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/guide-background-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
     <div class="guide-logo-shell"><img src="./assets/branding/wedding-logo-overlay.webp" alt="汪仕诚与马晗瑜的婚礼 LOGO" loading="lazy" decoding="async" fetchpriority="low"></div>
     <button class="guide-open" id="openGuide" type="button" aria-haspopup="dialog" aria-controls="guideModal">
       <span class="guide-ring" aria-hidden="true"></span>
@@ -331,8 +335,8 @@ button,input,textarea,select{font-family:inherit}
 </div>
 <!-- 保留两只猫的原始厚涂爪素材；前进/返回时分别从右下/左下固定轴心挥动 -->
 <div class="transition" id="tr-cat-wipe" aria-hidden="true">
-  <img class="cat-swipe-paw kulomi" data-src="./assets/web/transition-paws/kulomi-paw.webp" alt="" decoding="async" draggable="false">
-  <img class="cat-swipe-paw oreo" data-src="./assets/web/transition-paws/oreo-paw.webp" alt="" decoding="async" draggable="false">
+  <img class="cat-swipe-paw kulomi" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/transition-paws/kulomi-paw.webp" alt="" decoding="async" draggable="false">
+  <img class="cat-swipe-paw oreo" data-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/transition-paws/oreo-paw.webp" alt="" decoding="async" draggable="false">
 </div>
 
 <!-- 婚礼指南交互预览：正面三栏拆分竖排；背面迎宾栏与支线地图竖排 -->
@@ -356,22 +360,22 @@ button,input,textarea,select{font-family:inherit}
     <div class="guide-scroll" id="guideScroll">
       <section class="guide-page" id="guideMainPage" aria-label="婚礼主线指南长图">
         <div class="guide-long-wrap" id="guideMainWrap">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-01.webp" width="1067" height="1200" alt="婚礼指南正面：婚礼Online任务信息、交通住宿攻略、婚礼现场任务详情，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-02.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-03.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-04.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-05.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-v1/main-06.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-01.webp" width="1067" height="1200" alt="婚礼指南正面：婚礼Online任务信息、交通住宿攻略、婚礼现场任务详情，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-02.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-03.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-04.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-05.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-v1/main-06.webp" width="1067" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
         </div>
       </section>
       <section class="guide-page" id="guideBranchesPage" aria-label="重庆支线指南长图" hidden>
         <div class="guide-long-wrap" id="guideBranchesWrap">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-01.webp" width="2128" height="1200" alt="婚礼指南背面：重庆欢迎页与副本一至七地图，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-02.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-03.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-04.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-05.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-06.webp" width="2128" height="1169" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-01.webp" width="2128" height="1200" alt="婚礼指南背面：重庆欢迎页与副本一至七地图，按手机阅读顺序竖向拼接" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-02.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-03.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-04.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-05.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-06.webp" width="2128" height="1169" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <div class="guide-branch-hint">以下光圈点开可查看详细副本信息哟~</div>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:70.6%" type="button" data-guide-point="green" aria-label="打开副本一：绿心公园地图搜索"></button>
           <button class="guide-pin" style="--pin-x:39.5%;--pin-y:73.6%" type="button" data-guide-point="worldtree" aria-label="打开副本二：世界树地图搜索"></button>
@@ -441,7 +445,8 @@ var deck=document.getElementById('deck');
 var scenes=[].slice.call(document.querySelectorAll('.scene'));
 var guideBgVideo=document.getElementById('guideBgVideo');
 var inviteMusic=document.getElementById('inviteMusic');
-function tryStartInviteMusic(userGesture){if(!inviteMusic||typeof openingVideo==='undefined'||!inviteMusic.paused)return;if(!openingVideo.ended&&userGesture!==true&&(openingVideo.paused||openingVideo.readyState<2))return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
+function primeInviteMusic(){if(!inviteMusic)return;var src=inviteMusic.getAttribute('data-src');if(src&&!inviteMusic.getAttribute('src'))inviteMusic.src=src;}
+function tryStartInviteMusic(userGesture){if(!inviteMusic||typeof openingVideo==='undefined')return;primeInviteMusic();if(!inviteMusic.paused)return;if(!openingVideo.ended&&userGesture!==true&&(openingVideo.paused||openingVideo.readyState<2))return;var result=inviteMusic.play();if(result&&result.catch)result.catch(function(){});}
 function syncGuideBackground(n){if(!guideBgVideo)return;if(n===scenes.length-1){var poster=guideBgVideo.getAttribute('data-poster');if(poster&&!guideBgVideo.getAttribute('poster'))guideBgVideo.setAttribute('poster',poster);if(!guideBgVideo.getAttribute('src')){guideBgVideo.src=guideBgVideo.getAttribute('data-src');guideBgVideo.load();}var playResult=guideBgVideo.play();if(playResult&&playResult.catch)playResult.catch(function(){});}else if(!guideBgVideo.paused)guideBgVideo.pause();}
 function cur(){var h=deck.clientHeight||innerHeight;var i=Math.round(deck.scrollTop/h);return Math.min(scenes.length-1,Math.max(0,i));}
 function go(i){var n=Math.max(0,Math.min(scenes.length-1,i));deck.scrollTop=scenes[n].offsetTop;scenes.forEach(function(scene,index){scene.classList.toggle('is-current',index===n);});syncGuideBackground(n);}
@@ -465,9 +470,9 @@ function retryAutoplay(){if(openingVideo.paused&&!openingVideo.ended)playOpening
 openingFrame.addEventListener('click',function(){if(openingVideo.paused&&!openingVideo.ended)playOpeningVideo();tryStartInviteMusic(true);});
 skipOpening.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic(true);enterInvite();});
 sealOpen.addEventListener('click',function(e){e.stopPropagation();tryStartInviteMusic(true);enterInvite();});
-openingVideo.addEventListener('ended',function(){skipOpening.hidden=true;sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);});
-openingVideo.addEventListener('loadeddata',retryAutoplay);
-openingVideo.addEventListener('playing',function(){window.setTimeout(tryStartInviteMusic,300);});
+openingVideo.addEventListener('ended',function(){skipOpening.hidden=true;sealOpen.hidden=false;warmScene(1);loadPawArtwork(true);preloadAllInviteImages();});
+openingVideo.addEventListener('loadeddata',function(){retryAutoplay();preloadAllInviteImages();});
+openingVideo.addEventListener('playing',function(){primeInviteMusic();preloadAllInviteImages();window.setTimeout(tryStartInviteMusic,300);});
 document.addEventListener('WeixinJSBridgeReady',retryAutoplay,false);
 window.addEventListener('pageshow',retryAutoplay,false);
 if(window.WeixinJSBridge)window.setTimeout(retryAutoplay,0);
@@ -477,7 +482,7 @@ playOpeningVideo();
 var lightbox=document.getElementById('lightbox'),photoImage=document.getElementById('photoImage'),photoFrame=document.querySelector('.photo-frame');
 var photoName=document.getElementById('photoName'),photoSub=document.getElementById('photoSub'),photoCount=document.getElementById('photoCount');
 var photoPrev=document.getElementById('photoPrev'),photoNext=document.getElementById('photoNext');
-function photoRange(prefix,start,count){var out=[];for(var i=start;i<start+count;i++)out.push('./assets/web/story/photos/'+prefix+'-'+String(i).padStart(2,'0')+'.webp');return out;}
+function photoRange(prefix,start,count){var out=[];for(var i=start;i<start+count;i++)out.push('https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/story/photos/'+prefix+'-'+String(i).padStart(2,'0')+'.webp');return out;}
 function photoList(prefix,count){return photoRange(prefix,1,count);}
 var PHOTO={
  weddingBeach:{name:'我们的婚纱照 · 海边',sub:'第壹幕 · 海边一套',photos:photoList('wedding-beach',3)},
@@ -493,17 +498,19 @@ var PHOTO={
  catAAct4:{name:'奥利奥 · 本尊',sub:'肆 · 红本为证',photos:photoRange('oreo',7,4)},
  catAAct5:{name:'奥利奥 · 本尊',sub:'伍 · 婚礼',photos:photoRange('oreo',11,4)}
 };
-var currentPhotoGallery=null,currentPhotoIndex=0,photoTouchX=null,photoRenderToken=0;
+var currentPhotoGallery=null,currentPhotoIndex=0,photoTouchX=null,photoRenderToken=0,photoPreloadCache=Object.create(null);
+function preloadNextPhoto(){if(!currentPhotoGallery||currentPhotoGallery.photos.length<2)return;var url=currentPhotoGallery.photos[(currentPhotoIndex+1)%currentPhotoGallery.photos.length];if(photoPreloadCache[url])return;var image=new Image();image.decoding='async';image.setAttribute('fetchpriority','low');photoPreloadCache[url]=image;image.src=url;}
 function renderPhoto(){
  if(!currentPhotoGallery)return;
  photoName.textContent=currentPhotoGallery.name;photoSub.textContent=currentPhotoGallery.sub||'';
  var renderToken=++photoRenderToken,nextImage=document.createElement('img');
- nextImage.id='photoImage';nextImage.alt=currentPhotoGallery.name+' · 第'+(currentPhotoIndex+1)+'张';nextImage.loading='eager';nextImage.decoding='async';
+ if(!photoImage||!photoImage.complete||!photoImage.naturalWidth)photoFrame.classList.add('is-loading');
+ nextImage.id='photoImage';nextImage.alt=currentPhotoGallery.name+' · 第'+(currentPhotoIndex+1)+'张';nextImage.loading='eager';nextImage.decoding='async';nextImage.setAttribute('fetchpriority','high');
  nextImage.addEventListener('load',function(){
    if(renderToken!==photoRenderToken||!currentPhotoGallery)return;
-   var oldImage=photoImage;if(oldImage.parentNode)oldImage.parentNode.replaceChild(nextImage,oldImage);photoImage=nextImage;
+   var oldImage=photoImage;if(oldImage.parentNode)oldImage.parentNode.replaceChild(nextImage,oldImage);photoImage=nextImage;photoFrame.classList.remove('is-loading');preloadNextPhoto();
  });
- nextImage.addEventListener('error',function(){if(renderToken===photoRenderToken)toast('这张照片暂时加载失败，请稍后再试');});
+ nextImage.addEventListener('error',function(){if(renderToken===photoRenderToken){photoFrame.classList.remove('is-loading');toast('这张照片暂时加载失败，请稍后再试');}});
  nextImage.src=currentPhotoGallery.photos[currentPhotoIndex];
  photoCount.textContent=(currentPhotoIndex+1)+' / '+currentPhotoGallery.photos.length;var disabled=currentPhotoGallery.photos.length<2;photoPrev.disabled=disabled;photoNext.disabled=disabled;
 }
@@ -537,7 +544,7 @@ function warmScene(index){
   if(sceneWarmPromises[index])return sceneWarmPromises[index];
   var img=scenes[index].querySelector('.bg');
   if(!img)return Promise.resolve();
-  img.loading='eager';
+  img.loading='eager';img.setAttribute('fetchpriority','high');
   if(!img.getAttribute('src')){var deferredSrc=img.getAttribute('data-src');if(deferredSrc)img.src=deferredSrc;}
   sceneWarmPromises[index]=new Promise(function(resolve){
     var settled=false,timer;
@@ -676,11 +683,11 @@ document.getElementById('deck').addEventListener('click',function(e){
     case 'photo-land-chongqing': showStory('2023年10月7日，重庆','小奥利奥加入了我们的家',[
       '从那天起，重庆的夜色里，不再只有思念，还有了两只小猫',
       '它见证了我们从相隔千里，到终于相守'
-    ].join('\n\n'),'./assets/web/story/chongqing-illustration.jpg');break;
+    ].join('\n\n'),'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/story/chongqing-illustration.jpg');break;
     case 'photo-land-plateau': showStory('2021年7月16日，西宁','小库洛米走进了我们的生活',[
       '那时，我们相隔千里，却因为这个小生命，多了一个共同的牵挂',
       '库洛米来自她的城市，也像一座小桥，把西宁的温柔，带到我身边'
-    ].join('\n\n'),'./assets/web/story/xining-illustration.jpg');break;
+    ].join('\n\n'),'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/story/xining-illustration.jpg');break;
     case 'engagement-story': showStory('叁 · 定情','订婚仪式',[
       '2025年10月16日，红绸铺展，喜字高悬',
       '在双方长辈的注视与祝福里，我们定下婚约',
@@ -724,24 +731,28 @@ function ripple(h){var scene=h.closest('.scene');var r=document.createElement('d
 function copyAddr(){var addr='重庆市两江新区腾芳大道8号 禧满鸿福酒店';if(navigator.clipboard){navigator.clipboard.writeText(addr).then(function(){toast('地址已复制 ✂')},function(){toast(addr)});}else{toast(addr);}}
 document.getElementById('copyBtn').onclick=copyAddr;
 
-/* ================= 背景音乐：尝试自动播放，受设备策略拦截时在首次交互后重试 ================= */
-document.addEventListener('WeixinJSBridgeReady',tryStartInviteMusic,false);
-window.addEventListener('pageshow',tryStartInviteMusic,false);
-document.addEventListener('touchstart',tryStartInviteMusic,{passive:true});
-document.addEventListener('click',tryStartInviteMusic);
-if(window.WeixinJSBridge)window.setTimeout(tryStartInviteMusic,0);
+/* ================= 背景音乐：微信桥接优先启动，其他浏览器在首次真实操作时重试 ================= */
+function startInviteMusicFromWeixin(){primeInviteMusic();var start=function(){tryStartInviteMusic(true);};if(window.WeixinJSBridge&&typeof window.WeixinJSBridge.invoke==='function'){try{window.WeixinJSBridge.invoke('getNetworkType',{},start);}catch(e){start();}}else start();}
+document.addEventListener('WeixinJSBridgeReady',startInviteMusicFromWeixin,false);
+window.addEventListener('pageshow',function(){primeInviteMusic();tryStartInviteMusic(false);},false);
+if(window.WeixinJSBridge)window.setTimeout(startInviteMusicFromWeixin,0);
+function startInviteMusicFromUserInput(){tryStartInviteMusic(true);preloadAllInviteImages();}
+document.addEventListener('touchstart',startInviteMusicFromUserInput,{capture:true,passive:true});
+document.addEventListener('pointerdown',startInviteMusicFromUserInput,{capture:true,passive:true});
+document.addEventListener('click',startInviteMusicFromUserInput,true);
+document.addEventListener('keydown',startInviteMusicFromUserInput,true);
 
 /* ================= 婚礼指南尾幕与交互长图 ================= */
 var guideModal=document.getElementById('guideModal'),guideScroll=document.getElementById('guideScroll'),guidePointCard=document.getElementById('guidePointCard');
 var guidePoints={
-  green:{title:'副本一 · 绿心公园',image:'./assets/web/wedding-guide/points/green-photo.webp',query:'麓溪湖 绿心公园 重庆',coordinate:'麓溪湖·绿心公园',transport:'【直达传送阵】自驾/网约车：11km / 25min\n【公共传送网】公交/轻轨：不推荐，无直达',task:'沿湖畔小径登上鹿岛，与梅花鹿来一场轻柔的近距离邂逅！',features:'山谷廊桥、层叠花境、湖面倒影、开阔草坪、鹿灵互动。',reminder:'提前在「麓悦江城」小程序预约观光车和撸鹿。'},
-  worldtree:{title:'副本二 · 世界树',image:'./assets/web/wedding-guide/points/worldtree-photo.webp',query:'重庆光环花园城 世界树',coordinate:'光环花园城B馆（中央公园）',transport:'【直达传送阵】自驾/网约车：3.5km / 10min\n【公共传送网】公交/轻轨：3.1km / 22min（轨道9号线，步行约870米）',task:'进入B馆的奇幻森林，寻找机械巨树与森林中的有趣装置！',features:'B馆室内奇幻森林、机械巨树与互动装置。',reminder:'馆内装置与活动开放情况以商场当日公告和现场安排为准。'},
-  forest:{title:'副本三 · 沐光森林',image:'./assets/web/wedding-guide/points/forest-photo.webp',query:'重庆光环购物公园 沐光森林',coordinate:'重庆光环购物公园·沐光森林\n两江新区湖彩路118号',transport:'【直达传送阵】自驾/网约车：14.7km / 25min\n【公共传送网】公交/轻轨：15.6km / 57min（公交679路转轨道5号线，步行约560米）',task:'穿行在层叠的室内雨林之间，完成一次“商场里的雨林探索”！',features:'层叠室内雨林与绿植景观，适合边走边探索、拍照留念。',reminder:'商场营业时间与场内体验项目开放情况以当天公告为准。'},
-  nanbin:{title:'副本四 · 南滨路连环副本',image:'./assets/web/wedding-guide/points/nanbin-photo.webp',query:'下浩里 重庆',coordinate:'南岸区下浩里老街 → 沿江步行 → 长江艺术广场',transport:'【直达传送阵】自驾/网约车：24.8km / 32min\n【公共传送网】公交/轻轨：22km / 1小时6min（轨道9号线转6号线，步行约1km）',task:'先漫游下浩里的老街，再沿江步行至长江艺术广场，拍摄重庆“落地签”！',features:'下浩里老街、南滨路江岸与长江艺术广场；“落地签”为机车约拍商家服务。',reminder:'“落地签”不是固定景点官方项目；集合点、价格与安全规则按预约商家通知确认。'},
-  museum:{title:'副本五 · 三峡博物馆',image:'./assets/web/wedding-guide/points/museum-photo.webp',query:'重庆中国三峡博物馆',coordinate:'重庆市渝中区人民路236号',transport:'【直达传送阵】自驾/网约车：24.3km / 36min\n【公共传送网】公交/轻轨：20.6km / 1小时2min（轨道9号线转10号线，步行约1km）',task:'进入博物馆解锁巴渝历史，收集一段“读懂重庆”的历史情报！',features:'巴渝历史文化展陈与重庆城市记忆。',reminder:'开放时间、入馆证件及预约要求以博物馆官方当日公告为准；建议携带有效身份证件。'},
-  jiangtan:{title:'副本六 · 江北嘴江滩夜景',image:'./assets/web/wedding-guide/points/jiangtan-photo.webp',query:'江北嘴江滩公园 重庆',coordinate:'重庆市江北区江北嘴江滩公园',transport:'【直达传送阵】自驾/网约车：23.1km / 30min\n【公共传送网】公交/轻轨：19.8km / 1小时5min（轨道9号线转6号线，步行约1.5km）',task:'沿江漫步到观景处，把千厮门大桥和洪崖洞一起收入镜头，完成一张重庆夜景合影！',features:'江岸步道、两江夜景，可将千厮门大桥与洪崖洞一同收入镜头。',reminder:'夜景受天气与照明安排影响；临江步道注意脚下与随身物品。'},
-  trail:{title:'副本七 · 山城步道',image:'./assets/web/wedding-guide/points/trail-photo.webp',query:'山城第三步道 重庆',coordinate:'渝中区中兴路234号附近（山城第三步道/山城巷段）',transport:'【直达传送阵】自驾/网约车：27.3km / 56min\n【公共传送网】公交/轻轨：23km / 1小时18min（末段步行约1.6km）',task:'从高处沿山城巷道向下探索，收集山城坡坎间的老重庆记忆！',features:'山城巷道、坡坎台阶与老重庆街巷景观。',reminder:'坡坎和台阶较多，建议穿舒适防滑鞋、按体力慢行；雨天注意路面湿滑。'},
-  hotel:{title:'主线起点 · 禧满鸿福酒店',image:'./assets/web/wedding-guide/points/hotel.webp',query:'重庆禧满鸿福酒店',coordinate:'重庆市两江新区腾芳大道8号',transport:'婚礼指南地图起点；各副本路线请以出发当天实时导航为准。',task:'从主线关卡出发，按兴趣选择想探索的重庆支线副本。',features:'婚礼集合点与各条支线的路线起点。',reminder:'导航路线与耗时会随路况变化，出发前请重新确认。'}
+  green:{title:'副本一 · 绿心公园',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/green-photo.webp',query:'麓溪湖 绿心公园 重庆',coordinate:'麓溪湖·绿心公园',transport:'【直达传送阵】自驾/网约车：11km / 25min\n【公共传送网】公交/轻轨：不推荐，无直达',task:'沿湖畔小径登上鹿岛，与梅花鹿来一场轻柔的近距离邂逅！',features:'山谷廊桥、层叠花境、湖面倒影、开阔草坪、鹿灵互动。',reminder:'提前在「麓悦江城」小程序预约观光车和撸鹿。'},
+  worldtree:{title:'副本二 · 世界树',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/worldtree-photo.webp',query:'重庆光环花园城 世界树',coordinate:'光环花园城B馆（中央公园）',transport:'【直达传送阵】自驾/网约车：3.5km / 10min\n【公共传送网】公交/轻轨：3.1km / 22min（轨道9号线，步行约870米）',task:'进入B馆的奇幻森林，寻找机械巨树与森林中的有趣装置！',features:'B馆室内奇幻森林、机械巨树与互动装置。',reminder:'馆内装置与活动开放情况以商场当日公告和现场安排为准。'},
+  forest:{title:'副本三 · 沐光森林',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/forest-photo.webp',query:'重庆光环购物公园 沐光森林',coordinate:'重庆光环购物公园·沐光森林\n两江新区湖彩路118号',transport:'【直达传送阵】自驾/网约车：14.7km / 25min\n【公共传送网】公交/轻轨：15.6km / 57min（公交679路转轨道5号线，步行约560米）',task:'穿行在层叠的室内雨林之间，完成一次“商场里的雨林探索”！',features:'层叠室内雨林与绿植景观，适合边走边探索、拍照留念。',reminder:'商场营业时间与场内体验项目开放情况以当天公告为准。'},
+  nanbin:{title:'副本四 · 南滨路连环副本',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/nanbin-photo.webp',query:'下浩里 重庆',coordinate:'南岸区下浩里老街 → 沿江步行 → 长江艺术广场',transport:'【直达传送阵】自驾/网约车：24.8km / 32min\n【公共传送网】公交/轻轨：22km / 1小时6min（轨道9号线转6号线，步行约1km）',task:'先漫游下浩里的老街，再沿江步行至长江艺术广场，拍摄重庆“落地签”！',features:'下浩里老街、南滨路江岸与长江艺术广场；“落地签”为机车约拍商家服务。',reminder:'“落地签”不是固定景点官方项目；集合点、价格与安全规则按预约商家通知确认。'},
+  museum:{title:'副本五 · 三峡博物馆',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/museum-photo.webp',query:'重庆中国三峡博物馆',coordinate:'重庆市渝中区人民路236号',transport:'【直达传送阵】自驾/网约车：24.3km / 36min\n【公共传送网】公交/轻轨：20.6km / 1小时2min（轨道9号线转10号线，步行约1km）',task:'进入博物馆解锁巴渝历史，收集一段“读懂重庆”的历史情报！',features:'巴渝历史文化展陈与重庆城市记忆。',reminder:'开放时间、入馆证件及预约要求以博物馆官方当日公告为准；建议携带有效身份证件。'},
+  jiangtan:{title:'副本六 · 江北嘴江滩夜景',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/jiangtan-photo.webp',query:'江北嘴江滩公园 重庆',coordinate:'重庆市江北区江北嘴江滩公园',transport:'【直达传送阵】自驾/网约车：23.1km / 30min\n【公共传送网】公交/轻轨：19.8km / 1小时5min（轨道9号线转6号线，步行约1.5km）',task:'沿江漫步到观景处，把千厮门大桥和洪崖洞一起收入镜头，完成一张重庆夜景合影！',features:'江岸步道、两江夜景，可将千厮门大桥与洪崖洞一同收入镜头。',reminder:'夜景受天气与照明安排影响；临江步道注意脚下与随身物品。'},
+  trail:{title:'副本七 · 山城步道',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/trail-photo.webp',query:'山城第三步道 重庆',coordinate:'渝中区中兴路234号附近（山城第三步道/山城巷段）',transport:'【直达传送阵】自驾/网约车：27.3km / 56min\n【公共传送网】公交/轻轨：23km / 1小时18min（末段步行约1.6km）',task:'从高处沿山城巷道向下探索，收集山城坡坎间的老重庆记忆！',features:'山城巷道、坡坎台阶与老重庆街巷景观。',reminder:'坡坎和台阶较多，建议穿舒适防滑鞋、按体力慢行；雨天注意路面湿滑。'},
+  hotel:{title:'主线起点 · 禧满鸿福酒店',image:'https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/points/hotel.webp',query:'重庆禧满鸿福酒店',coordinate:'重庆市两江新区腾芳大道8号',transport:'婚礼指南地图起点；各副本路线请以出发当天实时导航为准。',task:'从主线关卡出发，按兴趣选择想探索的重庆支线副本。',features:'婚礼集合点与各条支线的路线起点。',reminder:'导航路线与耗时会随路况变化，出发前请重新确认。'}
 };
 function hideGuidePoint(){guidePointCard.hidden=true;}
 function setGuideMapLink(query){var link=document.getElementById('guideMapLink');if(query){link.href='https://uri.amap.com/search?keyword='+encodeURIComponent(query)+'&city=重庆市';link.hidden=false;}else{link.removeAttribute('href');link.hidden=true;}}
@@ -783,7 +794,22 @@ document.getElementById('guidePointDismiss').addEventListener('click',hideGuideP
 document.getElementById('guideBranchesWrap').addEventListener('click',function(e){var pin=e.target.closest('[data-guide-point]');if(!pin)return;showGuidePoint(pin.getAttribute('data-guide-point'));});
 guideModal.addEventListener('click',function(e){if(e.target===guideModal)closeWeddingGuide();});
 (function(){var target=new Date('2026-10-25T00:00:00+08:00');var d=Math.ceil((target-new Date())/86400000);var el=document.getElementById('days');el.innerHTML=d>0?('距 离 2 0 2 6 . 1 0 . 2 5 · 还 有 <b style="color:#e8b96a;font-size:18px">'+d+'</b> 天'):(d===0?'今天，是我们的大喜日子 🎊':'新婚快乐，岁岁常相见');})();
-/* 开篇播放期间预载第一幕和奥利奥爪图，减少视频结束后等待翻幕素材。 */
+/* 视频拿到首帧后持续预载所有幕背景、相册照片与婚礼指南图片，不等访客逐项点击。 */
+var inviteImageWarmStarted=false;
+function preloadAllInviteImages(){
+ if(inviteImageWarmStarted)return;
+ inviteImageWarmStarted=true;
+ var urls=[],seen=Object.create(null),cosAssetPrefix='https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/';
+ function add(url){if(!url||/^(?:data|blob):/i.test(url)||(/^(?:https?:)?\/\//i.test(url)&&url.indexOf(cosAssetPrefix)!==0)||seen[url])return;seen[url]=true;urls.push(url);}
+ document.querySelectorAll('.scene .bg,#tr-cat-wipe img,.guide-logo-shell img,video[poster],video[data-poster],img[data-guide-src]').forEach(function(img){var isVideo=img.tagName==='VIDEO';add(isVideo?(img.getAttribute('poster')||img.getAttribute('data-poster')):(img.getAttribute('src')||img.getAttribute('data-src')||img.getAttribute('data-guide-src')));});
+ Object.keys(PHOTO).forEach(function(key){PHOTO[key].photos.forEach(add);});
+ Object.keys(guidePoints).forEach(function(key){add(guidePoints[key].image);});
+ ['meta[property="og:image"]'].forEach(function(selector){document.querySelectorAll(selector).forEach(function(meta){add(meta.getAttribute('content'));});});
+ ['https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/story/chongqing-illustration.jpg','https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/story/xining-illustration.jpg'].forEach(add);
+ var cursor=0,active=0,maxConcurrent=4;
+ function pump(){while(active<maxConcurrent&&cursor<urls.length){var url=urls[cursor++];active++;(function(src){var image=new Image();image.decoding='async';image.setAttribute('fetchpriority','low');image.onload=image.onerror=function(){image.onload=image.onerror=null;active--;pump();};image.src=src;})(url);}}
+ pump();
+}
 warmScene(1);loadPawArtwork(true);
 </script>
 </body>
