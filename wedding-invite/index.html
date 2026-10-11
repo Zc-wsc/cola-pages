@@ -25,7 +25,8 @@
 :root{--red:#a3242b;--deep:#6e1116;--gold:#c9a063;--paper:#f4ecdd;--ink:#3a2e26}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:#1a1214;color:var(--ink);overflow:hidden}
+body{font-family:"STXingkai","华文行楷","Kaiti SC","STKaiti","KaiTi","楷体","Noto Serif SC","Songti SC","STSong",serif;background:#1a1214;color:var(--ink);overflow:hidden}
+button,input,textarea,select{font-family:inherit}
 #deck{height:100%;position:relative;overflow:hidden;scroll-behavior:auto;overscroll-behavior:none;touch-action:none}
 #deck::-webkit-scrollbar{display:none}
 .scene{position:relative;height:100vh;height:100dvh;overflow:hidden;background:#111}
@@ -36,7 +37,9 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .hot:active{background:transparent;filter:brightness(1.25)}
 .hot .ring{position:absolute;left:50%;top:50%;width:var(--ring-size,clamp(30px,8vw,50px));height:var(--ring-size,clamp(30px,8vw,50px));transform:translate(-50%,-50%);border:1.5px solid rgba(255,247,232,.94);border-radius:50%;box-shadow:0 0 0 1px rgba(113,52,42,.5),0 0 10px rgba(255,220,170,.72),inset 0 0 5px rgba(255,240,220,.42);pointer-events:none}
 .tour-entry{overflow:visible;text-decoration:none;color:inherit}
+.hot-label{position:absolute;left:50%;top:calc(50% - 23px);transform:translate(-50%,-100%);z-index:2;padding:6px 9px;border:1px solid rgba(255,230,188,.9);border-radius:999px;background:rgba(25,18,16,.86);color:#fff7e9;font-size:clamp(11px,3.2vw,13px);line-height:1.25;letter-spacing:.04em;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 2px 10px rgba(0,0,0,.32);pointer-events:none}
 .tour-label{position:absolute;left:calc(50% + 18px);top:50%;transform:translateY(-50%);z-index:1;padding:7px 10px;border:1px solid rgba(255,230,188,.8);border-radius:999px;background:rgba(25,18,16,.78);color:#fff7e9;font-size:clamp(11px,3.2vw,13px);line-height:1.25;letter-spacing:.04em;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.45);box-shadow:0 2px 10px rgba(0,0,0,.28)}
+#act1 .hot .ring{border-width:2px}
 .hot .ring:before,.hot .ring:after{content:"";position:absolute;inset:-1px;border:1.5px solid rgba(255,236,207,.98);border-radius:50%;box-shadow:0 0 0 1px rgba(105,40,32,.32),0 0 12px rgba(255,225,174,.82);opacity:0;animation:ring 2.8s ease-out infinite paused}
 .hot .ring:after{animation-delay:1.4s}
 .scene.is-current .hot .ring:before,.scene.is-current .hot .ring:after{animation-play-state:running}
@@ -47,6 +50,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 /* ---------- 轻提示：说明可以上滑，不参与点击和手势拦截 ---------- */
 .next-scene-hint{position:absolute;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:2px;white-space:nowrap;color:rgba(255,248,235,.96);font-size:clamp(11px,3vw,13px);letter-spacing:.12em;line-height:1.35;text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.75);pointer-events:none;user-select:none}
 .next-scene-arrow{font-family:Arial,sans-serif;font-size:18px;line-height:1;animation:nextHintFloat 1.8s ease-in-out infinite}
+.hotspot-intro{font-size:clamp(10px,2.7vw,11px);letter-spacing:.04em;line-height:1.3;color:rgba(255,248,235,.8);text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 8px rgba(0,0,0,.7);white-space:nowrap;pointer-events:none;user-select:none}
 @keyframes nextHintFloat{0%,100%{transform:translateY(2px);opacity:.72}50%{transform:translateY(-3px);opacity:1}}
 @media(prefers-reduced-motion:reduce){.next-scene-arrow{animation:none}}
 /* ---------- 气泡 / 提示 ---------- */
@@ -151,7 +155,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .guide-ring:before,.guide-ring:after{content:"";position:absolute;inset:-1px;border:1px solid rgba(255,243,218,.94);border-radius:50%;opacity:0;animation:guidePulse 2.8s ease-out infinite}
 .guide-ring:after{animation-delay:1.4s}
 @keyframes guidePulse{0%{opacity:0;transform:scale(.56)}18%{opacity:.88}75%{opacity:.45;transform:scale(1.35)}100%{opacity:0;transform:scale(1.62)}}
-.guide-label{font-size:clamp(14px,4vw,16px);letter-spacing:.14em;white-space:nowrap}
+.guide-label{font-size:clamp(18px,5.2vw,21px);letter-spacing:.14em;white-space:nowrap}
 #days{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2;color:#fff3df;font-size:12px;letter-spacing:.18em;white-space:nowrap;text-shadow:0 2px 9px rgba(30,17,12,.9)}
 #days b{color:#ffe4aa!important}
 /* ---------- 婚礼指南交互预览 ---------- */
@@ -175,6 +179,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
 .guide-scroll.zoomed{touch-action:pan-x pan-y}
 .guide-scroll.zoomed .guide-long-wrap{width:200%;max-width:none;margin:0}
 .guide-pin{position:absolute;z-index:2;left:var(--pin-x);top:var(--pin-y);width:clamp(30px,8vw,42px);height:clamp(30px,8vw,42px);transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.95);border-radius:50%;background:rgba(163,36,43,.18);box-shadow:0 0 0 2px rgba(163,36,43,.54),0 1px 8px rgba(43,25,20,.28);cursor:pointer;touch-action:manipulation}
+.guide-branch-hint{position:absolute;z-index:3;left:50%;top:68%;transform:translate(-50%,-50%);max-width:88%;padding:6px 10px;border:1px solid rgba(163,36,43,.24);border-radius:999px;background:rgba(255,250,240,.92);color:#8c1e28;font-size:clamp(11px,3vw,13px);line-height:1.35;letter-spacing:.04em;white-space:nowrap;text-align:center;box-shadow:0 2px 9px rgba(68,44,26,.14);pointer-events:none;user-select:none}
 .guide-pin:before,.guide-pin:after{content:"";position:absolute;inset:3px;border:1px solid rgba(255,248,232,.95);border-radius:50%}
 .guide-pin:after{inset:-5px;border-color:rgba(163,36,43,.6);animation:guidePinPulse 2.3s ease-out infinite}
 @keyframes guidePinPulse{0%{opacity:.8;transform:scale(.7)}100%{opacity:0;transform:scale(1.65)}}
@@ -233,10 +238,10 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act1.jpg" alt="第一幕 · 相遇" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">壹 · 相遇</div>
-    <div class="hot" data-act="lamp-petals" data-art-x="0.509" data-art-y="0.180" data-ring-ratio="0.047" style="left:50.9%;top:18%;width:15vw;height:10vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击吊灯，落下花瓣"><span class="ring"></span></div>
-    <div class="hot" data-act="meet-story" data-art-x="0.383" data-art-y="0.550" data-ring-ratio="0.047" style="left:38.3%;top:55%;width:20vw;height:15vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击精灵，查看相遇故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-wedding-beach" data-art-x="0.717" data-art-y="0.689" data-ring-ratio="0.047" style="left:71.7%;top:68.9%;width:22vw;height:23vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新人，查看海边婚纱照"><span class="ring"></span></div>
-    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看贰·相知</span></div>
+    <div class="hot" data-act="lamp-petals" data-art-x="0.509" data-art-y="0.180" data-ring-ratio="0.065" style="left:50.9%;top:18%;width:15vw;height:10vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击吊灯，落下花瓣"><span class="ring"></span></div>
+    <div class="hot" data-act="meet-story" data-art-x="0.383" data-art-y="0.550" data-ring-ratio="0.065" style="left:38.3%;top:55%;width:20vw;height:15vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击精灵，查看相遇故事"><span class="ring"></span><span class="hot-label">相遇故事</span></div>
+    <div class="hot" data-act="photo-wedding-beach" data-art-x="0.580" data-art-y="0.640" data-ring-ratio="0.065" style="left:58%;top:64%;width:22vw;height:23vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新人，查看海边婚纱照"><span class="ring"></span><span class="hot-label">新人美照</span></div>
+    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看贰·相知</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
   <!-- ═══════ 第二幕 · 相知 ═══════ -->
@@ -246,12 +251,12 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="chapter-tag">贰 · 相知</div>
     <div class="love-light" id="loveLight" aria-hidden="true"><div class="love-light-beam"></div><div class="love-light-couple"></div></div>
     <div class="hot" data-act="couple-light" data-art-x="0.505" data-art-y="0.195" style="left:50.5%;top:19.5%;width:16vw;height:10vh" aria-label="点击头部光照，照亮新人"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%" aria-label="点击重庆，查看小奥利奥的故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%" aria-label="点击西宁，查看小库洛米的故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-wedding-indoor" style="left:52%;top:78%;width:32%;height:30%" aria-label="点击新人，查看室内婚纱照"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.305" data-art-y="0.845" data-ring-ratio="0.047" style="left:30.5%;top:84.5%;width:18%;height:14%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.585" data-art-y="0.905" data-ring-ratio="0.047" style="left:58.5%;top:90.5%;width:22%;height:14%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
-    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看叁·定情</span></div>
+    <div class="hot" data-act="photo-land-chongqing" style="left:22%;top:50%;width:40%;height:28%" aria-label="点击重庆，查看小奥利奥的故事"><span class="ring"></span><span class="hot-label">奥利奥的到来</span></div>
+    <div class="hot" data-act="photo-land-plateau" style="left:76%;top:47%;width:40%;height:18%" aria-label="点击西宁，查看小库洛米的故事"><span class="ring"></span><span class="hot-label">库洛米的到来</span></div>
+    <div class="hot" data-act="photo-wedding-indoor" style="left:52%;top:78%;width:32%;height:30%" aria-label="点击新人，查看室内婚纱照"><span class="ring"></span><span class="hot-label">新人美照</span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.305" data-art-y="0.845" data-ring-ratio="0.047" style="left:30.5%;top:84.5%;width:18%;height:14%" aria-label="点击库洛米，查看照片"><span class="ring"></span><span class="hot-label">库洛米</span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.585" data-art-y="0.905" data-ring-ratio="0.047" style="left:58.5%;top:90.5%;width:22%;height:14%" aria-label="点击奥利奥，查看照片"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
+    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看叁·定情</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
   <!-- ═══════ 第三幕 · 定情 ═══════ -->
@@ -260,12 +265,11 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <div class="vignette"></div>
     <div class="chapter-tag">叁 · 定情</div>
     <div class="hot" data-act="full-petals" data-art-x="0.505" data-art-y="0.105" style="left:50.5%;top:10.5%;width:26vw;height:12vh" aria-label="点击背景囍字，落下满屏花瓣"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-engagement" data-art-x="0.40" data-art-y="0.64" data-ring-ratio="0.047" style="left:40%;top:64%;width:20%;height:23%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新郎，查看订婚当天照片"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-engagement" data-art-x="0.83" data-art-y="0.72" data-ring-ratio="0.047" style="left:83%;top:72%;width:32%;height:44%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新娘，查看订婚当天照片"><span class="ring"></span></div>
-    <div class="hot" data-act="engagement-story" data-art-x="0.56" data-art-y="0.475" data-ring-ratio="0.047" style="left:56%;top:47.5%;width:12%;height:7%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击桌上的订婚书，查看订婚故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.285" data-art-y="0.842" data-ring-ratio="0.047" style="left:28.5%;top:84.2%;width:20%;height:13%" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.835" data-art-y="0.839" data-ring-ratio="0.047" style="left:83.5%;top:83.9%;width:20%;height:13%" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
-    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看肆·红本为证</span></div>
+    <div class="hot" data-act="photo-engagement" data-art-x="0.40" data-art-y="0.64" data-ring-ratio="0.047" style="left:40%;top:64%;width:20%;height:23%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新郎，查看订婚当天照片"><span class="ring"></span><span class="hot-label">订婚当场</span></div>
+    <div class="hot" data-act="engagement-story" data-art-x="0.56" data-art-y="0.475" data-ring-ratio="0.047" style="left:56%;top:47.5%;width:12%;height:7%;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击桌上的订婚书，查看订婚故事"><span class="ring"></span><span class="hot-label">订婚故事</span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.225" data-art-y="0.805" data-ring-ratio="0.047" style="left:22.5%;top:80.5%;width:20%;height:13%" aria-label="点击库洛米，查看照片"><span class="ring"></span><span class="hot-label">库洛米</span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.835" data-art-y="0.839" data-ring-ratio="0.047" style="left:83.5%;top:83.9%;width:20%;height:13%" aria-label="点击奥利奥，查看照片"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
+    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看肆·红本为证</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
   <!-- ═══════ 第四幕 · 红本为证 ═══════ -->
@@ -273,11 +277,11 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act4.jpg" alt="第四幕 · 红本为证" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">肆 · 红本为证</div>
-    <div class="hot" data-act="marriage-story" data-art-x="0.538" data-art-y="0.172" data-ring-ratio="0.047" style="left:53.8%;top:17.2%;width:14vw;height:12vh" aria-label="点击国徽，查看领证故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-marriage" data-art-x="0.525" data-art-y="0.445" style="left:52.5%;top:44.5%;width:24vw;height:24vh" aria-label="点击新人，查看领证照片"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.335" data-art-y="0.865" style="left:33.5%;top:86.5%;width:20vw;height:16vh" aria-label="点击库洛米，查看照片"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.800" data-art-y="0.755" style="left:80%;top:75.5%;width:20vw;height:17vh" aria-label="点击奥利奥，查看照片"><span class="ring"></span></div>
-    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看伍·婚礼</span></div>
+    <div class="hot" data-act="marriage-story" data-art-x="0.538" data-art-y="0.172" data-ring-ratio="0.047" style="left:53.8%;top:17.2%;width:14vw;height:12vh" aria-label="点击国徽，查看领证故事"><span class="ring"></span><span class="hot-label">领证故事</span></div>
+    <div class="hot" data-act="photo-marriage" data-art-x="0.525" data-art-y="0.445" style="left:52.5%;top:44.5%;width:24vw;height:24vh" aria-label="点击新人，查看领证照片"><span class="ring"></span><span class="hot-label">领证照片</span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.335" data-art-y="0.865" style="left:33.5%;top:86.5%;width:20vw;height:16vh" aria-label="点击库洛米，查看照片"><span class="ring"></span><span class="hot-label">库洛米</span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.800" data-art-y="0.755" style="left:80%;top:75.5%;width:20vw;height:17vh" aria-label="点击奥利奥，查看照片"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
+    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看伍·婚礼</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
   <!-- ═══════ 第五幕 · 婚礼 ═══════ -->
@@ -285,14 +289,14 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
     <img class="bg" data-src="./assets/web/act5.jpg" alt="第五幕 · 婚礼" loading="lazy" decoding="async">
     <div class="vignette"></div>
     <div class="chapter-tag">伍 · 婚礼</div>
-    <div class="hot" data-act="door" style="left:73%;top:17%;width:36%;height:24%"><span class="ring"></span></div>
+    <div class="hot" data-act="door" style="left:73%;top:17%;width:36%;height:24%"><span class="ring"></span><span class="hot-label">酒店地址导航</span></div>
     <div class="hot" data-act="addr" style="left:25%;top:17%;width:46%;height:24%"><span class="ring"></span></div>
-    <div class="hot" data-act="stage" style="left:52%;top:58%;width:26%;height:14%"><span class="ring"></span></div>
-    <div class="hot" data-act="wedding-story" style="left:50%;top:37%;width:18%;height:12%" aria-label="点击舞台吊灯，查看婚礼故事"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-kuluomi" style="left:66%;top:81%;width:14%;height:18%"><span class="ring"></span></div>
-    <div class="hot" data-act="photo-cat-aoliao" style="left:80%;top:81%;width:16%;height:18%"><span class="ring"></span></div>
-    <a class="hot tour-entry" data-act="cloud-tour" data-art-x="0.22" data-art-y="0.84" data-ring-ratio="0.047" style="left:22%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="tour-label">点击进入720°云游</span></a>
-    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑前往婚礼指南</span></div>
+    <div class="hot" data-act="stage" style="left:52%;top:58%;width:26%;height:14%"><span class="ring"></span><span class="hot-label">婚礼流程</span></div>
+    <div class="hot" data-act="wedding-story" style="left:50%;top:37%;width:18%;height:12%" aria-label="点击舞台吊灯，查看婚礼故事"><span class="ring"></span><span class="hot-label">婚礼故事</span></div>
+    <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.62" data-art-y="0.86" style="left:65%;top:86%;width:14%;height:18%"><span class="ring"></span><span class="hot-label">库洛米</span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.84" data-art-y="0.86" style="left:92%;top:86%;width:16%;height:18%"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
+    <a class="hot tour-entry" data-act="cloud-tour" data-art-x="0.22" data-art-y="0.84" data-ring-ratio="0.047" style="left:22%;top:84%;width:14vw;height:12vh" href="https://map.baidu.com/mapscenes/static/h5-project/pano-share/pano-share.html?pid=09029200121907290850063937Q&amp;uid=&amp;heading=788.6996&amp;pitch=-6.5850515&amp;panoType=street" aria-label="点击进入720°云游"><span class="ring"></span><span class="hot-label">720°云游酒店</span></a>
+    <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑前往婚礼指南</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
   <!-- ═══════ 婚礼指南入口尾幕 ═══════ -->
@@ -364,6 +368,7 @@ body{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;background:
           <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-04.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-05.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <img class="guide-long guide-tile" data-guide-src="./assets/web/wedding-guide/tiles-optimized-hires/branches-06.webp" width="2128" height="1169" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          <div class="guide-branch-hint">以下光圈点开可查看详细副本信息哟~</div>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:70.6%" type="button" data-guide-point="green" aria-label="打开副本一：绿心公园地图搜索"></button>
           <button class="guide-pin" style="--pin-x:39.5%;--pin-y:73.6%" type="button" data-guide-point="worldtree" aria-label="打开副本二：世界树地图搜索"></button>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:79.6%" type="button" data-guide-point="forest" aria-label="打开副本三：沐光森林地图搜索"></button>
