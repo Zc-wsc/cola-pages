@@ -215,6 +215,10 @@ button,input,textarea,select{font-family:inherit}
 .ripple{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid rgba(179,38,44,.85);transform:translate(-50%,-50%);animation:rip .9s ease-out forwards;pointer-events:none}
 @keyframes rip{to{width:120px;height:120px;opacity:0}}
 @media (max-width:380px){.chapter-tag{font-size:12px}}
+/* 透明提示框：保留轻描边与字影，避免遮住底图人物 */
+.chapter-tag,#toast,.seal-label,.guide-branch-hint{background:transparent;box-shadow:none;text-shadow:0 1px 3px rgba(0,0,0,.92),0 0 8px rgba(0,0,0,.72);border-color:rgba(255,230,188,.72)}
+/* 所有光圈文字统一置于光圈正上方，白字配浅色字影保证辨识度 */
+.hot-label,.tour-label{position:absolute;left:50%;top:calc(50% - 23px);transform:translate(-50%,-100%);z-index:2;padding:6px 9px;border:1px solid rgba(255,230,188,.72);border-radius:999px;background:transparent;color:#fff7e9;font-size:clamp(11px,3.2vw,13px);line-height:1.25;letter-spacing:.04em;white-space:nowrap;text-shadow:0 1px 2px rgba(255,250,235,.98),0 0 7px rgba(255,250,235,.9);box-shadow:none;pointer-events:none}
 </style>
 </head>
 <body>
@@ -239,7 +243,7 @@ button,input,textarea,select{font-family:inherit}
     <div class="vignette"></div>
     <div class="chapter-tag">壹 · 相遇</div>
     <div class="hot" data-act="lamp-petals" data-art-x="0.509" data-art-y="0.180" data-ring-ratio="0.065" style="left:50.9%;top:18%;width:15vw;height:10vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击吊灯，落下花瓣"><span class="ring"></span></div>
-    <div class="hot" data-act="meet-story" data-art-x="0.383" data-art-y="0.550" data-ring-ratio="0.065" style="left:38.3%;top:55%;width:20vw;height:15vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击精灵，查看相遇故事"><span class="ring"></span><span class="hot-label">相遇故事</span></div>
+    <div class="hot" data-act="meet-story" data-art-x="0.350" data-art-y="0.580" data-ring-ratio="0.065" style="left:35%;top:58%;width:20vw;height:15vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击精灵身体，查看相遇故事"><span class="ring"></span><span class="hot-label">相遇故事</span></div>
     <div class="hot" data-act="photo-wedding-beach" data-art-x="0.580" data-art-y="0.640" data-ring-ratio="0.065" style="left:58%;top:64%;width:22vw;height:23vh;--ring-size:clamp(16px,5.7vw,28px)" aria-label="点击新人，查看海边婚纱照"><span class="ring"></span><span class="hot-label">新人美照</span></div>
     <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看贰·相知</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
@@ -280,7 +284,7 @@ button,input,textarea,select{font-family:inherit}
     <div class="hot" data-act="marriage-story" data-art-x="0.538" data-art-y="0.172" data-ring-ratio="0.047" style="left:53.8%;top:17.2%;width:14vw;height:12vh" aria-label="点击国徽，查看领证故事"><span class="ring"></span><span class="hot-label">领证故事</span></div>
     <div class="hot" data-act="photo-marriage" data-art-x="0.525" data-art-y="0.445" style="left:52.5%;top:44.5%;width:24vw;height:24vh" aria-label="点击新人，查看领证照片"><span class="ring"></span><span class="hot-label">领证照片</span></div>
     <div class="hot" data-act="photo-cat-kuluomi" data-art-x="0.335" data-art-y="0.865" style="left:33.5%;top:86.5%;width:20vw;height:16vh" aria-label="点击库洛米，查看照片"><span class="ring"></span><span class="hot-label">库洛米</span></div>
-    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.800" data-art-y="0.755" style="left:80%;top:75.5%;width:20vw;height:17vh" aria-label="点击奥利奥，查看照片"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
+    <div class="hot" data-act="photo-cat-aoliao" data-art-x="0.800" data-art-y="0.780" data-ring-ratio="0.047" style="left:80%;top:78%;width:20vw;height:17vh" aria-label="点击奥利奥身体，查看照片"><span class="ring"></span><span class="hot-label">奥利奥</span></div>
     <div class="next-scene-hint"><span class="next-scene-arrow" aria-hidden="true">↑</span><span>上滑查看伍·婚礼</span><span class="hotspot-intro">点击光圈，看看我们的故事</span></div>
   </section>
 
