@@ -186,7 +186,7 @@ button,input,textarea,select{font-family:inherit}
 .guide-scroll.zoomed{touch-action:pan-x pan-y}
 .guide-scroll.zoomed .guide-long-wrap{width:200%;max-width:none;margin:0}
 .guide-pin{position:absolute;z-index:2;left:var(--pin-x);top:var(--pin-y);width:clamp(30px,8vw,42px);height:clamp(30px,8vw,42px);transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.95);border-radius:50%;background:rgba(163,36,43,.18);box-shadow:0 0 0 2px rgba(163,36,43,.54),0 1px 8px rgba(43,25,20,.28);cursor:pointer;touch-action:manipulation}
-.guide-branch-hint{position:absolute;z-index:3;left:50%;top:68%;transform:translate(-50%,-50%);max-width:88%;padding:6px 10px;border:1px solid rgba(163,36,43,.24);border-radius:999px;background:rgba(255,250,240,.92);color:#8c1e28;font-size:clamp(11px,3vw,13px);line-height:1.35;letter-spacing:.04em;white-space:nowrap;text-align:center;box-shadow:0 2px 9px rgba(68,44,26,.14);pointer-events:none;user-select:none}
+.guide-branch-hint{position:absolute;z-index:3;left:50%;top:68%;transform:translate(-50%,-50%);max-width:88%;padding:6px 10px;border:1px solid rgba(163,36,43,.24);border-radius:999px;background:transparent;color:#e6c47d;font-size:clamp(11px,3vw,13px);line-height:1.35;letter-spacing:.04em;white-space:nowrap;text-align:center;box-shadow:0 2px 9px rgba(68,44,26,.14);pointer-events:none;user-select:none}
 .guide-pin:before,.guide-pin:after{content:"";position:absolute;inset:3px;border:1px solid rgba(255,248,232,.95);border-radius:50%}
 .guide-pin:after{inset:-5px;border-color:rgba(163,36,43,.6);animation:guidePinPulse 2.3s ease-out infinite}
 @keyframes guidePinPulse{0%{opacity:.8;transform:scale(.7)}100%{opacity:0;transform:scale(1.65)}}
@@ -379,7 +379,7 @@ button,input,textarea,select{font-family:inherit}
           <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-04.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-05.webp" width="2128" height="1200" alt="" aria-hidden="true" decoding="async" loading="lazy">
           <img class="guide-long guide-tile" data-guide-src="https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com/wedding-invite/assets/web/wedding-guide/tiles-optimized-hires/branches-06.webp" width="2128" height="1169" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          <div class="guide-branch-hint">以下光圈点开可查看详细副本信息哟~</div>
+          <div class="guide-branch-hint">点击光圈查看详细副本信息</div>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:70.6%" type="button" data-guide-point="green" aria-label="打开副本一：绿心公园地图搜索"></button>
           <button class="guide-pin" style="--pin-x:39.5%;--pin-y:73.6%" type="button" data-guide-point="worldtree" aria-label="打开副本二：世界树地图搜索"></button>
           <button class="guide-pin" style="--pin-x:8.2%;--pin-y:79.6%" type="button" data-guide-point="forest" aria-label="打开副本三：沐光森林地图搜索"></button>
