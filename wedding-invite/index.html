@@ -136,11 +136,14 @@ button,input,textarea,select{font-family:inherit}
 @keyframes up{from{transform:translateY(60%);opacity:.4}to{transform:none;opacity:1}}
 .modal h3{color:var(--red);letter-spacing:.3em;font-size:17px;text-align:center;margin-bottom:6px}
 .modal .sub{text-align:center;font-size:12px;color:#8a6a42;letter-spacing:.2em;margin-bottom:16px}
-.tl{list-style:none;position:relative;padding-left:20px}
-.tl:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(#c9a063,#a3242b)}
-.tl li{position:relative;margin-bottom:14px;padding-left:14px;font-size:14px;line-height:1.65}
-.tl li:before{content:"";position:absolute;left:-19px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(163,36,43,.18)}
-.tl b{color:#6e1116}
+.tl{--dot-col:18px;--tl-gap:10px;list-style:none;position:relative;margin:0 auto;padding:2px 0}
+.tl:before{content:"";position:absolute;left:calc(50% - 1px);top:12px;bottom:12px;width:2px;background:linear-gradient(#c9a063,#a3242b)}
+.tl li{display:grid;grid-template-columns:minmax(0,1fr) var(--dot-col) minmax(0,1fr);column-gap:var(--tl-gap);align-items:center;position:relative;margin-bottom:14px;padding:0;font-size:14px;line-height:1.65}
+.tl li:last-child{margin-bottom:0}
+.tl .tl-time{grid-column:1;text-align:right;color:#6e1116;font-weight:700;white-space:nowrap}
+.tl .tl-point{grid-column:2;justify-self:center;align-self:center;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(163,36,43,.18);z-index:1}
+.tl .tl-event{grid-column:3;min-width:0;text-align:left}
+@media(max-width:360px){.tl{--dot-col:16px;--tl-gap:8px}.tl li{font-size:13px}}
 .modal .close{margin-top:10px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--red);color:#f6dcbd;font-size:15px;letter-spacing:.3em}
 /* ---------- 地址/导航弹层 ---------- */
 .addr{font-size:14px;line-height:2;letter-spacing:.06em;text-align:center;color:#42342a}
@@ -411,10 +414,10 @@ button,input,textarea,select{font-family:inherit}
     <h3>婚礼当天流程</h3>
     <div class="sub">2026 年 10 月 25 日 · 禧满鸿福酒店</div>
     <ul class="tl">
-      <li><b>10:58</b> 迎宾入场</li>
-      <li><b>12:08</b> 仪式开始</li>
-      <li><b>12:18</b> 午宴时间</li>
-      <li><b>17:30</b> 晚宴时间</li>
+      <li><b class="tl-time">10:58</b><span class="tl-point" aria-hidden="true"></span><span class="tl-event">迎宾入场</span></li>
+      <li><b class="tl-time">12:08</b><span class="tl-point" aria-hidden="true"></span><span class="tl-event">仪式开始</span></li>
+      <li><b class="tl-time">12:18</b><span class="tl-point" aria-hidden="true"></span><span class="tl-event">午宴时间</span></li>
+      <li><b class="tl-time">17:30</b><span class="tl-point" aria-hidden="true"></span><span class="tl-event">晚宴时间</span></li>
     </ul>
     <button class="close" onclick="document.getElementById('tlModal').classList.remove('show')">收 起</button>
   </div>
