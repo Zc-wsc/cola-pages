@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0b1526">
+<title>大家的镜头 · 汪仕诚 & 马晗瑜的婚礼</title>
+<style>
+:root{
+  --bg0:#08101f; --bg1:#12294a; --gold:#e6c47d; --gold-soft:#f4e2b8;
+  --ink:#f3f6fb; --dim:rgba(243,246,251,.62); --line:rgba(230,196,125,.30);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(120,170,235,.28) 0%, rgba(120,170,235,0) 62%),
+    radial-gradient(90% 60% at 82% 8%, rgba(230,196,125,.14) 0%, rgba(230,196,125,0) 60%),
+    linear-gradient(178deg,#0b1526 0%,#12294a 46%,#0b1526 100%);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:0 0 40px;
+}
+.hand{font-family:"STXingkai","华文行楷","Kaiti SC","STKaiti","KaiTi","楷体",serif}
+.wrap{max-width:560px;margin:0 auto;padding:0 20px}
+
+/* ── 头 ───────────────────────────── */
+header{text-align:center;padding:calc(30px + env(safe-area-inset-top)) 0 18px}
+.eyebrow{
+  font-size:12px;letter-spacing:.34em;color:var(--gold);opacity:.9;
+  margin-bottom:14px;padding-left:.34em;
+}
+h1{
+  font-weight:400;margin:0;font-size:40px;line-height:1.18;letter-spacing:.06em;
+  color:#fff;text-shadow:0 2px 26px rgba(150,195,255,.35);
+}
+h1 .em{color:var(--gold-soft)}
+.sub{margin-top:12px;font-size:13.5px;color:var(--dim);letter-spacing:.08em}
+.rule{
+  width:64px;height:1px;margin:18px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ── 上传卡 ───────────────────────── */
+.upload{
+  margin-top:26px;border-radius:20px;padding:26px 22px 22px;text-align:center;
+  background:linear-gradient(160deg,rgba(255,255,255,.085),rgba(255,255,255,.03));
+  border:1px solid var(--line);
+  box-shadow:0 14px 44px rgba(4,10,22,.55), inset 0 1px 0 rgba(255,255,255,.09);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.cam{
+  width:56px;height:56px;margin:0 auto 14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 40%,rgba(230,196,125,.26),rgba(230,196,125,.05));
+  border:1px solid rgba(230,196,125,.42);
+}
+.cam svg{width:26px;height:26px;fill:none;stroke:var(--gold-soft);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.btn-main{
+  display:block;width:100%;border:0;border-radius:999px;padding:17px 20px;
+  font-size:17px;font-weight:600;letter-spacing:.10em;color:#231a08;
+  background:linear-gradient(135deg,#f6e3b4,#e2bd72 58%,#d8ab55);
+  box-shadow:0 10px 26px rgba(216,171,85,.30), inset 0 1px 0 rgba(255,255,255,.6);
+  cursor:pointer;
+}
+.btn-main:active{transform:translateY(1px)}
+.btn-ghost{
+  display:inline-block;margin-top:12px;border:1px solid rgba(230,196,125,.34);
+  background:transparent;color:var(--gold-soft);border-radius:999px;
+  padding:11px 22px;font-size:14px;letter-spacing:.08em;cursor:pointer;
+}
+.hint{margin-top:14px;font-size:12.5px;line-height:1.65;color:var(--dim)}
+.hint b{color:var(--gold);font-weight:500}
+
+/* ── 进度 ─────────────────────────── */
+#stage{margin-top:16px;display:none}
+.stage-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);margin-bottom:7px}
+.bar{height:5px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f6e3b4,#e2bd72);transition:width .25s}
+
+/* ── 相册 ─────────────────────────── */
+.album{margin-top:38px}
+.album-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.album-title h2{margin:0;font-size:19px;font-weight:500;letter-spacing:.10em;color:#fff}
+.album-title span{font-size:12px;color:var(--dim)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.grid .ph{
+  position:relative;padding-top:100%;border-radius:10px;overflow:hidden;
+  background:rgba(255,255,255,.05);cursor:pointer;
+}
+.grid .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.empty{
+  border:1px dashed rgba(230,196,125,.26);border-radius:16px;padding:34px 20px;
+  text-align:center;color:var(--dim);font-size:13px;line-height:1.8;
+}
+
+/* ── 全屏看 ───────────────────────── */
+#viewer{
+  position:fixed;inset:0;z-index:50;display:none;
+  background:rgba(4,8,16,.96);align-items:center;justify-content:center;
+}
+#viewer.on{display:flex}
+#viewer img{max-width:100%;max-height:100%;object-fit:contain}
+#viewer .close{
+  position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;
+  width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.24);
+  background:rgba(255,255,255,.10);color:#fff;font-size:20px;line-height:1;cursor:pointer;
+}
+
+/* ── 吐司 ─────────────────────────── */
+#toast{
+  position:fixed;left:50%;bottom:calc(34px + env(safe-area-inset-bottom));
+  transform:translate(-50%,18px);z-index:60;
+  padding:13px 22px;border-radius:999px;font-size:14px;letter-spacing:.04em;
+  background:rgba(18,32,54,.95);border:1px solid rgba(230,196,125,.42);color:var(--gold-soft);
+  box-shadow:0 12px 32px rgba(0,0,0,.5);opacity:0;pointer-events:none;
+  transition:opacity .28s, transform .28s;white-space:nowrap;
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+footer{margin-top:40px;text-align:center;font-size:11.5px;color:rgba(243,246,251,.36);line-height:1.9}
+footer .hand{font-size:15px;color:rgba(230,196,125,.66);letter-spacing:.10em}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">2026 · 10 · 25</div>
+    <h1 class="hand">大家的<span class="em">镜头</span></h1>
+    <div class="sub">汪仕诚 &amp; 马晗瑜 · 婚礼随手拍</div>
+    <div class="rule"></div>
+  </header>
+
+  <section class="upload">
+    <div class="cam">
+      <svg viewBox="0 0 24 24"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.1-1.7h6.4L15.8 6h2.7A2.5 2.5 0 0 1 21 8.5v8A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5z"/><circle cx="12" cy="12.4" r="3.3"/></svg>
+    </div>
+    <button class="btn-main" id="pick">上传你拍到的照片</button>
+    <button class="btn-ghost" id="shoot">直接拍一张</button>
+    <p class="hint">一次可以选很多张，<b>不用挑</b>，糊的也算。<br>照片会自动压小再传，不占你多少流量。</p>
+  </section>
+
+  <section id="stage">
+    <div class="stage-row"><span id="stage-txt">正在上传…</span><span id="stage-num">0%</span></div>
+    <div class="bar"><i id="stage-bar"></i></div>
+  </section>
+
+  <section class="album">
+    <div class="album-title">
+      <h2 class="hand">大家传上来的</h2>
+      <span id="count">还没有人上传</span>
+    </div>
+    <div id="empty" class="empty">第一个上传的人<br>会看到自己的照片出现在这里 ✨</div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <footer>
+    <div class="hand">谢谢你的镜头</div>
+    照片仅用于这场婚礼的纪念，不对外公开
+  </footer>
+</div>
+
+<div id="viewer"><button class="close" aria-label="关闭">×</button><img alt=""></div>
+<div id="toast"></div>
+
+<input type="file" id="f-multi" accept="image/*" multiple hidden>
+<input type="file" id="f-cam" accept="image/*" capture="environment" hidden>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   上传通道配置
+   mode: 'local'  只有你自己这台手机能看到（看效果用）
+         'cos'    真正上传到腾讯云，所有人都能看到（需要填 cos 这一段）
+   ════════════════════════════════════════════════════════ */
+const CFG = {
+  mode: 'local',
+  maxEdge: 2000,       // 长边像素上限
+  quality: 0.86,
+  cos: null            // 例：{ host:'https://xxx.cos.ap-chongqing.myqcloud.com', prefix:'album/', policy:'', signature:'', keyTime:'' }
+};
+
+const $ = s => document.querySelector(s);
+const grid = $('#grid'), emptyBox = $('#empty'), countEl = $('#count');
+const stage = $('#stage'), stageTxt = $('#stage-txt'), stageNum = $('#stage-num'), stageBar = $('#stage-bar');
+
+let photos = [];   // {src, id}
+
+/* ── 压缩：长边缩到 maxEdge，转 JPEG ── */
+async function shrink(file){
+  let bmp;
+  try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch(e){ bmp = await new Promise((res, rej) => {
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => { URL.revokeObjectURL(url); res(img); };
+      img.onerror = rej; img.src = url;
+    }); }
+  const w = bmp.width, h = bmp.height, m = Math.max(w, h);
+  const k = m > CFG.maxEdge ? CFG.maxEdge / m : 1;
+  const cw = Math.round(w * k), ch = Math.round(h * k);
+  const cv = document.createElement('canvas');
+  cv.width = cw; cv.height = ch;
+  const cx = cv.getContext('2d');
+  cx.imageSmoothingQuality = 'high';
+  cx.drawImage(bmp, 0, 0, cw, ch);
+  if (bmp.close) bmp.close();
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', CFG.quality));
+  return { blob, w: cw, h: ch };
+}
+
+/* ── 真上传到腾讯云（mode=cos 时才走） ── */
+async function uploadCOS(blob, idx){
+  const c = CFG.cos;
+  const name = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+  const fd = new FormData();
+  fd.append('key', c.prefix + name);
+  fd.append('policy', c.policy);
+  fd.append('Signature', c.signature);
+  fd.append('x-cos-security-token', c.token || '');
+  fd.append('success_action_status', '200');
+  fd.append('Content-Type', 'image/jpeg');
+  fd.append('file', blob, name);
+  const r = await fetch(c.host + '/', { method: 'POST', body: fd });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return c.host + '/' + c.prefix + name;
+}
+
+/* ── 本地存（看效果用） ── */
+const LS = 'wedding-album-local';
+function saveLocal(src){
+  photos.unshift({ src, id: Date.now() + Math.random() });
+  try { localStorage.setItem(LS, JSON.stringify(photos.slice(0, 12))); } catch(e){}
+}
+function loadLocal(){
+  try {
+    const s = JSON.parse(localStorage.getItem(LS) || '[]');
+    if (Array.isArray(s)) photos = s;
+  } catch(e){}
+}
+
+function paintAlbum(){
+  countEl.textContent = photos.length ? photos.length + ' 张' : '还没有人上传';
+  emptyBox.style.display = photos.length ? 'none' : 'block';
+  grid.innerHTML = '';
+  photos.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'ph';
+    const im = document.createElement('img');
+    im.src = p.src; im.loading = 'lazy'; im.alt = '';
+    d.appendChild(im);
+    d.onclick = () => { $('#viewer img').src = p.src; $('#viewer').classList.add('on'); };
+    grid.appendChild(d);
+  });
+}
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('on'), 2400);
+}
+
+function showStage(txt, pct){
+  stage.style.display = 'block';
+  stageTxt.textContent = txt;
+  stageNum.textContent = Math.round(pct) + '%';
+  stageBar.style.width = pct + '%';
+}
+
+/* ── 主流程 ── */
+async function handle(files){
+  const list = Array.from(files || []).filter(f => /^image\//.test(f.type));
+  if (!list.length) return;
+  let done = 0, failed = 0;
+  for (let i = 0; i < list.length; i++){
+    showStage('正在处理第 ' + (i + 1) + ' / ' + list.length + ' 张…', (i / list.length) * 100);
+    try {
+      const { blob } = await shrink(list[i]);
+      if (CFG.mode === 'cos'){
+        const url = await uploadCOS(blob, i);
+        photos.unshift({ src: url, id: url });
+      } else {
+        const src = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); });
+        saveLocal(src);
+      }
+      done++;
+    } catch(e){
+      failed++;
+      console.warn(e);
+    }
+    paintAlbum();
+    showStage('正在上传 ' + (i + 1) + ' / ' + list.length + ' 张…', ((i + 1) / list.length) * 100);
+  }
+  setTimeout(() => { stage.style.display = 'none'; stageBar.style.width = '0'; }, 600);
+  if (done) toast(failed ? '收到 ' + done + ' 张，有 ' + failed + ' 张没传上去' : '收到啦，谢谢你的镜头 ✨');
+  else toast('没传上去，换个网络再试试');
+}
+
+$('#pick').onclick = () => $('#f-multi').click();
+$('#shoot').onclick = () => $('#f-cam').click();
+$('#f-multi').onchange = e => { handle(e.target.files); e.target.value = ''; };
+$('#f-cam').onchange = e => { handle(e.target.files); e.target.value = ''; };
+$('#viewer').onclick = e => { if (e.target.id === 'viewer' || e.target.className === 'close') $('#viewer').classList.remove('on'); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#viewer').classList.remove('on'); });
+
+loadLocal();
+paintAlbum();
+</script>
+</body>
+</html>
