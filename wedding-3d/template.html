@@ -164,6 +164,32 @@ canvas{display:block;position:fixed;inset:0}
     return t;
   }
 
+  // 两侧的墙（暗色渐变，让照片不是浮在空中）
+  const wallTex = (function () {
+    const c = document.createElement('canvas');
+    c.width = 8; c.height = 256;
+    const g = c.getContext('2d');
+    const grd = g.createLinearGradient(0, 0, 0, 256);
+    grd.addColorStop(0, '#04070f');
+    grd.addColorStop(0.42, '#0d1930');
+    grd.addColorStop(0.72, '#0a1526');
+    grd.addColorStop(1, '#04070f');
+    g.fillStyle = grd; g.fillRect(0, 0, 8, 256);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  })();
+  const wallGeo = new THREE.PlaneGeometry(150, 7.2);
+  const wallMat = new THREE.MeshBasicMaterial({ map: wallTex });
+  const wallL = new THREE.Mesh(wallGeo, wallMat);
+  wallL.position.set(-2.62, 3.0, -42);
+  wallL.rotation.y = Math.PI / 2;
+  scene.add(wallL);
+  const wallR = new THREE.Mesh(wallGeo, wallMat);
+  wallR.position.set(2.62, 3.0, -42);
+  wallR.rotation.y = -Math.PI / 2;
+  scene.add(wallR);
+
   // ── 金色边框纹理 ───────────────────────────
   const frameTex = (function () {
     const w = 256, h = 256, c = document.createElement('canvas');
@@ -231,7 +257,7 @@ canvas{display:block;position:fixed;inset:0}
       const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: false });
       const mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(cx, cy, z);
-      mesh.rotation.y = side === -1 ? Math.PI / 2 : -Math.PI / 2;
+      mesh.rotation.y = (side === -1 ? Math.PI / 2 : -Math.PI / 2) - side * 0.14;
       mesh.userData = { idx: i, cap: p.cap || '' };
       scene.add(mesh);
       pickables.push(mesh);
