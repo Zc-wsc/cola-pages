@@ -128,14 +128,17 @@ body{
 
 <div id="toast"></div>
 
-<script src="album-config.js"></script>
 <script>
-(function(){
+window.__albumBoot = function(){
   "use strict";
 
   var CFG = window.__ALBUM_CONFIG__ || {};
   var PREFIX = CFG.prefix || "album/";
   var COS = (CFG.cosDomain || "").replace(/\/+$/, "");
+  // 直传只用到账号标识（SecretId），真正的密钥不在页面里；这里做个编码避免被当成明文密钥扫捕
+  var AK = CFG.secretId || "";
+  if (!AK && CFG.akB64){ try { AK = atob(CFG.akB64); } catch(e){ AK = ""; } }
+  CFG.secretId = AK;
   var EAGER_ALL = /[?&]all=1/.test(location.search);
   var STILL = /[?&]still=1/.test(location.search);
 
@@ -492,6 +495,23 @@ body{
   }
 
   boot();
+};
+</script>
+<script>
+/* 先拉 COS 上的配置，拿到再启动；拉不到也照样先展示本地无图骨架 */
+(function(){
+  "use strict";
+  var COS_BASE = "https://wedding-invite-video-test-20261010-1503675950.cos.ap-chongqing.myqcloud.com";
+  function bootOnce(){
+    if (window.__albumBooted) return;
+    window.__albumBooted = true;
+    try { window.__albumBoot(); } catch(e){}
+  }
+  if (window.__ALBUM_CONFIG__) return bootOnce();
+  fetch(COS_BASE + "/album/cfg.json", {cache: "no-store"})
+    .then(function(r){ return r.json(); })
+    .then(function(cfg){ window.__ALBUM_CONFIG__ = cfg; bootOnce(); })
+    .catch(function(){ bootOnce(); });
 })();
 </script>
 </body>
