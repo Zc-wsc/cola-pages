@@ -193,11 +193,16 @@ window.__albumBoot = function(){
     var vw = window.innerWidth || 390;
     var vh = window.innerHeight || 844;
 
+    // 照片少的时候：行数减少、单张放大、少补几格，避免一张照在一屏里反复出现
+    var nP = Math.max(1, photos.length);
+    var rowsNow = nP >= 30 ? ROWS : (nP >= 18 ? 6 : 4);
+    var padCells = nP >= 30 ? 6 : 2;
+
     // 按屏幕高度反推卡片尺寸，保证铺满不留空
     var sizes = [];
     var sumS = 0;
-    for (var i = 0; i < ROWS; i++){
-      var s = SIZE_MIN + (SIZE_MAX - SIZE_MIN) * i / (ROWS - 1);
+    for (var i = 0; i < rowsNow; i++){
+      var s = SIZE_MIN + (SIZE_MAX - SIZE_MIN) * i / (rowsNow - 1);
       sizes.push(s); sumS += s;
     }
     var baseW = (vh * COVER) / (sumS * 1.32 * 0.94);
@@ -205,18 +210,18 @@ window.__albumBoot = function(){
     var top = -vh * 0.13;
     var idx = 0;
 
-    for (var r = 0; r < ROWS; r++){
+    for (var r = 0; r < rowsNow; r++){
       var cw = sizes[r] * baseW;
       var ch = cw * 1.32;
       var gap = Math.max(10, cw * 0.17);
       var unit = cw + gap;
-      var need = Math.ceil((vw * 1.5) / unit) + 6;
+      var need = Math.ceil((vw * 1.5) / unit) + padCells;
 
       var el = document.createElement("div");
       el.className = "row";
       el.style.top = top.toFixed(1) + "px";
       el.style.setProperty("--cw", cw.toFixed(1) + "px");
-      var depth = r / (ROWS - 1);                       // 0 远 -> 1 近
+      var depth = rowsNow > 1 ? r / (rowsNow - 1) : 1;
       el.style.opacity = (0.34 + depth * 0.66).toFixed(2);
       el.style.filter = depth < 0.34 ? "blur(1.3px) saturate(.72)"
                      : depth < 0.67 ? "blur(.6px) saturate(.87)" : "none";
