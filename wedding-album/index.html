@@ -213,7 +213,7 @@ window.__albumBoot = function(){
     for (var r = 0; r < rowsNow; r++){
       var cw = sizes[r] * baseW;
       var ch = cw * 1.32;
-      var gap = Math.max(10, cw * 0.17);
+      var gap = Math.max(12, cw * 0.21);
       var unit = cw + gap;
       var need = Math.ceil((vw * 1.5) / unit) + padCells;
 
@@ -238,9 +238,9 @@ window.__albumBoot = function(){
           card.className = "card";
           var hh = hash(idx + c + r * 977);
           // 同一张照片重复出现时，用不同的裁切位置和轻微缩放，避免“同一张摊好几遍”的观感
-          var fx = 34 + (hh % 33);                       // 34%~66% 横向焦点
-          var fy = 28 + ((hh >> 3) % 45);                // 28%~72% 纵向焦点
-          var zoom = 1.03 + ((hh >> 7) % 5) * 0.035;      // 1.03~1.17
+          var fx = 44 + (hh % 13);                       // 44%~56%，接近居中，避免切脸
+          var fy = 16 + ((hh >> 3) % 25);                // 偏上，保住头顶
+          var zoom = 1.02 + ((hh >> 7) % 4) * 0.03;       // 1.02~1.11
           card.style.transform = "translateZ(" + ((hh % 3) - 1) * 6 + "px)";
           var img = document.createElement("img");
           if (!EAGER_ALL && (idx + c) > 20) img.loading = "lazy";
