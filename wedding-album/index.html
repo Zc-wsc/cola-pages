@@ -196,7 +196,7 @@ window.__albumBoot = function(){
     // 照片少的时候：行数减少、单张放大、少补几格，避免一张照在一屏里反复出现
     var nP = Math.max(1, photos.length);
     var rowsNow = nP >= 30 ? ROWS : (nP >= 18 ? 6 : 4);
-    var padCells = nP >= 30 ? 6 : 2;
+    var padCells = nP >= 30 ? 6 : 1;
 
     // 按屏幕高度反推卡片尺寸，保证铺满不留空
     var sizes = [];
@@ -238,9 +238,9 @@ window.__albumBoot = function(){
           card.className = "card";
           var hh = hash(idx + c + r * 977);
           // 同一张照片重复出现时，用不同的裁切位置和轻微缩放，避免“同一张摊好几遍”的观感
-          var fx = 44 + (hh % 13);                       // 44%~56%，接近居中，避免切脸
-          var fy = 16 + ((hh >> 3) % 25);                // 偏上，保住头顶
-          var zoom = 1.02 + ((hh >> 7) % 4) * 0.03;       // 1.02~1.11
+          var fx = 46 + (hh % 9);                        // 46%~54%，基本居中
+          var fy = 40 + ((hh >> 3) % 16);                // 中部取景，头顶脚下都留余地
+          var zoom = 1.0 + ((hh >> 7) % 3) * 0.02;        // 1.00~1.04
           card.style.transform = "translateZ(" + ((hh % 3) - 1) * 6 + "px)";
           var img = document.createElement("img");
           if (!EAGER_ALL && (idx + c) > 20) img.loading = "lazy";
