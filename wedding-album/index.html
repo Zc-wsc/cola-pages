@@ -401,7 +401,7 @@ window.__albumBoot = function(){
   }
 
   async function uploadOne(file){
-    var big = await resizeTo(file, 1800, 0.84);
+    var big = await resizeTo(file, 3200, 0.92);
     var small = await resizeTo(file, 460, 0.78);
     var id = stamp();
     await postToCos(PREFIX + id + ".jpg", big, id + ".jpg");
